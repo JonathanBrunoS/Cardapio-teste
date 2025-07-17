@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🍕 Pizzaria La Bella Fornalha - Cardápio Digital</title>
     <style>
-        /* Estilos mantidos idênticos ao HTML original */
         * {
             margin: 0;
             padding: 0;
@@ -36,7 +35,7 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
-        .header .container {
+         .header .container {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -632,7 +631,7 @@
     <!-- Header -->
     <header class="header">
         <div class="container">
-            <h1>CARDAPIO DIGITAL - La Bella Fornalha</h1>
+         <h1>CARDAPIO DIGITAL - La Bella Fornalha</h1>
             <p>Fazendo a Diferença há mais de 30 anos</p>
         </div>
     </header>
@@ -940,7 +939,7 @@
                     "name": "DE MILHO COM CATUPIRY",
                     "description": "Mussarela, milho e catupiry",
                     "prices": {
-                        "                        "GRANDE": 48.00,
+                        "GRANDE": 48.00,
                         "BROTO": 32.00
                     }
                 },
@@ -1797,15 +1796,17 @@
                 if (item.type === "pizza") {
                     orderDetails += ` (${item.size})`;
                 }
-                orderDetails += ` - Qtd: ${item.quantity} - R$ ${(item.price * item.quantity).toFixed(2)}\n`;
+                orderDetails += `\n`;
+                orderDetails += `   Qtd: ${item.quantity}x - R$ ${(item.price * item.quantity).toFixed(2)}\n`;
                 if (item.description) {
                     orderDetails += `   ${item.description}\n`;
                 }
+                orderDetails += `\n`;
             });
 
             const total = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
 
-            // Send to Google Sheets
+            // Prepare data for Google Sheets
             const data = {
                 timestamp: new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }),
                 nome: customerName,
@@ -1817,17 +1818,18 @@
                 total: total.toFixed(2)
             };
 
+            // Send to Google Sheets
             fetch('https://script.google.com/macros/s/AKfycbzudo81qiz5yhJwEMbHhc5i0Z2fORAlOSTramGOB2jGfF8P9VJo_UDmTUUZWA34fzNO/exec', {
                 method: 'POST',
-                mode: 'no-cors', // Usado para evitar problemas de CORS
+                mode: 'no-cors',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             })
-            .then(res => {
+            .then(() => {
                 console.log('🟢 Pedido salvo no Google Sheets');
-                // Limpar o carrinho após sucesso
+                // Clear cart after successful submission
                 cart = [];
                 updateCartDisplay();
                 closeCheckoutModal();
