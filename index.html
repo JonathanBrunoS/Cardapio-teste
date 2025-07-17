@@ -1531,7 +1531,7 @@
             const data = { nome: customerName, telefone: customerPhone, endereco: customerAddress, pagamento: paymentMethod, observacoes: observations, itens: items };
 
             console.log('Enviando para Google Sheets:', data);
-            fetch('https://script.google.com/macros/s/AKfycbztzDjpcsa3VBEVOQL2BkDYfG99wQ-XZ3pjxGcVKKPzewzdbcvoiO57wwaJmOY6E1KO/exec', {
+            fetch('https://script.google.com/macros/s/AKfycbwli029G1_IZJ2Y-r_f4oT28bR2R380fAW3dMKCMJYacGIt-PYt766XJBbg0Ei-b2pH/exec', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
