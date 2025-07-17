@@ -1789,7 +1789,7 @@
             const paymentMethod = document.getElementById('payment-method').value;
             const observations = document.getElementById('observations').value;
 
-            // Prepare order details
+            // Prepare order details for WhatsApp
             let orderDetails = '';
             cart.forEach((item, index) => {
                 orderDetails += `${index + 1}. ${item.name}`;
@@ -1804,9 +1804,16 @@
                 orderDetails += `\n`;
             });
 
+            // Prepare items for Google Sheets
+            const items = cart.map(item => ({
+                item: item.type === "pizza" ? `${item.name} (${item.size})` : item.name,
+                quantidade: item.quantity,
+                valorUnitario: item.price.toFixed(2)
+            }));
+
             const total = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
 
-            // Prepare data for Google Sheets
+            // Send to Google Sheets
             const data = {
                 timestamp: new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }),
                 nome: customerName,
@@ -1815,10 +1822,10 @@
                 pagamento: paymentMethod,
                 observacoes: observations,
                 pedido: orderDetails,
+                itens: items,
                 total: total.toFixed(2)
             };
 
-            // Send to Google Sheets
             fetch('https://script.google.com/macros/s/AKfycbzudo81qiz5yhJwEMbHhc5i0Z2fORAlOSTramGOB2jGfF8P9VJo_UDmTUUZWA34fzNO/exec', {
                 method: 'POST',
                 mode: 'no-cors',
@@ -1827,9 +1834,9 @@
                 },
                 body: JSON.stringify(data)
             })
-            .then(() => {
+            .then(res => {
                 console.log('🟢 Pedido salvo no Google Sheets');
-                // Clear cart after successful submission
+                // Limpar o carrinho após sucesso
                 cart = [];
                 updateCartDisplay();
                 closeCheckoutModal();
