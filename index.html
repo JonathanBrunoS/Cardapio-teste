@@ -1783,11 +1783,17 @@
 
         // Send to WhatsApp and Google Sheets
         function sendToWhatsAppAndGoogleSheets() {
-            const customerName = document.getElementById('customer-name').value;
-            const customerPhone = document.getElementById('customer-phone').value;
-            const customerAddress = document.getElementById('customer-address').value;
+            const customerName = document.getElementById('customer-name').value.trim();
+            const customerPhone = document.getElementById('customer-phone').value.trim();
+            const customerAddress = document.getElementById('customer-address').value.trim();
             const paymentMethod = document.getElementById('payment-method').value;
-            const observations = document.getElementById('observations').value;
+            const observations = document.getElementById('observations').value.trim();
+
+            // Validate form inputs
+            if (!customerName || !customerPhone || !customerAddress || !paymentMethod) {
+                alert('Por favor, preencha todos os campos obrigatórios.');
+                return;
+            }
 
             // Prepare order details for WhatsApp
             let orderDetails = '';
@@ -1805,38 +1811,78 @@
             });
 
             // Prepare items for Google Sheets
-            const items = cart.map(item => ({
-                item: item.type === "pizza" ? `${item.name} (${item.size})` : item.name,
-                quantidade: item.quantity,
-                valorUnitario: item.price.toFixed(2)
-            }));
+            const items = [];
+            cart.forEach(item => {
+                // For pizzas, split half pizzas into separate entries if necessary
+                if (item.type === "pizza" && item.isHalf) {
+                    // Add first half
+                    items.push({
+                        item: `${item.halfPizza1.name} (${item.size}, Meio)`,
+                        quantidade: item.quantity,
+                        valor_unitario: item.halfPizza1.prices[item.size].toFixed(2)
+                    });
+                    // Add second half
+                    items.push({
+                        item: `${item.halfPizza2.name} (${item.size}, Meio)`,
+                        quantidade: item.quantity,
+                        valor_unitario: item.halfPizza2.prices[item.size].toFixed(2)
+                    });
+                } else {
+                    // For whole pizzas, bebidas, and sobremesas
+                    items.push({
+                        item: item.type === "pizza" ? `${item.name} (${item.size})` : item.name,
+                        quantidade: item.quantity,
+                        valor_unitario: item.price.toFixed(2)
+                    });
+                }
+            });
 
             const total = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
 
-            // Send to Google Sheets
+            // Prepare data for Google Sheets
             const data = {
-                timestamp: new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }),
                 nome: customerName,
                 telefone: customerPhone,
                 endereco: customerAddress,
                 pagamento: paymentMethod,
                 observacoes: observations,
-                pedido: orderDetails,
-                itens: items,
-                total: total.toFixed(2)
+                itens: items
             };
 
+            // Send to Google Sheets
             fetch('https://script.google.com/macros/s/AKfycbyEPay4-Qyd2JQlzm6CB2nPLyYhqL7dzXG2FHiI7TXkVJOyIhN3y0Jun6wqwFbORnS_/exec', {
                 method: 'POST',
-                mode: 'no-cors',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             })
-            .then(res => {
+            .then(response => {
                 console.log('🟢 Pedido salvo no Google Sheets');
-                // Limpar o carrinho após sucesso
+                // Prepare WhatsApp message
+                let message = `🍕 *PEDIDO - PIZZARIA LA BELLA FORNALHA* 🍕\n\n`;
+                message += `👤 *DADOS DO CLIENTE:*\n`;
+                message += `Nome: ${customerName}\n`;
+                message += `Telefone: ${customerPhone}\n`;
+                message += `Endereço: ${customerAddress}\n\n`;
+                
+                message += `🛒 *ITENS DO PEDIDO:*\n`;
+                message += orderDetails;
+                
+                message += `💰 *TOTAL: R$ ${total.toFixed(2)}*\n\n`;
+                message += `💳 *FORMA DE PAGAMENTO:* ${paymentMethod}\n\n`;
+                
+                if (observations) {
+                    message += `📝 *OBSERVAÇÕES:* ${observations}\n\n`;
+                }
+                
+                message += `Obrigado pela preferência! 🙏`;
+
+                const phoneNumber = '5511959228663';
+                const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+                window.open(whatsappUrl, '_blank');
+
+                // Clear cart and close modal
                 cart = [];
                 updateCartDisplay();
                 closeCheckoutModal();
@@ -1845,30 +1891,34 @@
             .catch(err => {
                 console.error('🔴 Erro ao enviar para Google Sheets:', err);
                 alert('Erro ao salvar o pedido na planilha. O pedido foi enviado ao WhatsApp.');
+                // Proceed with WhatsApp message even if Google Sheets fails
+                let message = `🍕 *PEDIDO - PIZZARIA LA BELLA FORNALHA* 🍕\n\n`;
+                message += `👤 *DADOS DO CLIENTE:*\n`;
+                message += `Nome: ${customerName}\n`;
+                message += `Telefone: ${customerPhone}\n`;
+                message += `Endereço: ${customerAddress}\n\n`;
+                
+                message += `🛒 *ITENS DO PEDIDO:*\n`;
+                message += orderDetails;
+                
+                message += `💰 *TOTAL: R$ ${total.toFixed(2)}*\n\n`;
+                message += `💳 *FORMA DE PAGAMENTO:* ${paymentMethod}\n\n`;
+                
+                if (observations) {
+                    message += `📝 *OBSERVAÇÕES:* ${observations}\n\n`;
+                }
+                
+                message += `Obrigado pela preferência! 🙏`;
+
+                const phoneNumber = '5511959228663';
+                const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+                window.open(whatsappUrl, '_blank');
+
+                // Clear cart and close modal
+                cart = [];
+                updateCartDisplay();
+                closeCheckoutModal();
             });
-
-            // Send to WhatsApp
-            let message = `🍕 *PEDIDO - PIZZARIA LA BELLA FORNALHA* 🍕\n\n`;
-            message += `👤 *DADOS DO CLIENTE:*\n`;
-            message += `Nome: ${customerName}\n`;
-            message += `Telefone: ${customerPhone}\n`;
-            message += `Endereço: ${customerAddress}\n\n`;
-            
-            message += `🛒 *ITENS DO PEDIDO:*\n`;
-            message += orderDetails;
-            
-            message += `💰 *TOTAL: R$ ${total.toFixed(2)}*\n\n`;
-            message += `💳 *FORMA DE PAGAMENTO:* ${paymentMethod}\n\n`;
-            
-            if (observations) {
-                message += `📝 *OBSERVAÇÕES:* ${observations}\n\n`;
-            }
-            
-            message += `Obrigado pela preferência! 🙏`;
-
-            const phoneNumber = '5511959228663';
-            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-            window.open(whatsappUrl, '_blank');
         }
 
         // Close modals when clicking outside
