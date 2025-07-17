@@ -1789,13 +1789,13 @@
             const paymentMethod = document.getElementById('payment-method').value;
             const observations = document.getElementById('observations').value.trim();
 
-            // Validate form inputs
+            // Validar campos obrigatórios
             if (!customerName || !customerPhone || !customerAddress || !paymentMethod) {
                 alert('Por favor, preencha todos os campos obrigatórios.');
                 return;
             }
 
-            // Prepare order details for WhatsApp
+            // Preparar detalhes do pedido para WhatsApp
             let orderDetails = '';
             cart.forEach((item, index) => {
                 orderDetails += `${index + 1}. ${item.name}`;
@@ -1810,25 +1810,23 @@
                 orderDetails += `\n`;
             });
 
-            // Prepare items for Google Sheets
+            // Preparar itens para Google Sheets
             const items = [];
             cart.forEach(item => {
-                // For pizzas, split half pizzas into separate entries if necessary
                 if (item.type === "pizza" && item.isHalf) {
-                    // Add first half
+                    // Para pizzas meio a meio, adicionar cada sabor como item separado
                     items.push({
                         item: `${item.halfPizza1.name} (${item.size}, Meio)`,
                         quantidade: item.quantity,
                         valor_unitario: item.halfPizza1.prices[item.size].toFixed(2)
                     });
-                    // Add second half
                     items.push({
                         item: `${item.halfPizza2.name} (${item.size}, Meio)`,
                         quantidade: item.quantity,
                         valor_unitario: item.halfPizza2.prices[item.size].toFixed(2)
                     });
                 } else {
-                    // For whole pizzas, bebidas, and sobremesas
+                    // Para pizzas inteiras, bebidas e sobremesas
                     items.push({
                         item: item.type === "pizza" ? `${item.name} (${item.size})` : item.name,
                         quantidade: item.quantity,
@@ -1839,7 +1837,7 @@
 
             const total = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
 
-            // Prepare data for Google Sheets
+            // Preparar dados para Google Sheets
             const data = {
                 nome: customerName,
                 telefone: customerPhone,
@@ -1849,7 +1847,7 @@
                 itens: items
             };
 
-            // Send to Google Sheets
+            // Enviar para Google Sheets
             fetch('https://script.google.com/macros/s/AKfycbyEPay4-Qyd2JQlzm6CB2nPLyYhqL7dzXG2FHiI7TXkVJOyIhN3y0Jun6wqwFbORnS_/exec', {
                 method: 'POST',
                 headers: {
@@ -1859,7 +1857,7 @@
             })
             .then(response => {
                 console.log('🟢 Pedido salvo no Google Sheets');
-                // Prepare WhatsApp message
+                // Preparar mensagem para WhatsApp
                 let message = `🍕 *PEDIDO - PIZZARIA LA BELLA FORNALHA* 🍕\n\n`;
                 message += `👤 *DADOS DO CLIENTE:*\n`;
                 message += `Nome: ${customerName}\n`;
@@ -1882,7 +1880,7 @@
                 const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
                 window.open(whatsappUrl, '_blank');
 
-                // Clear cart and close modal
+                // Limpar carrinho e fechar modal
                 cart = [];
                 updateCartDisplay();
                 closeCheckoutModal();
@@ -1891,7 +1889,7 @@
             .catch(err => {
                 console.error('🔴 Erro ao enviar para Google Sheets:', err);
                 alert('Erro ao salvar o pedido na planilha. O pedido foi enviado ao WhatsApp.');
-                // Proceed with WhatsApp message even if Google Sheets fails
+                // Enviar mensagem para WhatsApp mesmo em caso de erro
                 let message = `🍕 *PEDIDO - PIZZARIA LA BELLA FORNALHA* 🍕\n\n`;
                 message += `👤 *DADOS DO CLIENTE:*\n`;
                 message += `Nome: ${customerName}\n`;
@@ -1914,7 +1912,7 @@
                 const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
                 window.open(whatsappUrl, '_blank');
 
-                // Clear cart and close modal
+                // Limpar carrinho e fechar modal
                 cart = [];
                 updateCartDisplay();
                 closeCheckoutModal();
