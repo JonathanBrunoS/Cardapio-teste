@@ -1493,6 +1493,26 @@
 
         document.getElementById('checkout-btn').addEventListener('click', openCheckoutModal);
 
+        function sendToGoogleSheets(payload) {
+            fetch('https://script.google.com/macros/s/AKfycbxzVZMx1yHCaVHN5XszF1sqx6yxp_HeospPGqd2Vngt04SWGm7p7ZayXNen4btheA3C/exec', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(response => {
+                if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
+                return response.text();
+            })
+            .then(data => {
+                console.log('✅ Sucesso ao enviar para Google Sheets:', data);
+            })
+            .catch(error => {
+                console.error('🔴 Erro ao enviar para Google Sheets:', error);
+            });
+        }
+
         function sendToWhatsAppAndGoogleSheets() {
             const customerName = document.getElementById('customer-name').value.trim();
             const customerPhone = document.getElementById('customer-phone').value.trim();
@@ -1528,33 +1548,24 @@
             });
 
             const total = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
-            const data = { nome: customerName, telefone: customerPhone, endereco: customerAddress, pagamento: paymentMethod, observacoes: observations, itens: items };
+            const payload = { nome: customerName, telefone: customerPhone, endereco: customerAddress, pagamento: paymentMethod, observacoes: observations, itens: items };
 
-            console.log('Enviando para Google Sheets:', data);
-            fetch('https://script.google.com/macros/s/AKfycbxzVZMx1yHCaVHN5XszF1sqx6yxp_HeospPGqd2Vngt04SWGm7p7ZayXNen4btheA3C/exec', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            })
-            .then(response => {
-                if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
-                return response.json();
-            })
-            .then(data => {
-                console.log('🟢 Resposta do Google Sheets:', data);
-                sendWhatsAppMessage(customerName, customerPhone, customerAddress, paymentMethod, observations, total);
-                alert('Pedido salvo na planilha e enviado ao WhatsApp!');
-            })
-            .catch(err => {
-                console.error('🔴 Erro ao enviar para Google Sheets:', err);
-                alert(`Erro ao salvar na planilha: ${err.message}. Tentando enviar apenas ao WhatsApp.`);
-                sendWhatsAppMessage(customerName, customerPhone, customerAddress, paymentMethod, observations, total);
-            })
-            .finally(() => {
-                cart = [];
-                updateCartDisplay();
-                closeCheckoutModal();
-            });
+            console.log('Enviando para Google Sheets:', payload);
+            sendToGoogleSheets(payload)
+                .then(() => {
+                    sendWhatsAppMessage(customerName, customerPhone, customerAddress, paymentMethod, observations, total);
+                    alert('Pedido salvo na planilha e enviado ao WhatsApp!');
+                })
+                .catch(err => {
+                    console.error('🔴 Erro ao enviar para Google Sheets:', err);
+                    alert(`Erro ao salvar na planilha: ${err.message}. Tentando enviar apenas ao WhatsApp.`);
+                    sendWhatsAppMessage(customerName, customerPhone, customerAddress, paymentMethod, observations, total);
+                })
+                .finally(() => {
+                    cart = [];
+                    updateCartDisplay();
+                    closeCheckoutModal();
+                });
         }
 
         function sendWhatsAppMessage(customerName, customerPhone, customerAddress, paymentMethod, observations, total) {
@@ -1586,87 +1597,6 @@
                 if (e.target === this) this.classList.remove('active');
             });
         });
-        <script>
-function sendToGoogleSheets(payload) {
-  fetch('https://script.google.com/macros/s/AKfycbxzVZMx1yHCaVHN5XszF1sqx6yxp_HeospPGqd2Vngt04SWGm7p7ZayXNen4btheA3C/exec', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(payload)
-  })
-  .then(response => {
-    if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
-    return response.text();
-  })
-  .then(data => {
-    console.log('✅ Sucesso ao enviar para Google Sheets:', data);
-  })
-  .catch(error => {
-    console.error('🔴 Erro ao enviar para Google Sheets:', error);
-  });
-}
-
-// Exemplo de chamada após submissão de pedido
-function finalizarPedido() {
-  const nome = document.getElementById('nomeCliente').value;
-  const telefone = document.getElementById('telefoneCliente').value;
-  const endereco = document.getElementById('enderecoCliente').value;
-  const pagamento = document.querySelector('input[name="pagamento"]:checked').value;
-  const observacoes = document.getElementById('observacoesCliente').value;
-
-  // Simulando o carrinho com base na sua estrutura
-  const itens = cart.map(item => ({
-    nome: item.name,
-    tamanho: item.size,
-    quantidade: item.quantity,
-    preco: item.price
-  }));
-
-  const payload = {
-    nome,
-    telefone,
-    endereco,
-    pagamento,
-    observacoes,
-    itens
-  };
-
-  sendToGoogleSheets(payload);
-  sendWhatsAppMessage(nome, telefone, endereco, pagamento, observacoes, calcularTotalPedido());
-}
-
-// Já existente no seu HTML
-function sendWhatsAppMessage(customerName, customerPhone, customerAddress, paymentMethod, observations, total) {
-  let message = `🍕 *PEDIDO - PIZZARIA LA BELLA FORNALHA* 🍕\n\n`;
-  message += `👤 *DADOS DO CLIENTE:*\n`;
-  message += `Nome: ${customerName}\n`;
-  message += `Telefone: ${customerPhone}\n`;
-  message += `Endereço: ${customerAddress}\n\n`;
-  message += `🛒 *ITENS DO PEDIDO:*\n`;
-  cart.forEach((item, index) => {
-    message += `${index + 1}. ${item.name}`;
-    if (item.type === "pizza") message += ` (${item.size})`;
-    message += `\n   Qtd: ${item.quantity}x - R$ ${(item.price * item.quantity).toFixed(2)}\n`;
-    if (item.description) message += `   ${item.description}\n`;
-    message += `\n`;
-  });
-  message += `💰 *TOTAL: R$ ${total.toFixed(2)}*\n\n`;
-  message += `💳 *FORMA DE PAGAMENTO:* ${paymentMethod}\n\n`;
-  if (observations) message += `📝 *OBSERVAÇÕES:* ${observations}\n\n`;
-  message += `Obrigado pela preferência! 🙏`;
-
-  const phoneNumber = '5511959228663';
-  const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-  window.open(whatsappUrl, '_blank');
-}
-
-// Simples função para calcular o total
-function calcularTotalPedido() {
-  return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
-}
-</script>
-
     </script>
 </body>
 </html>
