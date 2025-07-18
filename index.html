@@ -35,11 +35,17 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
-        .header .container {
+         .header .container {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 0.5rem;
+        }
+
+        .header img {
+            max-width: 150px;
+            height: auto;
+            display: block;
         }
 
         .header h1 {
@@ -448,6 +454,33 @@
             font-weight: 600;
         }
 
+        /* WhatsApp Floating Button */
+        .whatsapp-floating {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #25d366, #128c7e);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s;
+            z-index: 50;
+            font-size: 1.5rem;
+            text-decoration: none;
+        }
+
+        .whatsapp-floating:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.6);
+        }
+
         .cart-item {
             background: #f9fafb;
             border-radius: 0.5rem;
@@ -574,21 +607,40 @@
             margin-bottom: 1rem;
         }
 
+        /* Loading Spinner */
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 1.5rem;
             }
+
             .tab-button {
                 padding: 0.75rem 1rem;
                 font-size: 0.9rem;
             }
+
             .pizza-grid {
                 grid-template-columns: 1fr;
             }
+
             .size-options {
                 grid-template-columns: 1fr;
             }
+
             .cart-floating {
                 width: 50px;
                 height: 50px;
@@ -596,6 +648,15 @@
                 right: 1rem;
                 font-size: 1.2rem;
             }
+
+            .whatsapp-floating {
+                width: 50px;
+                height: 50px;
+                bottom: 1rem;
+                left: 1rem;
+                font-size: 1.2rem;
+            }
+
             .modal-content {
                 margin: 1rem;
                 padding: 1.5rem;
@@ -607,6 +668,7 @@
                 flex-direction: column;
                 align-items: flex-start;
             }
+
             .pizza-prices {
                 flex-direction: column;
                 align-items: flex-start;
@@ -616,13 +678,15 @@
     </style>
 </head>
 <body>
+    <!-- Header -->
     <header class="header">
         <div class="container">
-            <h1>CARDÁPIO DIGITAL - La Bella Fornalha</h1>
+         <h1>CARDAPIO DIGITAL - La Bella Fornalha</h1>
             <p>Fazendo a Diferença há mais de 30 anos</p>
         </div>
     </header>
 
+    <!-- Navigation Tabs -->
     <nav class="tabs">
         <div class="container">
             <ul class="tab-list">
@@ -633,19 +697,38 @@
         </div>
     </nav>
 
+    <!-- Main Content -->
     <main class="main-content">
         <div class="container">
-            <div id="pizzas" class="tab-content active"></div>
-            <div id="bebidas" class="tab-content"></div>
-            <div id="sobremesas" class="tab-content"></div>
+            <!-- Pizzas Tab -->
+            <div id="pizzas" class="tab-content active">
+                <!-- Categories will be populated by JavaScript -->
+            </div>
+
+            <!-- Bebidas Tab -->
+            <div id="bebidas" class="tab-content">
+                <!-- Categories will be populated by JavaScript -->
+            </div>
+
+            <!-- Sobremesas Tab -->
+            <div id="sobremesas" class="tab-content">
+                <!-- Categories will be populated by JavaScript -->
+            </div>
         </div>
     </main>
 
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/5511959228663" target="_blank" class="whatsapp-floating" title="Fale conosco no WhatsApp">
+        📱
+    </a>
+
+    <!-- Floating Cart Button -->
     <button id="cart-button" class="cart-floating" style="display: none;">
         🛒
         <span id="cart-badge" class="cart-badge">0</span>
     </button>
 
+    <!-- Pizza Modal -->
     <div id="pizza-modal" class="modal">
         <div class="modal-content">
             <button class="close-button" onclick="closePizzaModal()">×</button>
@@ -653,6 +736,7 @@
                 <h2 id="modal-title" class="modal-title"></h2>
                 <p id="modal-description" class="modal-description"></p>
             </div>
+
             <div class="size-selector">
                 <label class="form-label">Tamanho:</label>
                 <div class="size-options">
@@ -666,6 +750,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="type-selector">
                 <label class="form-label">Tipo:</label>
                 <div class="radio-group">
@@ -679,6 +764,7 @@
                     </label>
                 </div>
             </div>
+
             <div id="half-pizza-selector" class="half-pizza-selector" style="display: none;">
                 <label class="form-label">Escolha os dois sabores:</label>
                 <div class="select-wrapper">
@@ -692,24 +778,35 @@
                     </select>
                 </div>
             </div>
-            <button id="add-to-cart-btn" class="btn btn-primary btn-full">Adicionar ao Carrinho</button>
+
+            <button id="add-to-cart-btn" class="btn btn-primary btn-full">
+                Adicionar ao Carrinho
+            </button>
         </div>
     </div>
 
+    <!-- Cart Modal -->
     <div id="cart-modal" class="modal">
         <div class="modal-content">
             <button class="close-button" onclick="closeCartModal()">×</button>
             <div class="modal-header">
                 <h2 class="modal-title">Carrinho de Compras</h2>
             </div>
-            <div id="cart-items"></div>
+
+            <div id="cart-items">
+                <!-- Cart items will be populated by JavaScript -->
+            </div>
+
             <div id="cart-total" class="cart-total" style="display: none;">
                 <div class="total-row">
                     <span>Total:</span>
                     <span id="total-price">R$ 0,00</span>
                 </div>
-                <button id="checkout-btn" class="btn btn-primary btn-full" style="margin-top: 1rem;">Finalizar Pedido</button>
+                <button id="checkout-btn" class="btn btn-primary btn-full" style="margin-top: 1rem;">
+                    Finalizar Pedido
+                </button>
             </div>
+
             <div id="empty-cart" class="empty-state">
                 <div class="empty-state-icon">🛒</div>
                 <p>Seu carrinho está vazio</p>
@@ -717,6 +814,7 @@
         </div>
     </div>
 
+    <!-- Checkout Modal -->
     <div id="checkout-modal" class="modal">
         <div class="modal-content">
             <button class="close-button" onclick="closeCheckoutModal()">×</button>
@@ -724,19 +822,23 @@
                 <h2 class="modal-title">Finalizar Pedido</h2>
                 <p class="modal-description">Preencha seus dados para enviar o pedido</p>
             </div>
+
             <form id="checkout-form">
                 <div class="form-group">
                     <label class="form-label" for="customer-name">Nome Completo</label>
                     <input type="text" id="customer-name" class="form-input" placeholder="Seu nome completo" required>
                 </div>
+
                 <div class="form-group">
                     <label class="form-label" for="customer-phone">Telefone</label>
                     <input type="tel" id="customer-phone" class="form-input" placeholder="(11) 99999-9999" required>
                 </div>
+
                 <div class="form-group">
                     <label class="form-label" for="customer-address">Endereço Completo</label>
                     <textarea id="customer-address" class="form-input form-textarea" placeholder="Rua, número, bairro, cidade" required></textarea>
                 </div>
+
                 <div class="form-group">
                     <label class="form-label" for="payment-method">Forma de Pagamento</label>
                     <select id="payment-method" class="form-input" required>
@@ -747,311 +849,460 @@
                         <option value="pix">PIX</option>
                     </select>
                 </div>
+
                 <div class="form-group">
                     <label class="form-label" for="observations">Observações (opcional)</label>
                     <textarea id="observations" class="form-input form-textarea" placeholder="Alguma observação especial?"></textarea>
                 </div>
+
                 <div class="cart-total">
                     <div class="total-row">
                         <span>Total:</span>
                         <span id="checkout-total">R$ 0,00</span>
                     </div>
-                    <button type="submit" class="btn whatsapp-button btn-full" style="margin-top: 1rem;">📱 Enviar Pedido via WhatsApp</button>
+                    <button type="submit" class="btn whatsapp-button btn-full" style="margin-top: 1rem;" id="submit-order-btn">
+                        📱 Enviar Pedido via WhatsApp
+                    </button>
                 </div>
             </form>
         </div>
     </div>
 
     <script>
+        // Menu data
         const menuData = {
             "pizzas": [
                 {
                     "category": "PRESUNTO",
                     "name": "À MODA DA CASA",
                     "description": "Presunto, ovos, bacon, mussarela, catupiry, milho e azeitona preta",
-                    "prices": { "GRANDE": 52.00, "BROTO": 34.00 }
+                    "prices": {
+                        "GRANDE": 52.00,
+                        "BROTO": 34.00
+                    }
                 },
                 {
                     "category": "PRESUNTO",
                     "name": "PORTUGUESA",
                     "description": "Presunto, ovos, cebola, mussarela e azeitona preta",
-                    "prices": { "GRANDE": 52.00, "BROTO": 34.00 }
+                    "prices": {
+                        "GRANDE": 52.00,
+                        "BROTO": 34.00
+                    }
                 },
                 {
                     "category": "PRESUNTO",
                     "name": "CALABRESA",
                     "description": "Calabresa fatiada e cebola",
-                    "prices": { "GRANDE": 46.00, "BROTO": 30.00 }
+                    "prices": {
+                        "GRANDE": 46.00,
+                        "BROTO": 30.00
+                    }
                 },
                 {
                     "category": "PRESUNTO",
                     "name": "CALABRESA COM CATUPIRY",
                     "description": "Calabresa fatiada, cebola e catupiry",
-                    "prices": { "GRANDE": 48.00, "BROTO": 32.00 }
+                    "prices": {
+                        "GRANDE": 48.00,
+                        "BROTO": 32.00
+                    }
                 },
                 {
                     "category": "PRESUNTO",
                     "name": "NAPOLITANA",
                     "description": "Mussarela, tomate e parmesão",
-                    "prices": { "GRANDE": 46.00, "BROTO": 30.00 }
+                    "prices": {
+                        "GRANDE": 46.00,
+                        "BROTO": 30.00
+                    }
                 },
                 {
                     "category": "PRESUNTO",
                     "name": "ROMANA",
                     "description": "Mussarela, aliche e parmesão",
-                    "prices": { "GRANDE": 54.00, "BROTO": 36.00 }
+                    "prices": {
+                        "GRANDE": 54.00,
+                        "BROTO": 36.00
+                    }
                 },
                 {
                     "category": "PRESUNTO",
                     "name": "ALHO I",
                     "description": "Mussarela e alho",
-                    "prices": { "GRANDE": 46.00, "BROTO": 30.00 }
+                    "prices": {
+                        "GRANDE": 46.00,
+                        "BROTO": 30.00
+                    }
                 },
                 {
                     "category": "PRESUNTO",
                     "name": "ALHO II",
                     "description": "Mussarela, alho e parmesão",
-                    "prices": { "GRANDE": 48.00, "BROTO": 32.00 }
+                    "prices": {
+                        "GRANDE": 48.00,
+                        "BROTO": 32.00
+                    }
                 },
                 {
                     "category": "PRESUNTO",
                     "name": "ALHO COM CATUPIRY",
                     "description": "Mussarela, alho e catupiry",
-                    "prices": { "GRANDE": 50.00, "BROTO": 33.00 }
+                    "prices": {
+                        "GRANDE": 50.00,
+                        "BROTO": 33.00
+                    }
                 },
                 {
                     "category": "PRESUNTO",
                     "name": "DA PICADILHA I",
                     "description": "Mussarela, presunto, palmito, milho e ervilha",
-                    "prices": { "GRANDE": 52.00, "BROTO": 34.00 }
+                    "prices": {
+                        "GRANDE": 52.00,
+                        "BROTO": 34.00
+                    }
                 },
                 {
                     "category": "PRESUNTO",
                     "name": "DA PICADILHA II",
                     "description": "Mussarela, presunto, palmito, milho, ervilha e catupiry",
-                    "prices": { "GRANDE": 54.00, "BROTO": 36.00 }
+                    "prices": {
+                        "GRANDE": 54.00,
+                        "BROTO": 36.00
+                    }
                 },
                 {
                     "category": "PRESUNTO",
                     "name": "DE CATUPIRY",
                     "description": "Catupiry e azeitona preta",
-                    "prices": { "GRANDE": 48.00, "BROTO": 32.00 }
+                    "prices": {
+                        "GRANDE": 48.00,
+                        "BROTO": 32.00
+                    }
                 },
                 {
                     "category": "PRESUNTO",
                     "name": "DE MILHO",
                     "description": "Mussarela e milho",
-                    "prices": { "GRANDE": 46.00, "BROTO": 30.00 }
+                    "prices": {
+                        "GRANDE": 46.00,
+                        "BROTO": 30.00
+                    }
                 },
                 {
                     "category": "PRESUNTO",
                     "name": "DE MILHO COM CATUPIRY",
                     "description": "Mussarela, milho e catupiry",
-                    "prices": { "GRANDE": 48.00, "BROTO": 32.00 }
+                    "prices": {
+                        "GRANDE": 48.00,
+                        "BROTO": 32.00
+                    }
                 },
                 {
                     "category": "PRESUNTO",
                     "name": "HUSSARDA",
                     "description": "Mussarela, presunto, ovos, bacon, catupiry e azeitona preta",
-                    "prices": { "GRANDE": 52.00, "BROTO": 34.00 }
+                    "prices": {
+                        "GRANDE": 52.00,
+                        "BROTO": 34.00
+                    }
                 },
                 {
                     "category": "PRESUNTO",
                     "name": "MARGUERITA",
                     "description": "Mussarela, tomate e manjericão",
-                    "prices": { "GRANDE": 47.00, "BROTO": 31.00 }
+                    "prices": {
+                        "GRANDE": 47.00,
+                        "BROTO": 31.00
+                    }
                 },
                 {
                     "category": "PRESUNTO",
                     "name": "MARGUERITA ESPECIAL",
                     "description": "Mussarela, tomate, manjericão e parmesão",
-                    "prices": { "GRANDE": 49.00, "BROTO": 32.00 }
+                    "prices": {
+                        "GRANDE": 49.00,
+                        "BROTO": 32.00
+                    }
                 },
                 {
                     "category": "PRESUNTO",
                     "name": "PALMITO",
                     "description": "Mussarela e palmito",
-                    "prices": { "GRANDE": 49.00, "BROTO": 32.00 }
+                    "prices": {
+                        "GRANDE": 49.00,
+                        "BROTO": 32.00
+                    }
                 },
                 {
                     "category": "PRESUNTO",
                     "name": "PALMITO COM CATUPIRY",
                     "description": "Mussarela, palmito e catupiry",
-                    "prices": { "GRANDE": 51.00, "BROTO": 33.00 }
+                    "prices": {
+                        "GRANDE": 51.00,
+                        "BROTO": 33.00
+                    }
                 },
                 {
                     "category": "PRESUNTO",
                     "name": "QUATRO QUEIJOS",
                     "description": "Mussarela, provolone, catupiry e parmesão",
-                    "prices": { "GRANDE": 55.00, "BROTO": 37.00 }
+                    "prices": {
+                        "GRANDE": 55.00,
+                        "BROTO": 37.00
+                    }
                 },
                 {
                     "category": "PEIXES",
                     "name": "ATUM",
                     "description": "Atum e cebola",
-                    "prices": { "GRANDE": 52.00, "BROTO": 34.00 }
+                    "prices": {
+                        "GRANDE": 52.00,
+                        "BROTO": 34.00
+                    }
                 },
                 {
                     "category": "PEIXES",
                     "name": "ATUM COM CATUPIRY",
                     "description": "Atum, cebola e catupiry",
-                    "prices": { "GRANDE": 54.00, "BROTO": 36.00 }
+                    "prices": {
+                        "GRANDE": 54.00,
+                        "BROTO": 36.00
+                    }
                 },
                 {
                     "category": "PEIXES",
                     "name": "ATUM COM MUSSARELA",
                     "description": "Atum, cebola e mussarela",
-                    "prices": { "GRANDE": 53.00, "BROTO": 35.00 }
+                    "prices": {
+                        "GRANDE": 53.00,
+                        "BROTO": 35.00
+                    }
                 },
                 {
                     "category": "PEIXES",
                     "name": "ATUM COM MUSSARELA E CATUPIRY",
                     "description": "Atum, cebola, mussarela e catupiry",
-                    "prices": { "GRANDE": 55.00, "BROTO": 37.00 }
+                    "prices": {
+                        "GRANDE": 55.00,
+                        "BROTO": 37.00
+                    }
                 },
                 {
                     "category": "PEIXES",
                     "name": "BACALHAU",
                     "description": "Bacalhau, cebola, pimentão e azeitona preta",
-                    "prices": { "GRANDE": 58.00, "BROTO": 38.00 }
+                    "prices": {
+                        "GRANDE": 58.00,
+                        "BROTO": 38.00
+                    }
                 },
                 {
                     "category": "PEIXES",
                     "name": "CAMARÃO",
                     "description": "Camarão, mussarela e catupiry",
-                    "prices": { "GRANDE": 58.00, "BROTO": 38.00 }
+                    "prices": {
+                        "GRANDE": 58.00,
+                        "BROTO": 38.00
+                    }
                 },
                 {
                     "category": "PEIXES",
                     "name": "SALMÃO",
                     "description": "Salmão, mussarela e catupiry",
-                    "prices": { "GRANDE": 58.00, "BROTO": 38.00 }
+                    "prices": {
+                        "GRANDE": 58.00,
+                        "BROTO": 38.00
+                    }
                 },
                 {
                     "category": "FRANGO E PERU",
                     "name": "FRANGO COM CATUPIRY",
                     "description": "Frango desfiado e catupiry",
-                    "prices": { "GRANDE": 52.00, "BROTO": 34.00 }
+                    "prices": {
+                        "GRANDE": 52.00,
+                        "BROTO": 34.00
+                    }
                 },
                 {
                     "category": "FRANGO E PERU",
                     "name": "FRANGO COM CHEDDAR",
                     "description": "Frango desfiado e cheddar",
-                    "prices": { "GRANDE": 52.00, "BROTO": 34.00 }
+                    "prices": {
+                        "GRANDE": 52.00,
+                        "BROTO": 34.00
+                    }
                 },
                 {
                     "category": "FRANGO E PERU",
                     "name": "FRANGO COM CATUPIRY E BACON",
                     "description": "Frango desfiado, catupiry e bacon",
-                    "prices": { "GRANDE": 54.00, "BROTO": 36.00 }
+                    "prices": {
+                        "GRANDE": 54.00,
+                        "BROTO": 36.00
+                    }
                 },
                 {
                     "category": "FRANGO E PERU",
                     "name": "FRANGO COM CATUPIRY E MILHO",
                     "description": "Frango desfiado, catupiry e milho",
-                    "prices": { "GRANDE": 54.00, "BROTO": 36.00 }
+                    "prices": {
+                        "GRANDE": 54.00,
+                        "BROTO": 36.00
+                    }
                 },
                 {
                     "category": "FRANGO E PERU",
                     "name": "FRANGO COM CATUPIRY E PALMITO",
                     "description": "Frango desfiado, catupiry e palmito",
-                    "prices": { "GRANDE": 54.00, "BROTO": 36.00 }
+                    "prices": {
+                        "GRANDE": 54.00,
+                        "BROTO": 36.00
+                    }
                 },
                 {
                     "category": "FRANGO E PERU",
                     "name": "PEITO DE PERU",
                     "description": "Peito de peru defumado e catupiry",
-                    "prices": { "GRANDE": 52.00, "BROTO": 34.00 }
+                    "prices": {
+                        "GRANDE": 52.00,
+                        "BROTO": 34.00
+                    }
                 },
                 {
                     "category": "FRANGO E PERU",
                     "name": "PEITO DE PERU COM MUSSARELA",
                     "description": "Peito de peru defumado e mussarela",
-                    "prices": { "GRANDE": 52.00, "BROTO": 34.00 }
+                    "prices": {
+                        "GRANDE": 52.00,
+                        "BROTO": 34.00
+                    }
                 },
                 {
                     "category": "FRANGO E PERU",
                     "name": "PEITO DE PERU COM CHEDDAR",
                     "description": "Peito de peru defumado e cheddar",
-                    "prices": { "GRANDE": 52.00, "BROTO": 34.00 }
+                    "prices": {
+                        "GRANDE": 52.00,
+                        "BROTO": 34.00
+                    }
                 },
                 {
                     "category": "BACON",
                     "name": "BACON",
                     "description": "Mussarela e bacon",
-                    "prices": { "GRANDE": 52.00, "BROTO": 34.00 }
+                    "prices": {
+                        "GRANDE": 52.00,
+                        "BROTO": 34.00
+                    }
                 },
                 {
                     "category": "BACON",
                     "name": "BACON COM CATUPIRY",
                     "description": "Mussarela, bacon e catupiry",
-                    "prices": { "GRANDE": 54.00, "BROTO": 36.00 }
+                    "prices": {
+                        "GRANDE": 54.00,
+                        "BROTO": 36.00
+                    }
                 },
                 {
                     "category": "VEGETAIS",
                     "name": "BRÓCOLIS",
                     "description": "Brócolis, mussarela e bacon",
-                    "prices": { "GRANDE": 52.00, "BROTO": 34.00 }
+                    "prices": {
+                        "GRANDE": 52.00,
+                        "BROTO": 34.00
+                    }
                 },
                 {
                     "category": "VEGETAIS",
                     "name": "BRÓCOLIS COM CATUPIRY",
                     "description": "Brócolis, mussarela, bacon e catupiry",
-                    "prices": { "GRANDE": 54.00, "BROTO": 36.00 }
+                    "prices": {
+                        "GRANDE": 54.00,
+                        "BROTO": 36.00
+                    }
                 },
                 {
                     "category": "VEGETAIS",
                     "name": "ESCAROLA",
                     "description": "Escarola, mussarela e aliche",
-                    "prices": { "GRANDE": 52.00, "BROTO": 34.00 }
+                    "prices": {
+                        "GRANDE": 52.00,
+                        "BROTO": 34.00
+                    }
                 },
                 {
                     "category": "VEGETAIS",
                     "name": "ESCAROLA COM BACON",
                     "description": "Escarola, mussarela e bacon",
-                    "prices": { "GRANDE": 52.00, "BROTO": 34.00 }
+                    "prices": {
+                        "GRANDE": 52.00,
+                        "BROTO": 34.00
+                    }
                 },
                 {
                     "category": "VEGETAIS",
                     "name": "ESCAROLA COM CATUPIRY",
                     "description": "Escarola, mussarela e catupiry",
-                    "prices": { "GRANDE": 54.00, "BROTO": 36.00 }
+                    "prices": {
+                        "GRANDE": 54.00,
+                        "BROTO": 36.00
+                    }
                 },
                 {
                     "category": "VEGETAIS",
                     "name": "MILHO",
                     "description": "Mussarela e milho",
-                    "prices": { "GRANDE": 46.00, "BROTO": 30.00 }
+                    "prices": {
+                        "GRANDE": 46.00,
+                        "BROTO": 30.00
+                    }
                 },
                 {
                     "category": "VEGETAIS",
                     "name": "MILHO COM CATUPIRY",
                     "description": "Mussarela, milho e catupiry",
-                    "prices": { "GRANDE": 48.00, "BROTO": 32.00 }
+                    "prices": {
+                        "GRANDE": 48.00,
+                        "BROTO": 32.00
+                    }
                 },
                 {
                     "category": "VEGETAIS",
                     "name": "PALMITO",
                     "description": "Mussarela e palmito",
-                    "prices": { "GRANDE": 49.00, "BROTO": 32.00 }
+                    "prices": {
+                        "GRANDE": 49.00,
+                        "BROTO": 32.00
+                    }
                 },
                 {
                     "category": "VEGETAIS",
                     "name": "PALMITO COM CATUPIRY",
                     "description": "Mussarela, palmito e catupiry",
-                    "prices": { "GRANDE": 51.00, "BROTO": 33.00 }
+                    "prices": {
+                        "GRANDE": 51.00,
+                        "BROTO": 33.00
+                    }
                 },
                 {
                     "category": "PIZZAS DOCES",
                     "name": "BANANA",
                     "description": "Banana, canela e açúcar",
-                    "prices": { "GRANDE": 47.00, "BROTO": 31.00 }
+                    "prices": {
+                        "GRANDE": 47.00,
+                        "BROTO": 31.00
+                    }
                 },
                 {
                     "category": "PIZZAS DOCES",
                     "name": "BRIGADEIRO",
                     "description": "Chocolate e granulado",
-                    "prices": { "GRANDE": 47.00, "BROTO": 31.00 }
+                    "prices": {
+                        "GRANDE": 47.00,
+                        "BROTO": 31.00
+                    }
                 }
             ],
             "bebidas": [
@@ -1114,6 +1365,7 @@
             ]
         };
 
+        // Global variables
         let cart = [];
         let selectedPizza = null;
         let selectedSize = 'GRANDE';
@@ -1121,6 +1373,10 @@
         let halfPizza1 = null;
         let halfPizza2 = null;
 
+        // Google Sheets URL
+        const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxzVZMx1yHCaVHN5XszF1sqx6yxp_HeospPGqd2Vngt04SWGm7p7ZayXNen4btheA3C/exec';
+
+        // Initialize the app
         document.addEventListener('DOMContentLoaded', function() {
             renderPizzas();
             renderBebidas();
@@ -1129,7 +1385,9 @@
             updateCartDisplay();
         });
 
+        // Setup event listeners
         function setupEventListeners() {
+            // Tab navigation
             document.querySelectorAll('.tab-button').forEach(button => {
                 button.addEventListener('click', function() {
                     const tabId = this.dataset.tab;
@@ -1137,6 +1395,7 @@
                 });
             });
 
+            // Size selection
             document.querySelectorAll('.size-option').forEach(option => {
                 option.addEventListener('click', function() {
                     document.querySelectorAll('.size-option').forEach(opt => opt.classList.remove('selected'));
@@ -1145,6 +1404,7 @@
                 });
             });
 
+            // Pizza type selection
             document.querySelectorAll('input[name="pizza-type"]').forEach(radio => {
                 radio.addEventListener('change', function() {
                     isHalfPizza = this.value === 'half';
@@ -1153,6 +1413,7 @@
                 });
             });
 
+            // Half pizza selection
             document.getElementById('half-pizza-1').addEventListener('change', function() {
                 halfPizza1 = menuData.pizzas.find(p => p.name === this.value);
                 updateAddToCartButton();
@@ -1163,14 +1424,20 @@
                 updateAddToCartButton();
             });
 
+            // Add to cart button
             document.getElementById('add-to-cart-btn').addEventListener('click', addToCart);
+
+            // Cart button
             document.getElementById('cart-button').addEventListener('click', openCartModal);
+
+            // Checkout form
             document.getElementById('checkout-form').addEventListener('submit', function(e) {
                 e.preventDefault();
-                sendToWhatsAppAndGoogleSheets();
+                sendOrder();
             });
         }
 
+        // Switch tabs
         function switchTab(tabId) {
             document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
             document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
@@ -1178,88 +1445,120 @@
             document.getElementById(tabId).classList.add('active');
         }
 
+        // Render pizzas
         function renderPizzas() {
             const pizzasContainer = document.getElementById('pizzas');
             const pizzasByCategory = {};
+
             menuData.pizzas.forEach(pizza => {
-                if (!pizzasByCategory[pizza.category]) pizzasByCategory[pizza.category] = [];
+                if (!pizzasByCategory[pizza.category]) {
+                    pizzasByCategory[pizza.category] = [];
+                }
                 pizzasByCategory[pizza.category].push(pizza);
             });
+
             Object.entries(pizzasByCategory).forEach(([category, pizzas]) => {
                 const categorySection = document.createElement('div');
                 categorySection.className = 'category-section';
+
                 const categoryHeader = document.createElement('div');
                 categoryHeader.className = 'category-header';
                 categoryHeader.textContent = category;
+
                 const pizzaGrid = document.createElement('div');
                 pizzaGrid.className = 'pizza-grid';
+
                 pizzas.forEach(pizza => {
                     const pizzaCard = createPizzaCard(pizza);
                     pizzaGrid.appendChild(pizzaCard);
                 });
+
                 categorySection.appendChild(categoryHeader);
                 categorySection.appendChild(pizzaGrid);
                 pizzasContainer.appendChild(categorySection);
             });
+
             populateHalfPizzaSelectors();
         }
 
+        // Render bebidas
         function renderBebidas() {
             const bebidasContainer = document.getElementById('bebidas');
             bebidasContainer.innerHTML = '';
+
             const bebidasByCategory = {};
+
             menuData.bebidas.forEach(bebida => {
-                if (!bebidasByCategory[bebida.category]) bebidasByCategory[bebida.category] = [];
+                if (!bebidasByCategory[bebida.category]) {
+                    bebidasByCategory[bebida.category] = [];
+                }
                 bebidasByCategory[bebida.category].push(bebida);
             });
+
             Object.entries(bebidasByCategory).forEach(([category, bebidas]) => {
                 const categorySection = document.createElement('div');
                 categorySection.className = 'category-section';
+
                 const categoryHeader = document.createElement('div');
                 categoryHeader.className = 'category-header';
                 categoryHeader.textContent = category;
+
                 const bebidaGrid = document.createElement('div');
                 bebidaGrid.className = 'pizza-grid';
+
                 bebidas.forEach(bebida => {
                     const bebidaCard = createBebidaCard(bebida);
                     bebidaGrid.appendChild(bebidaCard);
                 });
+
                 categorySection.appendChild(categoryHeader);
                 categorySection.appendChild(bebidaGrid);
                 bebidasContainer.appendChild(categorySection);
             });
         }
 
+        // Render sobremesas
         function renderSobremesas() {
             const sobremesasContainer = document.getElementById('sobremesas');
             sobremesasContainer.innerHTML = '';
+
             const sobremesasByCategory = {};
+
             menuData.sobremesas.forEach(sobremesa => {
-                if (!sobremesasByCategory[sobremesa.category]) sobremesasByCategory[sobremesa.category] = [];
+                if (!sobremesasByCategory[sobremesa.category]) {
+                    sobremesasByCategory[sobremesa.category] = [];
+                }
                 sobremesasByCategory[sobremesa.category].push(sobremesa);
             });
+
             Object.entries(sobremesasByCategory).forEach(([category, sobremesas]) => {
                 const categorySection = document.createElement('div');
                 categorySection.className = 'category-section';
+
                 const categoryHeader = document.createElement('div');
                 categoryHeader.className = 'category-header';
                 categoryHeader.textContent = category;
+
                 const sobremesaGrid = document.createElement('div');
                 sobremesaGrid.className = 'pizza-grid';
+
                 sobremesas.forEach(sobremesa => {
                     const sobremesaCard = createSobremesaCard(sobremesa);
                     sobremesaGrid.appendChild(sobremesaCard);
                 });
+
                 categorySection.appendChild(categoryHeader);
                 categorySection.appendChild(sobremesaGrid);
                 sobremesasContainer.appendChild(categorySection);
             });
         }
 
+        // Create pizza card
         function createPizzaCard(pizza) {
             const card = document.createElement('div');
             card.className = 'pizza-card';
             card.onclick = () => openPizzaModal(pizza);
+
             card.innerHTML = `
                 <div class="pizza-name">${pizza.name}</div>
                 <div class="pizza-description">${pizza.description}</div>
@@ -1271,16 +1570,20 @@
                     <button class="add-button">+</button>
                 </div>
             `;
+
             card.querySelector('.add-button').addEventListener('click', (e) => {
                 e.stopPropagation();
                 openPizzaModal(pizza);
             });
+
             return card;
         }
 
+        // Create bebida card
         function createBebidaCard(bebida) {
             const card = document.createElement('div');
             card.className = 'pizza-card';
+
             card.innerHTML = `
                 <div class="pizza-name">${bebida.name}</div>
                 <div class="pizza-description">${bebida.description}</div>
@@ -1289,13 +1592,17 @@
                     <button class="add-button">+</button>
                 </div>
             `;
+
             card.querySelector('.add-button').addEventListener('click', () => addBebidaToCart(bebida));
+
             return card;
         }
 
+        // Create sobremesa card
         function createSobremesaCard(sobremesa) {
             const card = document.createElement('div');
             card.className = 'pizza-card';
+
             card.innerHTML = `
                 <div class="pizza-name">${sobremesa.name}</div>
                 <div class="pizza-description">${sobremesa.description}</div>
@@ -1304,42 +1611,52 @@
                     <button class="add-button">+</button>
                 </div>
             `;
+
             card.querySelector('.add-button').addEventListener('click', () => addSobremesaToCart(sobremesa));
+
             return card;
         }
 
+        // Open pizza modal
         function openPizzaModal(pizza) {
             selectedPizza = pizza;
             selectedSize = 'GRANDE';
             isHalfPizza = false;
             halfPizza1 = null;
             halfPizza2 = null;
+
             document.getElementById('modal-title').textContent = pizza.name;
             document.getElementById('modal-description').textContent = pizza.description;
             document.getElementById('price-grande').textContent = `R$ ${pizza.prices.GRANDE.toFixed(2)}`;
             document.getElementById('price-broto').textContent = `R$ ${pizza.prices.BROTO.toFixed(2)}`;
+
             document.querySelectorAll('.size-option').forEach(opt => opt.classList.remove('selected'));
             document.querySelector('[data-size="GRANDE"]').classList.add('selected');
             document.querySelector('input[value="whole"]').checked = true;
             document.getElementById('half-pizza-selector').style.display = 'none';
             document.getElementById('half-pizza-1').value = '';
             document.getElementById('half-pizza-2').value = '';
+
             updateAddToCartButton();
             document.getElementById('pizza-modal').classList.add('active');
         }
 
+        // Close pizza modal
         function closePizzaModal() {
             document.getElementById('pizza-modal').classList.remove('active');
         }
 
+        // Populate half pizza selectors
         function populateHalfPizzaSelectors() {
             const select1 = document.getElementById('half-pizza-1');
             const select2 = document.getElementById('half-pizza-2');
+
             menuData.pizzas.forEach(pizza => {
                 const option1 = document.createElement('option');
                 option1.value = pizza.name;
                 option1.textContent = `${pizza.name} - R$ ${pizza.prices.GRANDE.toFixed(2)}`;
                 select1.appendChild(option1);
+
                 const option2 = document.createElement('option');
                 option2.value = pizza.name;
                 option2.textContent = `${pizza.name} - R$ ${pizza.prices.GRANDE.toFixed(2)}`;
@@ -1347,14 +1664,17 @@
             });
         }
 
+        // Update add to cart button
         function updateAddToCartButton() {
             const button = document.getElementById('add-to-cart-btn');
             const isDisabled = isHalfPizza && (!halfPizza1 || !halfPizza2 || halfPizza1.name === halfPizza2.name);
             button.disabled = isDisabled;
         }
 
+        // Add to cart (pizzas)
         function addToCart() {
             if (!selectedPizza) return;
+
             const cartItem = {
                 id: Date.now(),
                 type: "pizza",
@@ -1367,11 +1687,13 @@
                 halfPizza1: halfPizza1,
                 halfPizza2: halfPizza2
             };
+
             cart.push(cartItem);
             updateCartDisplay();
             closePizzaModal();
         }
 
+        // Add bebida to cart
         function addBebidaToCart(bebida) {
             const cartItem = {
                 id: Date.now(),
@@ -1385,6 +1707,7 @@
             updateCartDisplay();
         }
 
+        // Add sobremesa to cart
         function addSobremesaToCart(sobremesa) {
             const cartItem = {
                 id: Date.now(),
@@ -1398,10 +1721,12 @@
             updateCartDisplay();
         }
 
+        // Update cart display
         function updateCartDisplay() {
             const cartButton = document.getElementById('cart-button');
             const cartBadge = document.getElementById('cart-badge');
             const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+
             if (totalItems > 0) {
                 cartButton.style.display = 'flex';
                 cartBadge.textContent = totalItems;
@@ -1410,46 +1735,59 @@
             }
         }
 
+        // Open cart modal
         function openCartModal() {
             renderCartItems();
             document.getElementById('cart-modal').classList.add('active');
         }
 
+        // Close cart modal
         function closeCartModal() {
             document.getElementById('cart-modal').classList.remove('active');
         }
 
+        // Render cart items
         function renderCartItems() {
             const cartItemsContainer = document.getElementById('cart-items');
             const cartTotal = document.getElementById('cart-total');
             const emptyCart = document.getElementById('empty-cart');
+
             if (cart.length === 0) {
                 cartItemsContainer.innerHTML = '';
                 cartTotal.style.display = 'none';
                 emptyCart.style.display = 'block';
                 return;
             }
+
             emptyCart.style.display = 'none';
             cartTotal.style.display = 'block';
+
             cartItemsContainer.innerHTML = '';
             cart.forEach(item => {
                 const cartItem = createCartItem(item);
                 cartItemsContainer.appendChild(cartItem);
             });
+
             updateCartTotal();
         }
 
+        // Create cart item
         function createCartItem(item) {
             const cartItem = document.createElement('div');
             cartItem.className = 'cart-item';
+
             let itemDetails = `
                 <div class="cart-item-header">
                     <div>
                         <div class="cart-item-name">${item.name}</div>
             `;
+
             if (item.type === "pizza") {
-                itemDetails += `<div class="cart-item-size">${item.size}</div>`;
+                itemDetails += `
+                        <div class="cart-item-size">${item.size}</div>
+                `;
             }
+
             itemDetails += `
                         <div class="cart-item-price">R$ ${(item.price * item.quantity).toFixed(2)}</div>
                     </div>
@@ -1460,131 +1798,150 @@
                     </div>
                 </div>
             `;
+
             cartItem.innerHTML = itemDetails;
             return cartItem;
         }
 
+        // Update quantity
         function updateQuantity(id, newQuantity) {
             if (newQuantity === 0) {
                 cart = cart.filter(item => item.id !== id);
             } else {
                 const item = cart.find(item => item.id === id);
-                if (item) item.quantity = newQuantity;
+                if (item) {
+                    item.quantity = newQuantity;
+                }
             }
             updateCartDisplay();
             renderCartItems();
         }
 
+        // Update cart total
         function updateCartTotal() {
             const total = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
             document.getElementById('total-price').textContent = `R$ ${total.toFixed(2)}`;
             document.getElementById('checkout-total').textContent = `R$ ${total.toFixed(2)}`;
         }
 
+        // Open checkout modal
         function openCheckoutModal() {
             updateCartTotal();
             closeCartModal();
             document.getElementById('checkout-modal').classList.add('active');
         }
 
+        // Close checkout modal
         function closeCheckoutModal() {
             document.getElementById('checkout-modal').classList.remove('active');
         }
 
+        // Setup checkout button
         document.getElementById('checkout-btn').addEventListener('click', openCheckoutModal);
 
-        function sendToGoogleSheets(payload) {
-            fetch('https://script.google.com/macros/s/AKfycbxzVZMx1yHCaVHN5XszF1sqx6yxp_HeospPGqd2Vngt04SWGm7p7ZayXNen4btheA3C/exec', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(payload)
-            })
-            .then(response => {
-                if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
-                return response.text();
-            })
-            .then(data => {
-                console.log('✅ Sucesso ao enviar para Google Sheets:', data);
-            })
-            .catch(error => {
-                console.error('🔴 Erro ao enviar para Google Sheets:', error);
-            });
-        }
+        // Send order (WhatsApp + Google Sheets)
+        async function sendOrder() {
+            const submitBtn = document.getElementById('submit-order-btn');
+            const originalText = submitBtn.innerHTML;
+            
+            // Show loading state
+            submitBtn.innerHTML = '<span class="loading-spinner"></span> Enviando...';
+            submitBtn.disabled = true;
 
-        function sendToWhatsAppAndGoogleSheets() {
-            const customerName = document.getElementById('customer-name').value.trim();
-            const customerPhone = document.getElementById('customer-phone').value.trim();
-            const customerAddress = document.getElementById('customer-address').value.trim();
-            const paymentMethod = document.getElementById('payment-method').value;
-            const observations = document.getElementById('observations').value.trim();
+            try {
+                const customerName = document.getElementById('customer-name').value;
+                const customerPhone = document.getElementById('customer-phone').value;
+                const customerAddress = document.getElementById('customer-address').value;
+                const paymentMethod = document.getElementById('payment-method').value;
+                const observations = document.getElementById('observations').value;
 
-            if (!customerName || !customerPhone || !customerAddress || !paymentMethod) {
-                alert('Por favor, preencha todos os campos obrigatórios.');
-                return;
-            }
+                // Prepare data for Google Sheets
+                const orderData = {
+                    nome: customerName,
+                    telefone: customerPhone,
+                    endereco: customerAddress,
+                    pagamento: paymentMethod,
+                    observacoes: observations,
+                    itens: cart.map(item => ({
+                        name: item.name,
+                        size: item.size || null,
+                        quantity: item.quantity,
+                        price: item.price
+                    }))
+                };
 
-            const items = [];
-            cart.forEach(item => {
-                if (item.type === "pizza" && item.isHalf) {
-                    items.push({
-                        item: `${item.halfPizza1.name} (${item.size}, Meio)`,
-                        quantidade: item.quantity,
-                        valor_unitario: item.halfPizza1.prices[item.size].toFixed(2)
+                // Send to Google Sheets
+                try {
+                    const response = await fetch(GOOGLE_SHEETS_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(orderData),
+                        mode: 'no-cors' // Required for Google Apps Script
                     });
-                    items.push({
-                        item: `${item.halfPizza2.name} (${item.size}, Meio)`,
-                        quantidade: item.quantity,
-                        valor_unitario: item.halfPizza2.prices[item.size].toFixed(2)
-                    });
-                } else {
-                    items.push({
-                        item: item.type === "pizza" ? `${item.name} (${item.size})` : item.name,
-                        quantidade: item.quantity,
-                        valor_unitario: item.price.toFixed(2)
-                    });
+                    
+                    console.log('Pedido enviado para Google Sheets');
+                } catch (error) {
+                    console.error('Erro ao enviar para Google Sheets:', error);
+                    // Continue with WhatsApp even if Sheets fails
                 }
-            });
 
-            const total = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
-            const payload = { nome: customerName, telefone: customerPhone, endereco: customerAddress, pagamento: paymentMethod, observacoes: observations, itens: items };
+                // Send to WhatsApp
+                sendToWhatsApp();
 
-            console.log('Enviando para Google Sheets:', payload);
-            sendToGoogleSheets(payload)
-                .then(() => {
-                    sendWhatsAppMessage(customerName, customerPhone, customerAddress, paymentMethod, observations, total);
-                    alert('Pedido salvo na planilha e enviado ao WhatsApp!');
-                })
-                .catch(err => {
-                    console.error('🔴 Erro ao enviar para Google Sheets:', err);
-                    alert(`Erro ao salvar na planilha: ${err.message}. Tentando enviar apenas ao WhatsApp.`);
-                    sendWhatsAppMessage(customerName, customerPhone, customerAddress, paymentMethod, observations, total);
-                })
-                .finally(() => {
-                    cart = [];
-                    updateCartDisplay();
-                    closeCheckoutModal();
-                });
+                // Reset form and cart
+                cart = [];
+                updateCartDisplay();
+                document.getElementById('checkout-form').reset();
+                closeCheckoutModal();
+
+            } catch (error) {
+                console.error('Erro ao enviar pedido:', error);
+                alert('Erro ao enviar pedido. Tente novamente.');
+            } finally {
+                // Reset button state
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
         }
 
-        function sendWhatsAppMessage(customerName, customerPhone, customerAddress, paymentMethod, observations, total) {
+        // Send to WhatsApp
+        function sendToWhatsApp() {
+            const customerName = document.getElementById('customer-name').value;
+            const customerPhone = document.getElementById('customer-phone').value;
+            const customerAddress = document.getElementById('customer-address').value;
+            const paymentMethod = document.getElementById('payment-method').value;
+            const observations = document.getElementById('observations').value;
+
             let message = `🍕 *PEDIDO - PIZZARIA LA BELLA FORNALHA* 🍕\n\n`;
             message += `👤 *DADOS DO CLIENTE:*\n`;
             message += `Nome: ${customerName}\n`;
             message += `Telefone: ${customerPhone}\n`;
             message += `Endereço: ${customerAddress}\n\n`;
+            
             message += `🛒 *ITENS DO PEDIDO:*\n`;
             cart.forEach((item, index) => {
                 message += `${index + 1}. ${item.name}`;
-                if (item.type === "pizza") message += ` (${item.size})`;
-                message += `\n   Qtd: ${item.quantity}x - R$ ${(item.price * item.quantity).toFixed(2)}\n`;
-                if (item.description) message += `   ${item.description}\n`;
+                if (item.type === "pizza") {
+                    message += ` (${item.size})`;
+                }
+                message += `\n`;
+                message += `   Qtd: ${item.quantity}x - R$ ${(item.price * item.quantity).toFixed(2)}\n`;
+                if (item.description) {
+                    message += `   ${item.description}\n`;
+                }
                 message += `\n`;
             });
+            
+            const total = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
             message += `💰 *TOTAL: R$ ${total.toFixed(2)}*\n\n`;
             message += `💳 *FORMA DE PAGAMENTO:* ${paymentMethod}\n\n`;
-            if (observations) message += `📝 *OBSERVAÇÕES:* ${observations}\n\n`;
+            
+            if (observations) {
+                message += `📝 *OBSERVAÇÕES:* ${observations}\n\n`;
+            }
+            
             message += `Obrigado pela preferência! 🙏`;
 
             const phoneNumber = '5511959228663';
@@ -1592,11 +1949,15 @@
             window.open(whatsappUrl, '_blank');
         }
 
+        // Close modals when clicking outside
         document.querySelectorAll('.modal').forEach(modal => {
             modal.addEventListener('click', function(e) {
-                if (e.target === this) this.classList.remove('active');
+                if (e.target === this) {
+                    this.classList.remove('active');
+                }
             });
         });
     </script>
 </body>
 </html>
+
