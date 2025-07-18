@@ -1374,7 +1374,7 @@
         let halfPizza2 = null;
 
         // Google Sheets URL
-        const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxzVZMx1yHCaVHN5XszF1sqx6yxp_HeospPGqd2Vngt04SWGm7p7ZayXNen4btheA3C/exec';
+        const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxo_nMPule4oGMWb4IOYfs-GnIrSgKm9DFSpZkeeczEP3gYBwkxwE2JlCDOkt7kP3uD/exec';
 
         // Initialize the app
         document.addEventListener('DOMContentLoaded', function() {
@@ -1849,25 +1849,29 @@
             submitBtn.disabled = true;
 
             try {
-                const customerName = document.getElementById('customer-name').value;
-                const customerPhone = document.getElementById('customer-phone').value;
-                const customerAddress = document.getElementById('customer-address').value;
+                const customerName = document.getElementById('customer-name').value.trim();
+                const customerPhone = document.getElementById('customer-phone').value.trim();
+                const customerAddress = document.getElementById('customer-address').value.trim();
                 const paymentMethod = document.getElementById('payment-method').value;
-                const observations = document.getElementById('observations').value;
+                const observations = document.getElementById('observations').value.trim();
 
                 // Prepare data for Google Sheets
                 const orderData = {
+                    timestamp: new Date().toISOString(),
                     nome: customerName,
                     telefone: customerPhone,
                     endereco: customerAddress,
                     pagamento: paymentMethod,
                     observacoes: observations,
                     itens: cart.map(item => ({
+                        type: item.type,
                         name: item.name,
                         size: item.size || null,
                         quantity: item.quantity,
-                        price: item.price
-                    }))
+                        price: item.price,
+                        subtotal: (item.price * item.quantity).toFixed(2)
+                    })),
+                    total: cart.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2)
                 };
 
                 // Send to Google Sheets
@@ -1877,24 +1881,25 @@
                         headers: {
                             'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify(orderData),
-                        mode: 'no-cors' // Required for Google Apps Script
+                        body: JSON.stringify(orderData)
                     });
                     
-                    console.log('Pedido enviado para Google Sheets');
+                    const result = await response.json();
+                    console.log('Google Sheets response:', result);
                 } catch (error) {
                     console.error('Erro ao enviar para Google Sheets:', error);
                     // Continue with WhatsApp even if Sheets fails
                 }
 
                 // Send to WhatsApp
-                sendToWhatsApp();
+                await sendToWhatsApp();
 
                 // Reset form and cart
                 cart = [];
                 updateCartDisplay();
                 document.getElementById('checkout-form').reset();
                 closeCheckoutModal();
+                alert('Pedido enviado com sucesso!');
 
             } catch (error) {
                 console.error('Erro ao enviar pedido:', error);
@@ -1907,45 +1912,48 @@
         }
 
         // Send to WhatsApp
-        function sendToWhatsApp() {
-            const customerName = document.getElementById('customer-name').value;
-            const customerPhone = document.getElementById('customer-phone').value;
-            const customerAddress = document.getElementById('customer-address').value;
+        async function sendToWhatsApp() {
+            const customerName = document.getElementById('customer-name').value.trim();
+            const customerPhone = document.getElementById('customer-phone').value.trim();
+            const customerAddress = document.getElementById('customer-address').value.trim();
             const paymentMethod = document.getElementById('payment-method').value;
-            const observations = document.getElementById('observations').value;
+            const observations = document.getElementById('observations').value.trim();
 
-            let message = `🍕 *PEDIDO - PIZZARIA LA BELLA FORNALHA* 🍕\n\n`;
-            message += `👤 *DADOS DO CLIENTE:*\n`;
+            // Create WhatsApp message
+            let message = `*PEDIDO - PIZZARIA LA BELLA FORNALHA*\n\n`;
+            message += `*DADOS DO CLIENTE:*\n`;
             message += `Nome: ${customerName}\n`;
             message += `Telefone: ${customerPhone}\n`;
             message += `Endereço: ${customerAddress}\n\n`;
             
-            message += `🛒 *ITENS DO PEDIDO:*\n`;
+            message += `*ITENS DO PEDIDO:*\n`;
             cart.forEach((item, index) => {
                 message += `${index + 1}. ${item.name}`;
                 if (item.type === "pizza") {
                     message += ` (${item.size})`;
                 }
-                message += `\n`;
-                message += `   Qtd: ${item.quantity}x - R$ ${(item.price * item.quantity).toFixed(2)}\n`;
+                message += ` - Qtd: ${item.quantity}x - R$ ${(item.price * item.quantity).toFixed(2)}\n`;
                 if (item.description) {
                     message += `   ${item.description}\n`;
                 }
-                message += `\n`;
             });
             
             const total = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
-            message += `💰 *TOTAL: R$ ${total.toFixed(2)}*\n\n`;
-            message += `💳 *FORMA DE PAGAMENTO:* ${paymentMethod}\n\n`;
+            message += `\n*TOTAL: R$ ${total.toFixed(2)}*\n`;
+            message += `*FORMA DE PAGAMENTO:* ${paymentMethod}\n`;
             
             if (observations) {
-                message += `📝 *OBSERVAÇÕES:* ${observations}\n\n`;
+                message += `\n*OBSERVAÇÕES:* ${observations}\n`;
             }
             
-            message += `Obrigado pela preferência! 🙏`;
+            message += `\nObrigado pela preferência!`;
 
+            // Encode message and create WhatsApp URL
             const phoneNumber = '5511959228663';
-            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`;
+
+            // Open WhatsApp in a new tab
             window.open(whatsappUrl, '_blank');
         }
 
@@ -1960,4 +1968,3 @@
     </script>
 </body>
 </html>
-
