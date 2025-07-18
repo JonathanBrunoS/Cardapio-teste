@@ -1839,86 +1839,26 @@
         // Setup checkout button
         document.getElementById('checkout-btn').addEventListener('click', openCheckoutModal);
 
-        // Send order (WhatsApp + Google Sheets)
-        async function sendOrder() {
-            const submitBtn = document.getElementById('submit-order-btn');
-            const originalText = submitBtn.innerHTML;
-            
-            // Show loading state
-            submitBtn.innerHTML = '<span class="loading-spinner"></span> Enviando...';
-            submitBtn.disabled = true;
-
+        // Send order to Google Sheets
+        async function sendToGoogleSheets(orderData) {
             try {
-                const customerName = document.getElementById('customer-name').value.trim();
-                const customerPhone = document.getElementById('customer-phone').value.trim();
-                const customerAddress = document.getElementById('customer-address').value.trim();
-                const paymentMethod = document.getElementById('payment-method').value;
-                const observations = document.getElementById('observations').value.trim();
-
-                // Prepare data for Google Sheets
-                const orderData = {
-                    timestamp: new Date().toISOString(),
-                    nome: customerName,
-                    telefone: customerPhone,
-                    endereco: customerAddress,
-                    pagamento: paymentMethod,
-                    observacoes: observations,
-                    itens: cart.map(item => ({
-                        type: item.type,
-                        name: item.name,
-                        size: item.size || null,
-                        quantity: item.quantity,
-                        price: item.price,
-                        subtotal: (item.price * item.quantity).toFixed(2)
-                    })),
-                    total: cart.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2)
-                };
-
-                // Send to Google Sheets
-                try {
-                    const response = await fetch(GOOGLE_SHEETS_URL, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(orderData)
-                    });
-                    
-                    const result = await response.json();
-                    console.log('Google Sheets response:', result);
-                } catch (error) {
-                    console.error('Erro ao enviar para Google Sheets:', error);
-                    // Continue with WhatsApp even if Sheets fails
-                }
-
-                // Send to WhatsApp
-                await sendToWhatsApp();
-
-                // Reset form and cart
-                cart = [];
-                updateCartDisplay();
-                document.getElementById('checkout-form').reset();
-                closeCheckoutModal();
-                alert('Pedido enviado com sucesso!');
-
+                const response = await fetch(GOOGLE_SHEETS_URL, {
+                    method: 'POST',
+                    mode: 'no-cors', // Use no-cors to avoid CORS issues
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(orderData)
+                });
+                return { status: 'success', message: 'Order sent to Google Sheets' };
             } catch (error) {
-                console.error('Erro ao enviar pedido:', error);
-                alert('Erro ao enviar pedido. Tente novamente.');
-            } finally {
-                // Reset button state
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
+                console.error('Erro ao enviar para Google Sheets:', error);
+                return { status: 'error', message: error.toString() };
             }
         }
 
         // Send to WhatsApp
-        async function sendToWhatsApp() {
-            const customerName = document.getElementById('customer-name').value.trim();
-            const customerPhone = document.getElementById('customer-phone').value.trim();
-            const customerAddress = document.getElementById('customer-address').value.trim();
-            const paymentMethod = document.getElementById('payment-method').value;
-            const observations = document.getElementById('observations').value.trim();
-
+        function sendToWhatsApp(customerName, customerPhone, customerAddress, paymentMethod, observations) {
             // Create WhatsApp message
             let message = `*PEDIDO - PIZZARIA LA BELLA FORNALHA*\n\n`;
             message += `*DADOS DO CLIENTE:*\n`;
@@ -1948,13 +1888,83 @@
             
             message += `\nObrigado pela preferência!`;
 
-            // Encode message and create WhatsApp URL
+            // Encode message safely
+            const encodedMessage = encodeURIComponent(message).replace(/%0A/g, '%0A');
             const phoneNumber = '5511959228663';
-            const encodedMessage = encodeURIComponent(message);
             const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`;
 
             // Open WhatsApp in a new tab
             window.open(whatsappUrl, '_blank');
+        }
+
+        // Send order (WhatsApp + Google Sheets)
+        async function sendOrder() {
+            const submitBtn = document.getElementById('submit-order-btn');
+            const originalText = submitBtn.innerHTML;
+            
+            // Show loading state
+            submitBtn.innerHTML = '<span class="loading-spinner"></span> Enviando...';
+            submitBtn.disabled = true;
+
+            try {
+                const customerName = document.getElementById('customer-name').value.trim();
+                const customerPhone = document.getElementById('customer-phone').value.trim();
+                const customerAddress = document.getElementById('customer-address').value.trim();
+                const paymentMethod = document.getElementById('payment-method').value;
+                const observations = document.getElementById('observations').value.trim();
+
+                // Validate form inputs
+                if (!customerName || !customerPhone || !customerAddress || !paymentMethod) {
+                    alert('Por favor, preencha todos os campos obrigatórios.');
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                    return;
+                }
+
+                // Prepare data for Google Sheets
+                const orderData = {
+                    timestamp: new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }),
+                    nome: customerName,
+                    telefone: customerPhone,
+                    endereco: customerAddress,
+                    pagamento: paymentMethod,
+                    observacoes: observations,
+                    itens: cart.map(item => ({
+                        type: item.type,
+                        name: item.name,
+                        size: item.size || null,
+                        quantity: item.quantity,
+                        price: item.price,
+                        subtotal: (item.price * item.quantity).toFixed(2)
+                    })),
+                    total: cart.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2)
+                };
+
+                // Send to Google Sheets (non-blocking)
+                sendToGoogleSheets(orderData).then(result => {
+                    console.log('Google Sheets result:', result);
+                }).catch(error => {
+                    console.error('Google Sheets error:', error);
+                });
+
+                // Send to WhatsApp immediately
+                sendToWhatsApp(customerName, customerPhone, customerAddress, paymentMethod, observations);
+
+                // Reset form and cart
+                cart = [];
+                updateCartDisplay();
+                document.getElementById('checkout-form').reset();
+                closeCheckoutModal();
+                alert('Pedido enviado com sucesso!');
+
+            } catch (error) {
+                console.error('Erro ao enviar pedido:', error);
+                alert('Erro ao enviar pedido. Tente novamente.');
+            } finally {
+                // Reset button state
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
         }
 
         // Close modals when clicking outside
