@@ -59,7 +59,7 @@
             background: white;
             border-bottom: 1px solid #e5e7eb;
             position: sticky;
-            top: 80px;
+            top: 100px;
             z-index: 99;
         }
 
@@ -689,6 +689,7 @@
         <div class="container">
             <h1>CARDAPIO DIGITAL - La Bella Fornalha</h1>
             <p>Fazendo a Diferença há mais de 30 anos</p>
+            <p>🕒 Tempo de entrega: 30 a 40 minutos</p>
         </div>
     </header>
 
@@ -696,7 +697,8 @@
     <nav class="tabs">
         <div class="container">
             <ul class="tab-list">
-                <li><button class="tab-button active" data-tab="pizzas">Pizzas</button></li>
+                <li><button class="tab-button active" data-tab="pizzas-salgadas">Pizzas Salgadas</button></li>
+                <li><button class="tab-button" data-tab="pizzas-doces">Pizzas Doces</button></li>
                 <li><button class="tab-button" data-tab="bebidas">Bebidas</button></li>
                 <li><button class="tab-button" data-tab="sobremesas">Sobremesas</button></li>
             </ul>
@@ -706,8 +708,13 @@
     <!-- Main Content -->
     <main class="main-content">
         <div class="container">
-            <!-- Pizzas Tab -->
-            <div id="pizzas" class="tab-content active">
+            <!-- Pizzas Salgadas Tab -->
+            <div id="pizzas-salgadas" class="tab-content active">
+                <!-- Categories will be populated by JavaScript -->
+            </div>
+
+            <!-- Pizzas Doces Tab -->
+            <div id="pizzas-doces" class="tab-content">
                 <!-- Categories will be populated by JavaScript -->
             </div>
 
@@ -1412,7 +1419,8 @@
 
         // Initialize the app
         document.addEventListener('DOMContentLoaded', function() {
-            renderPizzas();
+            renderPizzasSalgadas();
+            renderPizzasDoces();
             renderBebidas();
             renderSobremesas();
             setupEventListeners();
@@ -1490,12 +1498,12 @@
             document.getElementById(tabId).classList.add('active');
         }
 
-        // Render pizzas
-        function renderPizzas() {
-            const pizzasContainer = document.getElementById('pizzas');
+        // Render pizzas salgadas
+        function renderPizzasSalgadas() {
+            const pizzasContainer = document.getElementById('pizzas-salgadas');
             const pizzasByCategory = {};
 
-            menuData.pizzas.forEach(pizza => {
+            menuData.pizzas.filter(pizza => pizza.category !== "PIZZAS DOCES").forEach(pizza => {
                 if (!pizzasByCategory[pizza.category]) {
                     pizzasByCategory[pizza.category] = [];
                 }
@@ -1524,6 +1532,40 @@
             });
 
             populateHalfPizzaSelectors();
+        }
+
+        // Render pizzas doces
+        function renderPizzasDoces() {
+            const pizzasContainer = document.getElementById('pizzas-doces');
+            const pizzasByCategory = {};
+
+            menuData.pizzas.filter(pizza => pizza.category === "PIZZAS DOCES").forEach(pizza => {
+                if (!pizzasByCategory[pizza.category]) {
+                    pizzasByCategory[pizza.category] = [];
+                }
+                pizzasByCategory[pizza.category].push(pizza);
+            });
+
+            Object.entries(pizzasByCategory).forEach(([category, pizzas]) => {
+                const categorySection = document.createElement('div');
+                categorySection.className = 'category-section';
+
+                const categoryHeader = document.createElement('div');
+                categoryHeader.className = 'category-header';
+                categoryHeader.textContent = category;
+
+                const pizzaGrid = document.createElement('div');
+                pizzaGrid.className = 'pizza-grid';
+
+                pizzas.forEach(pizza => {
+                    const pizzaCard = createPizzaCard(pizza);
+                    pizzaGrid.appendChild(pizzaCard);
+                });
+
+                categorySection.appendChild(categoryHeader);
+                categorySection.appendChild(pizzaGrid);
+                pizzasContainer.appendChild(categorySection);
+            });
         }
 
         // Render bebidas
@@ -1934,7 +1976,11 @@
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(orderData)
+                    body: JSON.stringify({
+                        action: 'append',
+                        sheetName: 'Orders',
+                        data: orderData
+                    })
                 });
                 return { status: 'success', message: 'Order sent to Google Sheets' };
             } catch (error) {
