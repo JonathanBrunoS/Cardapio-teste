@@ -35,7 +35,7 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
-         .header .container {
+        .header .container {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -376,6 +376,11 @@
             box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
         }
 
+        /* Combo Selector */
+        .combo-selector {
+            margin: 1.5rem 0;
+        }
+
         /* Buttons */
         .btn {
             padding: 0.75rem 1.5rem;
@@ -472,13 +477,17 @@
             box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
             transition: all 0.3s;
             z-index: 50;
-            font-size: 1.5rem;
-            text-decoration: none;
         }
 
         .whatsapp-floating:hover {
             transform: scale(1.1);
             box-shadow: 0 6px 25px rgba(37, 211, 102, 0.6);
+        }
+
+        .whatsapp-floating svg {
+            width: 32px;
+            height: 32px;
+            fill: white;
         }
 
         .cart-item {
@@ -654,7 +663,11 @@
                 height: 50px;
                 bottom: 1rem;
                 left: 1rem;
-                font-size: 1.2rem;
+            }
+
+            .whatsapp-floating svg {
+                width: 28px;
+                height: 28px;
             }
 
             .modal-content {
@@ -681,7 +694,7 @@
     <!-- Header -->
     <header class="header">
         <div class="container">
-         <h1>CARDAPIO DIGITAL - La Bella Fornalha</h1>
+            <h1>CARDAPIO DIGITAL - La Bella Fornalha</h1>
             <p>Fazendo a Diferença há mais de 30 anos</p>
         </div>
     </header>
@@ -719,7 +732,10 @@
 
     <!-- Floating WhatsApp Button -->
     <a href="https://wa.me/5511959228663" target="_blank" class="whatsapp-floating" title="Fale conosco no WhatsApp">
-        📱
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.134.297-.347.446-.52.149-.174.297-.347.397-.496.099-.149.099-.371-.025-.52-.124-.149-.52-.647-.692-.796-.173-.149-.347-.099-.471.05-.124.149-.471.496-.692.892-.222.397-.422.693-.623.991-.198.297-.397.645-.297.991.099.397.422.892.692 1.338.495.743 1.041 1.435 1.757 2.028.716.595 1.566 1.041 2.565 1.238.297.099.594.099.892.074.297-.025.644-.223.94-.471.297-.248.495-.645.594-.991.099-.347.099-.645-.025-.793-.124-.149-.297-.347-.446-.496z"/>
+            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm.091 18.709c-2.565 0-4.904-1.041-6.604-2.732l-.471-.347-4.317.991 1.041-4.218-.347-.471C.401 10.132 0 8.382 0 6.618 0 2.955 3.134 0 7.091 0c1.882 0 3.683.743 5.018 2.059C14.346 4.295 15.6 7.091 15.6 10.182c0 3.664-2.955 8.527-6.509 8.527z"/>
+        </svg>
     </a>
 
     <!-- Floating Cart Button -->
@@ -748,6 +764,20 @@
                         <div class="size-name">Broto</div>
                         <div class="size-price" id="price-broto">R$ 0,00</div>
                     </div>
+                </div>
+            </div>
+
+            <div id="combo-selector" class="combo-selector" style="display: none;">
+                <label class="form-label">Opção:</label>
+                <div class="radio-group">
+                    <label class="radio-option">
+                        <input type="radio" name="combo-type" value="pizza-only" checked>
+                        Apenas Pizza
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="combo-type" value="combo">
+                        Combo com Refrigerante
+                    </label>
                 </div>
             </div>
 
@@ -861,7 +891,11 @@
                         <span id="checkout-total">R$ 0,00</span>
                     </div>
                     <button type="submit" class="btn whatsapp-button btn-full" style="margin-top: 1rem;" id="submit-order-btn">
-                        📱 Enviar Pedido via WhatsApp
+                        <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; fill: white; margin-right: 8px;">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.134.297-.347.446-.52.149-.174.297-.347.397-.496.099-.149.099-.371-.025-.52-.124-.149-.52-.647-.692-.796-.173-.149-.347-.099-.471.05-.124.149-.471.496-.692.892-.222.397-.422.693-.623.991-.198.297-.397.645-.297.991.099.397.422.892.692 1.338.495.743 1.041 1.435 1.757 2.028.716.595 1.566 1.041 2.565 1.238.297.099.594.099.892.074.297-.025.644-.223.94-.471.297-.248.495-.645.594-.991.099-.347.099-.645-.025-.793-.124-.149-.297-.347-.446-.496z"/>
+                            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm.091 18.709c-2.565 0-4.904-1.041-6.604-2.732l-.471-.347-4.317.991 1.041-4.218-.347-.471C.401 10.132 0 8.382 0 6.618 0 2.955 3.134 0 7.091 0c1.882 0 3.683.743 5.018 2.059C14.346 4.295 15.6 7.091 15.6 10.182c0 3.664-2.955 8.527-6.509 8.527z"/>
+                        </svg>
+                        Enviar Pedido via WhatsApp
                     </button>
                 </div>
             </form>
@@ -879,6 +913,10 @@
                     "prices": {
                         "GRANDE": 52.00,
                         "BROTO": 34.00
+                    },
+                    "combo": {
+                        "drink": "Dolly 2L",
+                        "drinkPrice": 12.00
                     }
                 },
                 {
@@ -888,6 +926,10 @@
                     "prices": {
                         "GRANDE": 52.00,
                         "BROTO": 34.00
+                    },
+                    "combo": {
+                        "drink": "Coca-Cola 2L",
+                        "drinkPrice": 12.00
                     }
                 },
                 {
@@ -897,6 +939,10 @@
                     "prices": {
                         "GRANDE": 46.00,
                         "BROTO": 30.00
+                    },
+                    "combo": {
+                        "drink": "Fanta Uva 2L",
+                        "drinkPrice": 12.00
                     }
                 },
                 {
@@ -1372,6 +1418,7 @@
         let isHalfPizza = false;
         let halfPizza1 = null;
         let halfPizza2 = null;
+        let isCombo = false;
 
         // Google Sheets URL
         const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxo_nMPule4oGMWb4IOYfs-GnIrSgKm9DFSpZkeeczEP3gYBwkxwE2JlCDOkt7kP3uD/exec';
@@ -1401,6 +1448,7 @@
                     document.querySelectorAll('.size-option').forEach(opt => opt.classList.remove('selected'));
                     this.classList.add('selected');
                     selectedSize = this.dataset.size;
+                    updatePizzaModalPrices();
                 });
             });
 
@@ -1409,6 +1457,16 @@
                 radio.addEventListener('change', function() {
                     isHalfPizza = this.value === 'half';
                     document.getElementById('half-pizza-selector').style.display = isHalfPizza ? 'block' : 'none';
+                    document.getElementById('combo-selector').style.display = isHalfPizza ? 'none' : (selectedPizza.combo ? 'block' : 'none');
+                    updateAddToCartButton();
+                });
+            });
+
+            // Combo selection
+            document.querySelectorAll('input[name="combo-type"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    isCombo = this.value === 'combo';
+                    updatePizzaModalPrices();
                     updateAddToCartButton();
                 });
             });
@@ -1559,14 +1617,26 @@
             card.className = 'pizza-card';
             card.onclick = () => openPizzaModal(pizza);
 
+            let priceBadges = `
+                <div class="price-badges">
+                    <span class="price-badge">Grande: R$ ${pizza.prices.GRANDE.toFixed(2)}</span>
+                    <span class="price-badge outline">Broto: R$ ${pizza.prices.BROTO.toFixed(2)}</span>
+            `;
+
+            if (pizza.combo) {
+                priceBadges += `
+                    <span class="price-badge">Combo Grande + ${pizza.combo.drink}: R$ ${(pizza.prices.GRANDE + pizza.combo.drinkPrice).toFixed(2)}</span>
+                    <span class="price-badge outline">Combo Broto + ${pizza.combo.drink}: R$ ${(pizza.prices.BROTO + pizza.combo.drinkPrice).toFixed(2)}</span>
+                `;
+            }
+
+            priceBadges += `</div>`;
+
             card.innerHTML = `
                 <div class="pizza-name">${pizza.name}</div>
                 <div class="pizza-description">${pizza.description}</div>
                 <div class="pizza-prices">
-                    <div class="price-badges">
-                        <span class="price-badge">Grande: R$ ${pizza.prices.GRANDE.toFixed(2)}</span>
-                        <span class="price-badge outline">Broto: R$ ${pizza.prices.BROTO.toFixed(2)}</span>
-                    </div>
+                    ${priceBadges}
                     <button class="add-button">+</button>
                 </div>
             `;
@@ -1617,6 +1687,21 @@
             return card;
         }
 
+        // Update pizza modal prices
+        function updatePizzaModalPrices() {
+            if (!selectedPizza) return;
+            let grandePrice = selectedPizza.prices.GRANDE;
+            let brotoPrice = selectedPizza.prices.BROTO;
+
+            if (isCombo && selectedPizza.combo) {
+                grandePrice += selectedPizza.combo.drinkPrice;
+                brotoPrice += selectedPizza.combo.drinkPrice;
+            }
+
+            document.getElementById('price-grande').textContent = `R$ ${grandePrice.toFixed(2)}`;
+            document.getElementById('price-broto').textContent = `R$ ${brotoPrice.toFixed(2)}`;
+        }
+
         // Open pizza modal
         function openPizzaModal(pizza) {
             selectedPizza = pizza;
@@ -1624,15 +1709,17 @@
             isHalfPizza = false;
             halfPizza1 = null;
             halfPizza2 = null;
+            isCombo = false;
 
             document.getElementById('modal-title').textContent = pizza.name;
             document.getElementById('modal-description').textContent = pizza.description;
-            document.getElementById('price-grande').textContent = `R$ ${pizza.prices.GRANDE.toFixed(2)}`;
-            document.getElementById('price-broto').textContent = `R$ ${pizza.prices.BROTO.toFixed(2)}`;
+            updatePizzaModalPrices();
 
             document.querySelectorAll('.size-option').forEach(opt => opt.classList.remove('selected'));
             document.querySelector('[data-size="GRANDE"]').classList.add('selected');
             document.querySelector('input[value="whole"]').checked = true;
+            document.querySelector('input[value="pizza-only"]').checked = true;
+            document.getElementById('combo-selector').style.display = pizza.combo ? 'block' : 'none';
             document.getElementById('half-pizza-selector').style.display = 'none';
             document.getElementById('half-pizza-1').value = '';
             document.getElementById('half-pizza-2').value = '';
@@ -1675,17 +1762,29 @@
         function addToCart() {
             if (!selectedPizza) return;
 
+            let price = isHalfPizza ? Math.max(halfPizza1.prices[selectedSize], halfPizza2.prices[selectedSize]) : selectedPizza.prices[selectedSize];
+            let name = isHalfPizza ? `${halfPizza1.name} / ${halfPizza2.name}` : selectedPizza.name;
+            let description = isHalfPizza ? `${halfPizza1.description} / ${halfPizza2.description}` : selectedPizza.description;
+
+            if (isCombo && selectedPizza.combo && !isHalfPizza) {
+                price += selectedPizza.combo.drinkPrice;
+                name += ` + ${selectedPizza.combo.drink}`;
+                description += `, ${selectedPizza.combo.drink}`;
+            }
+
             const cartItem = {
                 id: Date.now(),
                 type: "pizza",
-                name: isHalfPizza ? `${halfPizza1.name} / ${halfPizza2.name}` : selectedPizza.name,
-                description: isHalfPizza ? `${halfPizza1.description} / ${halfPizza2.description}` : selectedPizza.description,
+                name: name,
+                description: description,
                 size: selectedSize,
-                price: isHalfPizza ? Math.max(halfPizza1.prices[selectedSize], halfPizza2.prices[selectedSize]) : selectedPizza.prices[selectedSize],
+                price: price,
                 quantity: 1,
                 isHalf: isHalfPizza,
                 halfPizza1: halfPizza1,
-                halfPizza2: halfPizza2
+                halfPizza2: halfPizza2,
+                isCombo: isCombo && selectedPizza.combo && !isHalfPizza,
+                comboDrink: isCombo && selectedPizza.combo ? selectedPizza.combo.drink : null
             };
 
             cart.push(cartItem);
@@ -1784,7 +1883,7 @@
 
             if (item.type === "pizza") {
                 itemDetails += `
-                        <div class="cart-item-size">${item.size}</div>
+                        <div class="cart-item-size">${item.size}${item.isCombo ? ' (Combo)' : ''}</div>
                 `;
             }
 
@@ -1844,7 +1943,7 @@
             try {
                 const response = await fetch(GOOGLE_SHEETS_URL, {
                     method: 'POST',
-                    mode: 'no-cors', // Use no-cors to avoid CORS issues
+                    mode: 'no-cors',
                     headers: {
                         'Content-Type': 'application/json'
                     },
@@ -1859,7 +1958,6 @@
 
         // Send to WhatsApp
         function sendToWhatsApp(customerName, customerPhone, customerAddress, paymentMethod, observations) {
-            // Create WhatsApp message
             let message = `*PEDIDO - PIZZARIA LA BELLA FORNALHA*\n\n`;
             message += `*DADOS DO CLIENTE:*\n`;
             message += `Nome: ${customerName}\n`;
@@ -1870,7 +1968,7 @@
             cart.forEach((item, index) => {
                 message += `${index + 1}. ${item.name}`;
                 if (item.type === "pizza") {
-                    message += ` (${item.size})`;
+                    message += ` (${item.size}${item.isCombo ? ' + Combo' : ''})`;
                 }
                 message += ` - Qtd: ${item.quantity}x - R$ ${(item.price * item.quantity).toFixed(2)}\n`;
                 if (item.description) {
@@ -1888,12 +1986,10 @@
             
             message += `\nObrigado pela preferência!`;
 
-            // Encode message safely
             const encodedMessage = encodeURIComponent(message).replace(/%0A/g, '%0A');
             const phoneNumber = '5511959228663';
             const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`;
 
-            // Open WhatsApp in a new tab
             window.open(whatsappUrl, '_blank');
         }
 
@@ -1902,7 +1998,6 @@
             const submitBtn = document.getElementById('submit-order-btn');
             const originalText = submitBtn.innerHTML;
             
-            // Show loading state
             submitBtn.innerHTML = '<span class="loading-spinner"></span> Enviando...';
             submitBtn.disabled = true;
 
@@ -1913,7 +2008,6 @@
                 const paymentMethod = document.getElementById('payment-method').value;
                 const observations = document.getElementById('observations').value.trim();
 
-                // Validate form inputs
                 if (!customerName || !customerPhone || !customerAddress || !paymentMethod) {
                     alert('Por favor, preencha todos os campos obrigatórios.');
                     submitBtn.innerHTML = originalText;
@@ -1921,7 +2015,6 @@
                     return;
                 }
 
-                // Prepare data for Google Sheets
                 const orderData = {
                     timestamp: new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }),
                     nome: customerName,
@@ -1935,46 +2028,8 @@
                         size: item.size || null,
                         quantity: item.quantity,
                         price: item.price,
-                        subtotal: (item.price * item.quantity).toFixed(2)
+                        subtotal: (item.price * item.quantity).toFixed(2),
+                        isCombo: item.isCombo || false,
+                        comboDrink: item.comboDrink || null
                     })),
-                    total: cart.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2)
-                };
-
-                // Send to Google Sheets (non-blocking)
-                sendToGoogleSheets(orderData).then(result => {
-                    console.log('Google Sheets result:', result);
-                }).catch(error => {
-                    console.error('Google Sheets error:', error);
-                });
-
-                // Send to WhatsApp immediately
-                sendToWhatsApp(customerName, customerPhone, customerAddress, paymentMethod, observations);
-
-                // Reset form and cart
-                cart = [];
-                updateCartDisplay();
-                document.getElementById('checkout-form').reset();
-                closeCheckoutModal();
-                alert('Pedido enviado com sucesso!');
-
-            } catch (error) {
-                console.error('Erro ao enviar pedido:', error);
-                alert('Erro ao enviar pedido. Tente novamente.');
-            } finally {
-                // Reset button state
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-            }
-        }
-
-        // Close modals when clicking outside
-        document.querySelectorAll('.modal').forEach(modal => {
-            modal.addEventListener('click', function(e) {
-                if (e.target === this) {
-                    this.classList.remove('active');
-                }
-            });
-        });
-    </script>
-</body>
-</html>
+                    total: cart.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2
