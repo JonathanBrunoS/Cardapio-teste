@@ -42,12 +42,6 @@
             gap: 0.5rem;
         }
 
-        .header img {
-            max-width: 150px;
-            height: auto;
-            display: block;
-        }
-
         .header h1 {
             text-align: center;
             font-size: 2rem;
@@ -484,10 +478,9 @@
             box-shadow: 0 6px 25px rgba(37, 211, 102, 0.6);
         }
 
-        .whatsapp-floating svg {
+        .whatsapp-floating img {
             width: 32px;
             height: 32px;
-            fill: white;
         }
 
         .cart-item {
@@ -665,7 +658,7 @@
                 left: 1rem;
             }
 
-            .whatsapp-floating svg {
+            .whatsapp-floating img {
                 width: 28px;
                 height: 28px;
             }
@@ -732,10 +725,7 @@
 
     <!-- Floating WhatsApp Button -->
     <a href="https://wa.me/5511959228663" target="_blank" class="whatsapp-floating" title="Fale conosco no WhatsApp">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.134.297-.347.446-.52.149-.174.297-.347.397-.496.099-.149.099-.371-.025-.52-.124-.149-.52-.647-.692-.796-.173-.149-.347-.099-.471.05-.124.149-.471.496-.692.892-.222.397-.422.693-.623.991-.198.297-.397.645-.297.991.099.397.422.892.692 1.338.495.743 1.041 1.435 1.757 2.028.716.595 1.566 1.041 2.565 1.238.297.099.594.099.892.074.297-.025.644-.223.94-.471.297-.248.495-.645.594-.991.099-.347.099-.645-.025-.793-.124-.149-.297-.347-.446-.496z"/>
-            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm.091 18.709c-2.565 0-4.904-1.041-6.604-2.732l-.471-.347-4.317.991 1.041-4.218-.347-.471C.401 10.132 0 8.382 0 6.618 0 2.955 3.134 0 7.091 0c1.882 0 3.683.743 5.018 2.059C14.346 4.295 15.6 7.091 15.6 10.182c0 3.664-2.955 8.527-6.509 8.527z"/>
-        </svg>
+        <img src="https://cdn.simpleicons.org/whatsapp/white" alt="WhatsApp Icon">
     </a>
 
     <!-- Floating Cart Button -->
@@ -891,10 +881,7 @@
                         <span id="checkout-total">R$ 0,00</span>
                     </div>
                     <button type="submit" class="btn whatsapp-button btn-full" style="margin-top: 1rem;" id="submit-order-btn">
-                        <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; fill: white; margin-right: 8px;">
-                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.134.297-.347.446-.52.149-.174.297-.347.397-.496.099-.149.099-.371-.025-.52-.124-.149-.52-.647-.692-.796-.173-.149-.347-.099-.471.05-.124.149-.471.496-.692.892-.222.397-.422.693-.623.991-.198.297-.397.645-.297.991.099.397.422.892.692 1.338.495.743 1.041 1.435 1.757 2.028.716.595 1.566 1.041 2.565 1.238.297.099.594.099.892.074.297-.025.644-.223.94-.471.297-.248.495-.645.594-.991.099-.347.099-.645-.025-.793-.124-.149-.297-.347-.446-.496z"/>
-                            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm.091 18.709c-2.565 0-4.904-1.041-6.604-2.732l-.471-.347-4.317.991 1.041-4.218-.347-.471C.401 10.132 0 8.382 0 6.618 0 2.955 3.134 0 7.091 0c1.882 0 3.683.743 5.018 2.059C14.346 4.295 15.6 7.091 15.6 10.182c0 3.664-2.955 8.527-6.509 8.527z"/>
-                        </svg>
+                        <img src="https://cdn.simpleicons.org/whatsapp/white" style="width: 20px; height: 20px; margin-right: 8px;" alt="WhatsApp Icon">
                         Enviar Pedido via WhatsApp
                     </button>
                 </div>
@@ -1986,7 +1973,7 @@
             
             message += `\nObrigado pela preferência!`;
 
-            const encodedMessage = encodeURIComponent(message).replace(/%0A/g, '%0A');
+            const encodedMessage = encodeURIComponent(message);
             const phoneNumber = '5511959228663';
             const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`;
 
@@ -2032,4 +2019,24 @@
                         isCombo: item.isCombo || false,
                         comboDrink: item.comboDrink || null
                     })),
-                    total: cart.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2
+                    total: cart.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2)
+                };
+
+                await sendToGoogleSheets(orderData);
+                sendToWhatsApp(customerName, customerPhone, customerAddress, paymentMethod, observations);
+
+                cart = [];
+                updateCartDisplay();
+                closeCheckoutModal();
+                document.getElementById('checkout-form').reset();
+            } catch (error) {
+                console.error('Erro ao enviar pedido:', error);
+                alert('Ocorreu um erro ao enviar o pedido. Tente novamente.');
+            } finally {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>
