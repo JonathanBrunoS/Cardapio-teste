@@ -24,6 +24,7 @@
             padding: 0 1rem;
         }
 
+        /* Header */
         .header {
             background: linear-gradient(135deg, #dc2626, #b91c1c);
             color: white;
@@ -53,6 +54,7 @@
             font-size: 0.9rem;
         }
 
+        /* Navigation Tabs */
         .tabs {
             background: white;
             border-bottom: 1px solid #e5e7eb;
@@ -90,6 +92,7 @@
             background-color: #fef2f2;
         }
 
+        /* Content */
         .main-content {
             padding: 2rem 0 6rem;
         }
@@ -102,6 +105,7 @@
             display: block;
         }
 
+        /* Category Section */
         .category-section {
             margin-bottom: 3rem;
         }
@@ -119,6 +123,7 @@
             font-size: 1.2rem;
         }
 
+        /* Pizza Grid */
         .pizza-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -203,6 +208,7 @@
             box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
         }
 
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -269,6 +275,7 @@
             color: #374151;
         }
 
+        /* Size Selector */
         .size-selector {
             margin: 1.5rem 0;
         }
@@ -309,6 +316,7 @@
             font-size: 0.9rem;
         }
 
+        /* Type Selector */
         .type-selector {
             margin: 1.5rem 0;
         }
@@ -330,6 +338,7 @@
             margin: 0;
         }
 
+        /* Half Pizza Selector */
         .half-pizza-selector {
             background: rgba(220, 38, 38, 0.05);
             border: 2px dashed #dc2626;
@@ -361,10 +370,12 @@
             box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
         }
 
+        /* Combo Selector */
         .combo-selector {
             margin: 1.5rem 0;
         }
 
+        /* Buttons */
         .btn {
             padding: 0.75rem 1.5rem;
             border: none;
@@ -400,6 +411,7 @@
             width: 100%;
         }
 
+        /* Cart */
         .cart-floating {
             position: fixed;
             bottom: 2rem;
@@ -431,7 +443,7 @@
             right: -8px;
             background: white;
             color: #dc2626;
-            border-radius Konversation beenden50%;
+            border-radius: 50%;
             width: 24px;
             height: 24px;
             display: flex;
@@ -441,6 +453,7 @@
             font-weight: 600;
         }
 
+        /* WhatsApp Floating Button */
         .whatsapp-floating {
             position: fixed;
             bottom: 2rem;
@@ -544,6 +557,7 @@
             font-weight: 600;
         }
 
+        /* Checkout Form */
         .form-group {
             margin-bottom: 1rem;
         }
@@ -584,6 +598,7 @@
             box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
         }
 
+        /* Empty State */
         .empty-state {
             text-align: center;
             padding: 3rem 1rem;
@@ -595,6 +610,7 @@
             margin-bottom: 1rem;
         }
 
+        /* Loading Spinner */
         .loading-spinner {
             display: inline-block;
             width: 20px;
@@ -609,6 +625,7 @@
             to { transform: rotate(360deg); }
         }
 
+        /* CEP Button */
         .cep-button {
             background: linear-gradient(135deg, #059669, #047857);
             color: white;
@@ -629,6 +646,7 @@
             box-shadow: none;
         }
 
+        /* Delivery Fee Display */
         .delivery-fee-display {
             background: #f0f9ff;
             border: 1px solid #0ea5e9;
@@ -638,26 +656,7 @@
             font-weight: 500;
         }
 
-        .distance-info {
-            background: #f0fdf4;
-            border: 1px solid #22c55e;
-            border-radius: 0.5rem;
-            padding: 0.75rem;
-            color: #166534;
-            font-weight: 500;
-            margin-top: 0.5rem;
-        }
-
-        .error-display {
-            background: #fef2f2;
-            border: 1px solid #ef4444;
-            border-radius: 0.5rem;
-            padding: 0.75rem;
-            color: #dc2626;
-            font-weight: 500;
-            margin-top: 0.5rem;
-        }
-
+        /* Responsive */
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 1.5rem;
@@ -738,10 +737,17 @@
 
     <main class="main-content">
         <div class="container">
-            <div id="pizzas-salgadas" class="tab-content active"></div>
-            <div id="pizzas-doces" class="tab-content"></div>
-            <div id="bebidas" class="tab-content"></div>
-            <div id="sobremesas" class="tab-content"></div>
+            <div id="pizzas-salgadas" class="tab-content active">
+                </div>
+
+            <div id="pizzas-doces" class="tab-content">
+                </div>
+
+            <div id="bebidas" class="tab-content">
+                </div>
+
+            <div id="sobremesas" class="tab-content">
+                </div>
         </div>
     </main>
 
@@ -831,7 +837,8 @@
                 <h2 class="modal-title">Carrinho de Compras</h2>
             </div>
 
-            <div id="cart-items"></div>
+            <div id="cart-items">
+                </div>
 
             <div id="cart-total" class="cart-total" style="display: none;">
                 <div class="total-row">
@@ -890,22 +897,25 @@
                 </div>
 
                 <div id="address-group" class="form-group">
-                    <label class="form-label" for="customer-address">Endereço Completo</label>
-                    <textarea id="customer-address" class="form-input form-textarea" placeholder="Rua, número, bairro, cidade" required></textarea>
+                    <label class="form-label" for="customer-address">Endereço (Rua, Bairro, Cidade)</label>
+                    <textarea id="customer-address" class="form-input form-textarea" placeholder="Busque pelo CEP para preencher" required readonly></textarea>
+                </div>
+                
+                <div id="address-details-group" class="form-group">
+                    <div class="form-group">
+                        <label class="form-label" for="customer-address-number">Número</label>
+                        <input type="text" id="customer-address-number" class="form-input" placeholder="Ex: 123" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="customer-address-complement">Complemento (opcional)</label>
+                        <input type="text" id="customer-address-complement" class="form-input" placeholder="Ex: Apto 45, Bloco B">
+                    </div>
                 </div>
 
-                <div id="delivery-info-group" style="display: none;">
-                    <div id="distance-info" class="distance-info" style="display: none;">
-                        <span id="distance-text"></span>
-                    </div>
-                    <div id="delivery-fee-group" class="form-group" style="display: none;">
-                        <label class="form-label">Taxa de Entrega</label>
-                        <div class="delivery-fee-display">
-                            <span id="delivery-fee">R$ 0,00</span>
-                        </div>
-                    </div>
-                    <div id="error-info" class="error-display" style="display: none;">
-                        <span id="error-text"></span>
+                <div id="delivery-fee-group" class="form-group" style="display: none;">
+                    <label class="form-label">Taxa de Entrega</label>
+                    <div class="delivery-fee-display">
+                        <span id="delivery-fee">R$ 0,00</span>
                     </div>
                 </div>
 
@@ -940,10 +950,14 @@
     </div>
 
     <script>
+        // Constants
         const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxzVZMx1yHCaVHN5XszF1sqx6yxp_HeospPGqd2Vngt04SWGm7p7ZayXNen4btheA3C/exec';
         const WHATSAPP_NUMBER = '5511959228663';
-        const PIZZERIA_ADDRESS = 'R. Salvador Sala, 359, Piqueri, São Paulo, SP, Brasil';
+        
+        // Pizzeria coordinates (R. Salvador Sala, 359 - Piqueri, São Paulo - SP, 02914-030)
+        const PIZZERIA_COORDS = { lat: -23.5177, lng: -46.6929 };
 
+        // Menu data
         const menuData = {
             "pizzas": [
                 {
@@ -967,337 +981,68 @@
                     "prices": { "GRANDE": 46.00, "BROTO": 30.00 },
                     "combo": { "drink": "Fanta Uva 2L", "drinkPrice": 12.00 }
                 },
-                {
-                    "category": "PRESUNTO",
-                    "name": "CALABRESA COM CATUPIRY",
-                    "description": "Calabresa fatiada, cebola e catupiry",
-                    "prices": { "GRANDE": 48.00, "BROTO": 32.00 }
-                },
-                {
-                    "category": "PRESUNTO",
-                    "name": "NAPOLITANA",
-                    "description": "Mussarela, tomate e parmesão",
-                    "prices": { "GRANDE": 46.00, "BROTO": 30.00 }
-                },
-                {
-                    "category": "PRESUNTO",
-                    "name": "ROMANA",
-                    "description": "Mussarela, aliche e parmesão",
-                    "prices": { "GRANDE": 54.00, "BROTO": 36.00 }
-                },
-                {
-                    "category": "PRESUNTO",
-                    "name": "ALHO I",
-                    "description": "Mussarela e alho",
-                    "prices": { "GRANDE": 46.00, "BROTO": 30.00 }
-                },
-                {
-                    "category": "PRESUNTO",
-                    "name": "ALHO II",
-                    "description": "Mussarela, alho e parmesão",
-                    "prices": { "GRANDE": 48.00, "BROTO": 32.00 }
-                },
-                {
-                    "category": "Presunto",
-                    "name": "ALHO COM CATUPIRY",
-                    "description": "Mussarela, alho e catupiry",
-                    "prices": { "GRANDE": 50.00, "BROTO": 33.00 }
-                },
-                {
-                    "category": "Presunto",
-                    "name": "DA PICADILHA I",
-                    "description": "Mussarela, presunto, palmito, milho e ervilha",
-                    "prices": { "GRANDE": 52.00, "BROTO": 34.00 }
-                },
-                {
-                    "category": "Presunto",
-                    "name": "DA PICADILHA II",
-                    "description": "Mussarela, presunto, palmito, milho, ervilha e catupiry",
-                    "prices": { "GRANDE": 54.00, "BROTO": 36.00 }
-                },
-                {
-                    "category": "Presunto",
-                    "name": "DE CATUPIRY",
-                    "description": "Catupiry e azeitona preta",
-                    "prices": { "GRANDE": 48.00, "BROTO": 32.00 }
-                },
-                {
-                    "category": "Presunto",
-                    "name": "DE MILHO",
-                    "description": "Mussarela e milho",
-                    "prices": { "GRANDE": 46.00, "BROTO": 30.00 }
-                },
-                {
-                    "category": "Presunto",
-                    "name": "DE MILHO COM CATUPIRY",
-                    "description": "Mussarela, milho e catupiry",
-                    "prices": { "GRANDE": 48.00, "BROTO": 32.00 }
-                },
-                {
-                    "category": "Presunto",
-                    "name": "HUSSARDA",
-                    "description": "Mussarela, presunto, ovos, bacon, catupiry e azeitona preta",
-                    "prices": { "GRANDE": 52.00, "BROTO": 34.00 }
-                },
-                {
-                    "category": "Presunto",
-                    "name": "MARGUERITA",
-                    "description": "Mussarela, tomate e manjericão",
-                    "prices": { "GRANDE": 47.00, "BROTO": 31.00 }
-                },
-                {
-                    "category": "Presunto",
-                    "name": "MARGUERITA ESPECIAL",
-                    "description": "Mussarela, tomate, manjericão e parmesão",
-                    "prices": { "GRANDE": 49.00, "BROTO": 32.00 }
-                },
-                {
-                    "category": "Presunto",
-                    "name": "PALMITO",
-                    "description": "Mussarela e palmito",
-                    "prices": { "GRANDE": 49.00, "BROTO": 32.00 }
-                },
-                {
-                    "category": "Presunto",
-                    "name": "PALMITO COM CATUPIRY",
-                    "description": "Mussarela, palmito e catupiry",
-                    "prices": { "GRANDE": 51.00, "BROTO": 33.00 }
-                },
-                {
-                    "category": "Presunto",
-                    "name": "QUATRO QUEIJOS",
-                    "description": "Mussarela, provolone, catupiry e parmesão",
-                    "prices": { "GRANDE": 55.00, "BROTO": 37.00 }
-                },
-                {
-                    "category": "Peixes",
-                    "name": "ATUM",
-                    "description": "Atum e cebola",
-                    "prices": { "GRANDE": 52.00, "BROTO": 34.00 }
-                },
-                {
-                    "category": "Peixes",
-                    "name": "ATUM COM CATUPIRY",
-                    "description": "Atum, cebola e catupiry",
-                    "prices": { "GRANDE": 54.00, "BROTO": 36.00 }
-                },
-                {
-                    "category": "Peixes",
-                    "name": "ATUM COM MUSSARELA",
-                    "description": "Atum, cebola e mussarela",
-                    "prices": { "GRANDE": 53.00, "BROTO": 35.00 }
-                },
-                {
-                    "category": "Peixes",
-                    "name": "ATUM COM MUSSARELA E CATUPIRY",
-                    "description": "Atum, cebola, mussarela e catupiry",
-                    "prices": { "GRANDE": 55.00, "BROTO": 37.00 }
-                },
-                {
-                    "category": "Peixes",
-                    "name": "BACALHAU",
-                    "description": "Bacalhau, cebola, pimentão e azeitona preta",
-                    "prices": { "GRANDE": 58.00, "BROTO": 38.00 }
-                },
-                {
-                    "category": "Peixes",
-                    "name": "CAMARÃO",
-                    "description": "Camarão, mussarela e catupiry",
-                    "prices": { "GRANDE": 58.00, "BROTO": 38.00 }
-                },
-                {
-                    "category": "Peixes",
-                    "name": "SALMÃO",
-                    "description": "Salmão, mussarela e catupiry",
-                    "prices": { "GRANDE": 58.00, "BROTO": 38.00 }
-                },
-                {
-                    "category": "Frango e Peru",
-                    "name": "FRANGO COM CATUPIRY",
-                    "description": "Frango desfiado e catupiry",
-                    "prices": { "GRANDE": 52.00, "BROTO": 34.00 }
-                },
-                {
-                    "category": "Frango e Peru",
-                    "name": "FRANGO COM CHEDDAR",
-                    "description": "Frango desfiado e cheddar",
-                    "prices": { "GRANDE": 52.00, "BROTO": 34.00 }
-                },
-                {
-                    "category": "Frango e Peru",
-                    "name": "FRANGO COM CATUPIRY E BACON",
-                    "description": "Frango desfiado, catupiry e bacon",
-                    "prices": { "GRANDE": 54.00, "BROTO": 36.00 }
-                },
-                {
-                    "category": "Frango e Peru",
-                    "name": "FRANGO COM CATUPIRY E MILHO",
-                    "description": "Frango desfiado, catupiry e milho",
-                    "prices": { "GRANDE": 54.00, "BROTO": 36.00 }
-                },
-                {
-                    "category": "Frango e Peru",
-                    "name": "FRANGO COM CATUPIRY E PALMITO",
-                    "description": "Frango desfiado, catupiry e palmito",
-                    "prices": { "GRANDE": 54.00, "BROTO": 36.00 }
-                },
-                {
-                    "category": "Frango e Peru",
-                    "name": "PEITO DE PERU",
-                    "description": "Peito de peru defumado e catupiry",
-                    "prices": { "GRANDE": 52.00, "BROTO": 34.00 }
-                },
-                {
-                    "category": "Frango e Peru",
-                    "name": "PEITO DE PERU COM MUSSARELA",
-                    "description": "Peito de peru defumado e mussarela",
-                    "prices": { "GRANDE": 52.00, "BROTO": 34.00 }
-                },
-                {
-                    "category": "Frango e Peru",
-                    "name": "PEITO DE PERU COM CHEDDAR",
-                    "description": "Peito de peru defumado e cheddar",
-                    "prices": { "GRANDE": 52.00, "BROTO": 34.00 }
-                },
-                {
-                    "category": "Bacon",
-                    "name": "BACON",
-                    "description": "Mussarela e bacon",
-                    "prices": { "GRANDE": 52.00, "BROTO": 34.00 }
-                },
-                {
-                    "category": "Bacon",
-                    "name": "BACON COM CATUPIRY",
-                    "description": "Mussarela, bacon e catupiry",
-                    "prices": { "GRANDE": 54.00, "BROTO": 36.00 }
-                },
-                {
-                    "category": "Vegetais",
-                    "name": "BRÓCOLIS",
-                    "description": "Brócolis, mussarela e bacon",
-                    "prices": { "GRANDE": 52.00, "BROTO": 34.00 }
-                },
-                {
-                    "category": "Vegetais",
-                    "name": "BRÓCOLIS COM CATUPIRY",
-                    "description": "Brócolis, mussarela, bacon e catupiry",
-                    "prices": { "GRANDE": 54.00, "BROTO": 36.00 }
-                },
-                {
-                    "category": "Vegetais",
-                    "name": "ESCAROLA",
-                    "description": "Escarola, mussarela e aliche",
-                    "prices": { "GRANDE": 52.00, "BROTO": 34.00 }
-                },
-                {
-                    "category": "Vegetais",
-                    "name": "ESCAROLA COM BACON",
-                    "description": "Escarola, mussarela e bacon",
-                    "prices": { "GRANDE": 52.00, "BROTO": 34.00 }
-                },
-                {
-                    "category": "Vegetais",
-                    "name": "ESCAROLA COM CATUPIRY",
-                    "description": "Escarola, mussarela e catupiry",
-                    "prices": { "GRANDE": 54.00, "BROTO": 36.00 }
-                },
-                {
-                    "category": "Vegetais",
-                    "name": "MILHO",
-                    "description": "Mussarela e milho",
-                    "prices": { "GRANDE": 46.00, "BROTO": 30.00 }
-                },
-                {
-                    "category": "Vegetais",
-                    "name": "MILHO COM CATUPIRY",
-                    "description": "Mussarela, milho e catupiry",
-                    "prices": { "GRANDE": 48.00, "BROTO": 32.00 }
-                },
-                {
-                    "category": "Vegetais",
-                    "name": "PALMITO",
-                    "description": "Mussarela e palmito",
-                    "prices": { "GRANDE": 49.00, "BROTO": 32.00 }
-                },
-                {
-                    "category": "Vegetais",
-                    "name": "PALMITO COM CATUPIRY",
-                    "description": "Mussarela, palmito e catupiry",
-                    "prices": { "GRANDE": 51.00, "BROTO": 33.00 }
-                },
-                {
-                    "category": "Pizzas Doces",
-                    "name": "BANANA",
-                    "description": "Banana, canela e açúcar",
-                    "prices": { "GRANDE": 47.00, "BROTO": 31.00 }
-                },
-                {
-                    "category": "Pizzas Doces",
-                    "name": "BRIGADEIRO",
-                    "description": "Chocolate e granulado",
-                    "prices": { "GRANDE": 47.00, "BROTO": 31.00 }
-                }
+                { "category": "PRESUNTO", "name": "CALABRESA COM CATUPIRY", "description": "Calabresa fatiada, cebola e catupiry", "prices": { "GRANDE": 48.00, "BROTO": 32.00 } },
+                { "category": "PRESUNTO", "name": "NAPOLITANA", "description": "Mussarela, tomate e parmesão", "prices": { "GRANDE": 46.00, "BROTO": 30.00 } },
+                { "category": "PRESUNTO", "name": "ROMANA", "description": "Mussarela, aliche e parmesão", "prices": { "GRANDE": 54.00, "BROTO": 36.00 } },
+                { "category": "PRESUNTO", "name": "ALHO I", "description": "Mussarela e alho", "prices": { "GRANDE": 46.00, "BROTO": 30.00 } },
+                { "category": "PRESUNTO", "name": "ALHO II", "description": "Mussarela, alho e parmesão", "prices": { "GRANDE": 48.00, "BROTO": 32.00 } },
+                { "category": "PRESUNTO", "name": "ALHO COM CATUPIRY", "description": "Mussarela, alho e catupiry", "prices": { "GRANDE": 50.00, "BROTO": 33.00 } },
+                { "category": "PRESUNTO", "name": "DA PICADILHA I", "description": "Mussarela, presunto, palmito, milho e ervilha", "prices": { "GRANDE": 52.00, "BROTO": 34.00 } },
+                { "category": "PRESUNTO", "name": "DA PICADILHA II", "description": "Mussarela, presunto, palmito, milho, ervilha e catupiry", "prices": { "GRANDE": 54.00, "BROTO": 36.00 } },
+                { "category": "PRESUNTO", "name": "DE CATUPIRY", "description": "Catupiry e azeitona preta", "prices": { "GRANDE": 48.00, "BROTO": 32.00 } },
+                { "category": "PRESUNTO", "name": "DE MILHO", "description": "Mussarela e milho", "prices": { "GRANDE": 46.00, "BROTO": 30.00 } },
+                { "category": "PRESUNTO", "name": "DE MILHO COM CATUPIRY", "description": "Mussarela, milho e catupiry", "prices": { "GRANDE": 48.00, "BROTO": 32.00 } },
+                { "category": "PRESUNTO", "name": "HUSSARDA", "description": "Mussarela, presunto, ovos, bacon, catupiry e azeitona preta", "prices": { "GRANDE": 52.00, "BROTO": 34.00 } },
+                { "category": "PRESUNTO", "name": "MARGUERITA", "description": "Mussarela, tomate e manjericão", "prices": { "GRANDE": 47.00, "BROTO": 31.00 } },
+                { "category": "PRESUNTO", "name": "MARGUERITA ESPECIAL", "description": "Mussarela, tomate, manjericão e parmesão", "prices": { "GRANDE": 49.00, "BROTO": 32.00 } },
+                { "category": "PRESUNTO", "name": "PALMITO", "description": "Mussarela e palmito", "prices": { "GRANDE": 49.00, "BROTO": 32.00 } },
+                { "category": "PRESUNTO", "name": "PALMITO COM CATUPIRY", "description": "Mussarela, palmito e catupiry", "prices": { "GRANDE": 51.00, "BROTO": 33.00 } },
+                { "category": "PRESUNTO", "name": "QUATRO QUEIJOS", "description": "Mussarela, provolone, catupiry e parmesão", "prices": { "GRANDE": 55.00, "BROTO": 37.00 } },
+                { "category": "PEIXES", "name": "ATUM", "description": "Atum e cebola", "prices": { "GRANDE": 52.00, "BROTO": 34.00 } },
+                { "category": "PEIXES", "name": "ATUM COM CATUPIRY", "description": "Atum, cebola e catupiry", "prices": { "GRANDE": 54.00, "BROTO": 36.00 } },
+                { "category": "PEIXES", "name": "ATUM COM MUSSARELA", "description": "Atum, cebola e mussarela", "prices": { "GRANDE": 53.00, "BROTO": 35.00 } },
+                { "category": "PEIXES", "name": "ATUM COM MUSSARELA E CATUPIRY", "description": "Atum, cebola, mussarela e catupiry", "prices": { "GRANDE": 55.00, "BROTO": 37.00 } },
+                { "category": "PEIXES", "name": "BACALHAU", "description": "Bacalhau, cebola, pimentão e azeitona preta", "prices": { "GRANDE": 58.00, "BROTO": 38.00 } },
+                { "category": "PEIXES", "name": "CAMARÃO", "description": "Camarão, mussarela e catupiry", "prices": { "GRANDE": 58.00, "BROTO": 38.00 } },
+                { "category": "PEIXES", "name": "SALMÃO", "description": "Salmão, mussarela e catupiry", "prices": { "GRANDE": 58.00, "BROTO": 38.00 } },
+                { "category": "FRANGO E PERU", "name": "FRANGO COM CATUPIRY", "description": "Frango desfiado e catupiry", "prices": { "GRANDE": 52.00, "BROTO": 34.00 } },
+                { "category": "FRANGO E PERU", "name": "FRANGO COM CHEDDAR", "description": "Frango desfiado e cheddar", "prices": { "GRANDE": 52.00, "BROTO": 34.00 } },
+                { "category": "FRANGO E PERU", "name": "FRANGO COM CATUPIRY E BACON", "description": "Frango desfiado, catupiry e bacon", "prices": { "GRANDE": 54.00, "BROTO": 36.00 } },
+                { "category": "FRANGO E PERU", "name": "FRANGO COM CATUPIRY E MILHO", "description": "Frango desfiado, catupiry e milho", "prices": { "GRANDE": 54.00, "BROTO": 36.00 } },
+                { "category": "FRANGO E PERU", "name": "FRANGO COM CATUPIRY E PALMITO", "description": "Frango desfiado, catupiry e palmito", "prices": { "GRANDE": 54.00, "BROTO": 36.00 } },
+                { "category": "FRANGO E PERU", "name": "PEITO DE PERU", "description": "Peito de peru defumado e catupiry", "prices": { "GRANDE": 52.00, "BROTO": 34.00 } },
+                { "category": "FRANGO E PERU", "name": "PEITO DE PERU COM MUSSARELA", "description": "Peito de peru defumado e mussarela", "prices": { "GRANDE": 52.00, "BROTO": 34.00 } },
+                { "category": "FRANGO E PERU", "name": "PEITO DE PERU COM CHEDDAR", "description": "Peito de peru defumado e cheddar", "prices": { "GRANDE": 52.00, "BROTO": 34.00 } },
+                { "category": "BACON", "name": "BACON", "description": "Mussarela e bacon", "prices": { "GRANDE": 52.00, "BROTO": 34.00 } },
+                { "category": "BACON", "name": "BACON COM CATUPIRY", "description": "Mussarela, bacon e catupiry", "prices": { "GRANDE": 54.00, "BROTO": 36.00 } },
+                { "category": "VEGETAIS", "name": "BRÓCOLIS", "description": "Brócolis, mussarela e bacon", "prices": { "GRANDE": 52.00, "BROTO": 34.00 } },
+                { "category": "VEGETAIS", "name": "BRÓCOLIS COM CATUPIRY", "description": "Brócolis, mussarela, bacon e catupiry", "prices": { "GRANDE": 54.00, "BROTO": 36.00 } },
+                { "category": "VEGETAIS", "name": "ESCAROLA", "description": "Escarola, mussarela e aliche", "prices": { "GRANDE": 52.00, "BROTO": 34.00 } },
+                { "category": "VEGETAIS", "name": "ESCAROLA COM BACON", "description": "Escarola, mussarela e bacon", "prices": { "GRANDE": 52.00, "BROTO": 34.00 } },
+                { "category": "VEGETAIS", "name": "ESCAROLA COM CATUPIRY", "description": "Escarola, mussarela e catupiry", "prices": { "GRANDE": 54.00, "BROTO": 36.00 } },
+                { "category": "VEGETAIS", "name": "MILHO", "description": "Mussarela e milho", "prices": { "GRANDE": 46.00, "BROTO": 30.00 } },
+                { "category": "VEGETAIS", "name": "MILHO COM CATUPIRY", "description": "Mussarela, milho e catupiry", "prices": { "GRANDE": 48.00, "BROTO": 32.00 } },
+                { "category": "VEGETAIS", "name": "PALMITO", "description": "Mussarela e palmito", "prices": { "GRANDE": 49.00, "BROTO": 32.00 } },
+                { "category": "VEGETAIS", "name": "PALMITO COM CATUPIRY", "description": "Mussarela, palmito e catupiry", "prices": { "GRANDE": 51.00, "BROTO": 33.00 } },
+                { "category": "PIZZAS DOCES", "name": "BANANA", "description": "Banana, canela e açúcar", "prices": { "GRANDE": 47.00, "BROTO": 31.00 } },
+                { "category": "PIZZAS DOCES", "name": "BRIGADEIRO", "description": "Chocolate e granulado", "prices": { "GRANDE": 47.00, "BROTO": 31.00 } }
             ],
             "bebidas": [
-                {
-                    "category": "Refrigerantes",
-                    "name": "Dolly 2L",
-                    "description": "Refrigerante Dolly de 2 litros",
-                    "price": 12.00
-                },
-                {
-                    "category": "Refrigerantes",
-                    "name": "Coca-Cola 2L",
-                    "description": "Refrigerante Coca-cola de 2 litros",
-                    "price": 12.00
-                },
-                {
-                    "category": "Refrigerantes",
-                    "name": "Fanta Uva 2L",
-                    "description": "Refrigerante Fanta Uva de 2 litros",
-                    "price": 12.00
-                },
-                {
-                    "category": "Sucos",
-                    "name": "Suco de Laranja Natural",
-                    "description": "Suco de laranja fresco e natural",
-                    "price": 8.00
-                },
-                {
-                    "category": "Bebida-Alcoolica",
-                    "name": "Brahma Chopp",
-                    "description": "Latinha 269ml",
-                    "price": 5.00
-                }
+                { "category": "Refrigerantes", "name": "Dolly 2L", "description": "Refrigerante Dolly de 2 litros", "price": 12.00 },
+                { "category": "Refrigerantes", "name": "Coca-Cola 2L", "description": "Refrigerante Coca-cola de 2 litros", "price": 12.00 },
+                { "category": "Refrigerantes", "name": "Fanta Uva 2L", "description": "Refrigerante Fanta Uva de 2 litros", "price": 12.00 },
+                { "category": "Sucos", "name": "Suco de Laranja Natural", "description": "Suco de laranja fresco e natural", "price": 8.00 },
+                { "category": "Bebida-Alcoolica", "name": "Brahma Chopp", "description": "Latinha 269ml", "price": 5.00 }
             ],
             "sobremesas": [
-                {
-                    "category": "Doces",
-                    "name": "Tiramisu",
-                    "description": "Sobremesa italiana com café e mascarpone",
-                    "price": 15.00
-                },
-                {
-                    "category": "Doces",
-                    "name": "Cheesecake",
-                    "description": "Cheesecake com cobertura de frutas vermelhas",
-                    "price": 18.00
-                },
-                {
-                    "category": "Gelados",
-                    "name": "Sorvete de Chocolate",
-                    "description": "Sorvete cremoso de chocolate",
-                    "price": 10.00
-                },
-                {
-                    "category": "Gelados",
-                    "name": "Sundae",
-                    "description": "Sundae com calda de caramelo e nozes",
-                    "price": 12.00
-                }
+                { "category": "Doces", "name": "Tiramisu", "description": "Sobremesa italiana com café e mascarpone", "price": 15.00 },
+                { "category": "Doces", "name": "Cheesecake", "description": "Cheesecake com cobertura de frutas vermelhas", "price": 18.00 },
+                { "category": "Gelados", "name": "Sorvete de Chocolate", "description": "Sorvete cremoso de chocolate", "price": 10.00 },
+                { "category": "Gelados", "name": "Sundae", "description": "Sundae com calda de caramelo e nozes", "price": 12.00 }
             ]
         };
 
+        // Global variables
         let cart = [];
         let selectedPizza = null;
         let selectedSize = 'GRANDE';
@@ -1307,6 +1052,7 @@
         let isCombo = false;
         let deliveryFee = 0;
 
+        // Initialize the app
         document.addEventListener('DOMContentLoaded', function() {
             renderPizzasSalgadas();
             renderPizzasDoces();
@@ -1317,6 +1063,7 @@
             setupCEPMask();
         });
 
+        // Setup CEP input mask
         function setupCEPMask() {
             const cepInput = document.getElementById('customer-cep');
             cepInput.addEventListener('input', function(e) {
@@ -1328,13 +1075,17 @@
             });
         }
 
+        // Setup event listeners
         function setupEventListeners() {
+            // Tab navigation
             document.querySelectorAll('.tab-button').forEach(button => {
                 button.addEventListener('click', function() {
-                    switchTab(this.dataset.tab);
+                    const tabId = this.dataset.tab;
+                    switchTab(tabId);
                 });
             });
 
+            // Size selection
             document.querySelectorAll('.size-option').forEach(option => {
                 option.addEventListener('click', function() {
                     document.querySelectorAll('.size-option').forEach(opt => opt.classList.remove('selected'));
@@ -1344,16 +1095,17 @@
                 });
             });
 
+            // Pizza type selection
             document.querySelectorAll('input[name="pizza-type"]').forEach(radio => {
                 radio.addEventListener('change', function() {
                     isHalfPizza = this.value === 'half';
                     document.getElementById('half-pizza-selector').style.display = isHalfPizza ? 'block' : 'none';
                     document.getElementById('combo-selector').style.display = isHalfPizza ? 'none' : (selectedPizza && selectedPizza.combo ? 'block' : 'none');
-                    populateHalfPizzaOptions();
                     updateAddToCartButton();
                 });
             });
 
+            // Combo selection
             document.querySelectorAll('input[name="combo-type"]').forEach(radio => {
                 radio.addEventListener('change', function() {
                     isCombo = this.value === 'combo';
@@ -1362,448 +1114,299 @@
                 });
             });
 
+            // Half pizza selection
             document.getElementById('half-pizza-1').addEventListener('change', function() {
-                halfPizza1 = menuData.pizzas.find(p => p.name === this.value) || null;
+                halfPizza1 = menuData.pizzas.find(p => p.name === this.value);
                 updateAddToCartButton();
             });
 
             document.getElementById('half-pizza-2').addEventListener('change', function() {
-                halfPizza2 = menuData.pizzas.find(p => p.name === this.value) || null;
+                halfPizza2 = menuData.pizzas.find(p => p.name === this.value);
                 updateAddToCartButton();
             });
 
+            // Order type selection (delivery/pickup)
             document.querySelectorAll('input[name="order-type"]').forEach(radio => {
                 radio.addEventListener('change', function() {
+                    // CORREÇÃO E MELHORIA: Controla a visibilidade de todos os campos de endereço
                     const cepGroup = document.getElementById('cep-group');
                     const addressGroup = document.getElementById('address-group');
-                    const deliveryInfoGroup = document.getElementById('delivery-info-group');
-                    if (this.value === 'delivery') {
-                        cepGroup.style.display = 'block';
-                        addressGroup.style.display = 'block';
-                        deliveryInfoGroup.style.display = 'block';
+                    const addressDetailsGroup = document.getElementById('address-details-group'); // Novo grupo
+                    const deliveryFeeGroup = document.getElementById('delivery-fee-group');
+                    
+                    const cepInput = document.getElementById('customer-cep');
+                    const addressInput = document.getElementById('customer-address');
+                    const addressNumberInput = document.getElementById('customer-address-number');
+
+                    const isDelivery = this.value === 'delivery';
+
+                    cepGroup.style.display = isDelivery ? 'block' : 'none';
+                    addressGroup.style.display = isDelivery ? 'block' : 'none';
+                    addressDetailsGroup.style.display = isDelivery ? 'block' : 'none'; // Novo
+                    deliveryFeeGroup.style.display = isDelivery && deliveryFee > 0 ? 'block' : 'none';
+
+                    if (isDelivery) {
+                        cepInput.setAttribute('required', '');
+                        addressInput.setAttribute('required', '');
+                        addressNumberInput.setAttribute('required', ''); // Novo
                     } else {
-                        cepGroup.style.display = 'none';
-                        addressGroup.style.display = 'none';
-                        deliveryInfoGroup.style.display = 'none';
-                        deliveryFee = 0;
-                        updateCheckoutTotal();
+                        cepInput.removeAttribute('required');
+                        addressInput.removeAttribute('required');
+                        addressNumberInput.removeAttribute('required'); // Novo
+                        deliveryFee = 0; // Zera a taxa ao mudar para retirada
                     }
+                    updateCheckoutTotal();
                 });
             });
 
+            // CEP lookup button
             document.getElementById('lookup-cep-btn').addEventListener('click', lookupCEP);
+
+            // Add to cart button
             document.getElementById('add-to-cart-btn').addEventListener('click', addToCart);
+
+            // Cart button
             document.getElementById('cart-button').addEventListener('click', openCartModal);
+
+            // Checkout button
             document.getElementById('checkout-btn').addEventListener('click', openCheckoutModal);
+
+            // Checkout form
             document.getElementById('checkout-form').addEventListener('submit', function(e) {
                 e.preventDefault();
                 sendOrder();
             });
         }
 
-        async function lookupCEP() {
-            const cep = document.getElementById('customer-cep').value.replace(/\D/g, '');
-            if (cep.length !== 8) {
-                alert('Por favor, insira um CEP válido.');
+        // CEP lookup function with mock data
+        function lookupCEP() {
+            const cepInput = document.getElementById('customer-cep').value.replace(/\D/g, '');
+            const lookupBtn = document.getElementById('lookup-cep-btn');
+            const originalText = lookupBtn.innerHTML;
+            
+            if (cepInput.length !== 8) {
+                alert('Por favor, digite um CEP válido com 8 dígitos.');
                 return;
             }
 
-            try {
-                const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-                const data = await response.json();
-                if (data.erro) {
-                    alert('CEP não encontrado. Por favor, insira o endereço manualmente.');
-                    return;
+            lookupBtn.innerHTML = '<span class="loading-spinner"></span> Buscando...';
+            lookupBtn.disabled = true;
+
+            // Mock CEP database with coordinates
+            const cepDatabase = {
+                '02914030': { address: 'R. Salvador Sala, Piqueri, São Paulo - SP', lat: -23.5177, lng: -46.6929 },
+                '02915000': { address: 'R. José Félix de Oliveira, Vila Albertina, São Paulo - SP', lat: -23.5160, lng: -46.6900 },
+                '02710000': { address: 'Av. Mutinga, Pirituba, São Paulo - SP', lat: -23.4920, lng: -46.7230 },
+                '01310100': { address: 'Av. Paulista, Bela Vista, São Paulo - SP', lat: -23.5618, lng: -46.6563 },
+                '04038001': { address: 'R. Vergueiro, Vila Mariana, São Paulo - SP', lat: -23.5881, lng: -46.6233 }
+            };
+
+            setTimeout(() => {
+                if (cepDatabase[cepInput]) {
+                    const { address, lat, lng } = cepDatabase[cepInput];
+                    document.getElementById('customer-address').value = address;
+                    
+                    const distance = calculateDistance(PIZZERIA_COORDS.lat, PIZZERIA_COORDS.lng, lat, lng);
+                    deliveryFee = distance <= 2 ? 5.00 : 12.00;
+                    
+                    document.getElementById('delivery-fee').textContent = `R$ ${deliveryFee.toFixed(2).replace('.', ',')}`;
+                    document.getElementById('delivery-fee-group').style.display = 'block';
+                    alert(`Endereço encontrado! Taxa de entrega: R$ ${deliveryFee.toFixed(2).replace('.', ',')}`);
+                } else {
+                    alert('CEP não encontrado. A taxa de entrega padrão será aplicada. Por favor, preencha o endereço manualmente.');
+                    document.getElementById('customer-address').value = '';
+                    document.getElementById('customer-address').readOnly = false; // Permite preenchimento manual se o CEP falhar
+                    deliveryFee = 12.00; // Default to higher fee
+                    document.getElementById('delivery-fee').textContent = `R$ ${deliveryFee.toFixed(2).replace('.', ',')}`;
+                    document.getElementById('delivery-fee-group').style.display = 'block';
                 }
-
-                const address = `${data.logradouro}, ${data.bairro}, ${data.localidade} - ${data.uf}`;
-                document.getElementById('customer-address').value = address;
-
-                // Simulação de taxa de entrega
-                const distance = Math.random() * 5; // Simula distância entre 0 e 5 km
-                deliveryFee = distance <= 2 ? 5.00 : 12.00;
-                document.getElementById('delivery-fee').textContent = `R$ ${deliveryFee.toFixed(2).replace('.', ',')}`;
-                document.getElementById('delivery-fee-group').style.display = 'block';
-                document.getElementById('delivery-info-group').style.display = 'block';
                 updateCheckoutTotal();
-            } catch (error) {
-                console.error('Erro ao buscar CEP:', error);
-                alert('Erro ao buscar CEP. Por favor, insira o endereço manualmente.');
-            }
+                lookupBtn.innerHTML = originalText;
+                lookupBtn.disabled = false;
+            }, 1000);
         }
 
+        // Calculate distance using Haversine formula (in km)
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            const R = 6371; // Earth's radius in km
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            return R * c;
+        }
+
+        // Switch tabs
         function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
             document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
             document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
         }
 
-        function renderPizzasSalgadas() {
-            const container = document.getElementById('pizzas-salgadas');
+        function renderPizzasSalgadas() { const container = document.getElementById('pizzas-salgadas'); const pizzas = menuData.pizzas.filter(p => p.category !== "PIZZAS DOCES"); renderItems(container, pizzas, createPizzaCard); populateHalfPizzaSelectors(); }
+        function renderPizzasDoces() { const container = document.getElementById('pizzas-doces'); const pizzas = menuData.pizzas.filter(p => p.category === "PIZZAS DOCES"); renderItems(container, pizzas, createPizzaCard); }
+        function renderBebidas() { const container = document.getElementById('bebidas'); renderItems(container, menuData.bebidas, createBebidaCard); }
+        function renderSobremesas() { const container = document.getElementById('sobremesas'); renderItems(container, menuData.sobremesas, createSobremesaCard); }
+
+        function renderItems(container, items, createCardFn) {
             container.innerHTML = '';
-            const categories = [...new Set(menuData.pizzas.filter(p => p.category !== "Pizzas Doces").map(p => p.category))];
-            categories.forEach(category => {
-                const section = document.createElement('div');
-                section.className = 'category-section';
-                section.innerHTML = `<h2 class="category-header">${category}</h2>`;
+            const itemsByCategory = items.reduce((acc, item) => {
+                if (!acc[item.category]) acc[item.category] = [];
+                acc[item.category].push(item);
+                return acc;
+            }, {});
+
+            Object.entries(itemsByCategory).forEach(([category, itemList]) => {
+                const categorySection = document.createElement('div');
+                categorySection.className = 'category-section';
+                categorySection.innerHTML = `<div class="category-header">${category}</div>`;
+                
                 const grid = document.createElement('div');
                 grid.className = 'pizza-grid';
-                menuData.pizzas.filter(p => p.category === category).forEach(pizza => {
-                    const card = document.createElement('div');
-                    card.className = 'pizza-card';
-                    card.innerHTML = `
-                        <div class="pizza-name">${pizza.name}</div>
-                        <div class="pizza-description">${pizza.description}</div>
-                        <div class="pizza-prices">
-                            <div class="price-badges">
-                                <span class="price-badge">Grande: R$ ${pizza.prices.GRANDE.toFixed(2).replace('.', ',')}</span>
-                                <span class="price-badge outline">Broto: R$ ${pizza.prices.BROTO.toFixed(2).replace('.', ',')}</span>
-                            </div>
-                            <button class="add-button" onclick="openPizzaModal('${pizza.name}')">+</button>
-                        </div>
-                    `;
-                    grid.appendChild(card);
-                });
-                section.appendChild(grid);
-                container.appendChild(section);
+                itemList.forEach(item => grid.appendChild(createCardFn(item)));
+                
+                categorySection.appendChild(grid);
+                container.appendChild(categorySection);
             });
         }
 
-        function renderPizzasDoces() {
-            const container = document.getElementById('pizzas-doces');
-            container.innerHTML = '';
-            const category = "Pizzas Doces";
-            const section = document.createElement('div');
-            section.className = 'category-section';
-            section.innerHTML = `<h2 class="category-header">${category}</h2>`;
-            const grid = document.createElement('div');
-            grid.className = 'pizza-grid';
-            menuData.pizzas.filter(p => p.category === category).forEach(pizza => {
-                const card = document.createElement('div');
-                card.className = 'pizza-card';
-                card.innerHTML = `
-                    <div class="pizza-name">${pizza.name}</div>
-                    <div class="pizza-description">${pizza.description}</div>
-                    <div class="pizza-prices">
-                        <div class="price-badges">
-                            <span class="price-badge">Grande: R$ ${pizza.prices.GRANDE.toFixed(2).replace('.', ',')}</span>
-                            <span class="price-badge outline">Broto: R$ ${pizza.prices.BROTO.toFixed(2).replace('.', ',')}</span>
-                        </div>
-                        <button class="add-button" onclick="openPizzaModal('${pizza.name}')">+</button>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-            section.appendChild(grid);
-            container.appendChild(section);
+        function createPizzaCard(pizza) {
+            const card = document.createElement('div');
+            card.className = 'pizza-card';
+            card.onclick = () => openPizzaModal(pizza);
+            let pricesHtml = `<span class="price-badge">Grande: R$ ${pizza.prices.GRANDE.toFixed(2).replace('.', ',')}</span> <span class="price-badge outline">Broto: R$ ${pizza.prices.BROTO.toFixed(2).replace('.', ',')}</span>`;
+            if (pizza.combo) pricesHtml += `<span class="price-badge">Combo G: R$ ${(pizza.prices.GRANDE + pizza.combo.drinkPrice).toFixed(2).replace('.', ',')}</span>`;
+            card.innerHTML = `<div class="pizza-name">${pizza.name}</div><div class="pizza-description">${pizza.description}</div><div class="pizza-prices"><div class="price-badges">${pricesHtml}</div><button class="add-button">+</button></div>`;
+            card.querySelector('.add-button').addEventListener('click', (e) => { e.stopPropagation(); openPizzaModal(pizza); });
+            return card;
         }
 
-        function renderBebidas() {
-            const container = document.getElementById('bebidas');
-            container.innerHTML = '';
-            const categories = [...new Set(menuData.bebidas.map(b => b.category))];
-            categories.forEach(category => {
-                const section = document.createElement('div');
-                section.className = 'category-section';
-                section.innerHTML = `<h2 class="category-header">${category}</h2>`;
-                const grid = document.createElement('div');
-                grid.className = 'pizza-grid';
-                menuData.bebidas.filter(b => b.category === category).forEach(bebida => {
-                    const card = document.createElement('div');
-                    card.className = 'pizza-card';
-                    card.innerHTML = `
-                        <div class="pizza-name">${bebida.name}</div>
-                        <div class="pizza-description">${bebida.description}</div>
-                        <div class="pizza-prices">
-                            <div class="price-badges">
-                                <span class="price-badge">R$ ${bebida.price.toFixed(2).replace('.', ',')}</span>
-                            </div>
-                            <button class="add-button" onclick="addBebidaToCart('${bebida.name}')">+</button>
-                        </div>
-                    `;
-                    grid.appendChild(card);
-                });
-                section.appendChild(grid);
-                container.appendChild(section);
-            });
-        }
+        function createBebidaCard(bebida) { const card = document.createElement('div'); card.className = 'pizza-card'; card.innerHTML = `<div class="pizza-name">${bebida.name}</div><div class="pizza-description">${bebida.description}</div><div class="pizza-prices"><span class="price-badge">R$ ${bebida.price.toFixed(2).replace('.', ',')}</span><button class="add-button">+</button></div>`; card.querySelector('.add-button').addEventListener('click', () => addBebidaToCart(bebida)); return card; }
+        function createSobremesaCard(sobremesa) { const card = document.createElement('div'); card.className = 'pizza-card'; card.innerHTML = `<div class="pizza-name">${sobremesa.name}</div><div class="pizza-description">${sobremesa.description}</div><div class="pizza-prices"><span class="price-badge">R$ ${sobremesa.price.toFixed(2).replace('.', ',')}</span><button class="add-button">+</button></div>`; card.querySelector('.add-button').addEventListener('click', () => addSobremesaToCart(sobremesa)); return card; }
 
-        function renderSobremesas() {
-            const container = document.getElementById('sobremesas');
-            container.innerHTML = '';
-            const categories = [...new Set(menuData.sobremesas.map(s => s.category))];
-            categories.forEach(category => {
-                const section = document.createElement('div');
-                section.className = 'category-section';
-                section.innerHTML = `<h2 class="category-header">${category}</h2>`;
-                const grid = document.createElement('div');
-                grid.className = 'pizza-grid';
-                menuData.sobremesas.filter(s => s.category === category).forEach(sobremesa => {
-                    const card = document.createElement('div');
-                    card.className = 'pizza-card';
-                    card.innerHTML = `
-                        <div class="pizza-name">${sobremesa.name}</div>
-                        <div class="pizza-description">${sobremesa.description}</div>
-                        <div class="pizza-prices">
-                            <div class="price-badges">
-                                <span class="price-badge">R$ ${sobremesa.price.toFixed(2).replace('.', ',')}</span>
-                            </div>
-                            <button class="add-button" onclick="addSobremesaToCart('${sobremesa.name}')">+</button>
-                        </div>
-                    `;
-                    grid.appendChild(card);
-                });
-                section.appendChild(grid);
-                container.appendChild(section);
-            });
-        }
+        function updatePizzaModalPrices() { if (!selectedPizza) return; let grandePrice = selectedPizza.prices.GRANDE; let brotoPrice = selectedPizza.prices.BROTO; if (isCombo && selectedPizza.combo) { grandePrice += selectedPizza.combo.drinkPrice; brotoPrice += selectedPizza.combo.drinkPrice; } document.getElementById('price-grande').textContent = `R$ ${grandePrice.toFixed(2).replace('.', ',')}`; document.getElementById('price-broto').textContent = `R$ ${brotoPrice.toFixed(2).replace('.', ',')}`; }
 
-        function openPizzaModal(pizzaName) {
-            selectedPizza = menuData.pizzas.find(p => p.name === pizzaName);
-            document.getElementById('modal-title').textContent = selectedPizza.name;
-            document.getElementById('modal-description').textContent = selectedPizza.description;
-            document.getElementById('price-grande').textContent = `R$ ${selectedPizza.prices.GRANDE.toFixed(2).replace('.', ',')}`;
-            document.getElementById('price-broto').textContent = `R$ ${selectedPizza.prices.BROTO.toFixed(2).replace('.', ',')}`;
-            document.getElementById('combo-selector').style.display = selectedPizza.combo ? 'block' : 'none';
-            document.getElementById('half-pizza-selector').style.display = 'none';
-            document.querySelector('input[name="pizza-type"][value="whole"]').checked = true;
-            isHalfPizza = false;
-            halfPizza1 = null;
-            halfPizza2 = null;
-            isCombo = false;
-            document.querySelector('input[name="combo-type"][value="pizza-only"]').checked = true;
-            populateHalfPizzaOptions();
-            updateAddToCartButton();
-            document.getElementById('pizza-modal').classList.add('active');
-        }
+        function openPizzaModal(pizza) { selectedPizza = pizza; selectedSize = 'GRANDE'; isHalfPizza = false; halfPizza1 = null; halfPizza2 = null; isCombo = false; document.getElementById('modal-title').textContent = pizza.name; document.getElementById('modal-description').textContent = pizza.description; updatePizzaModalPrices(); document.querySelectorAll('.size-option').forEach(opt => opt.classList.remove('selected')); document.querySelector('[data-size="GRANDE"]').classList.add('selected'); document.querySelector('input[value="whole"]').checked = true; document.querySelector('input[value="pizza-only"]').checked = true; document.getElementById('combo-selector').style.display = pizza.combo ? 'block' : 'none'; document.getElementById('half-pizza-selector').style.display = 'none'; document.getElementById('half-pizza-1').value = ''; document.getElementById('half-pizza-2').value = ''; updateAddToCartButton(); document.getElementById('pizza-modal').classList.add('active'); }
+        function closePizzaModal() { document.getElementById('pizza-modal').classList.remove('active'); }
 
-        function closePizzaModal() {
-            document.getElementById('pizza-modal').classList.remove('active');
-        }
+        function populateHalfPizzaSelectors() { const select1 = document.getElementById('half-pizza-1'); const select2 = document.getElementById('half-pizza-2'); select1.innerHTML = '<option value="">Primeiro sabor</option>'; select2.innerHTML = '<option value="">Segundo sabor</option>'; menuData.pizzas.filter(pizza => pizza.category !== "PIZZAS DOCES").forEach(pizza => { const option1 = document.createElement('option'); option1.value = pizza.name; option1.textContent = pizza.name; select1.appendChild(option1); const option2 = document.createElement('option'); option2.value = pizza.name; option2.textContent = pizza.name; select2.appendChild(option2); }); }
+        function updateAddToCartButton() { const button = document.getElementById('add-to-cart-btn'); if (isHalfPizza) { button.disabled = !halfPizza1 || !halfPizza2; } else { button.disabled = false; } }
 
-        function populateHalfPizzaOptions() {
-            const select1 = document.getElementById('half-pizza-1');
-            const select2 = document.getElementById('half-pizza-2');
-            select1.innerHTML = '<option value="">Primeiro sabor</option>';
-            select2.innerHTML = '<option value="">Segundo sabor</option>';
-            menuData.pizzas
-                .filter(p => p.category === selectedPizza.category)
-                .forEach(pizza => {
-                    const option1 = document.createElement('option');
-                    option1.value = pizza.name;
-                    option1.textContent = pizza.name;
-                    const option2 = document.createElement('option');
-                    option2.value = pizza.name;
-                    option2.textContent = pizza.name;
-                    select1.appendChild(option1);
-                    select2.appendChild(option2);
-                });
-        }
-
-        function updatePizzaModalPrices() {
-            let price = selectedPizza.prices[selectedSize];
-            if (isCombo && selectedPizza.combo) {
-                price += selectedPizza.combo.drinkPrice;
-            }
-            document.getElementById('price-grande').textContent = `R$ ${selectedPizza.prices.GRANDE.toFixed(2).replace('.', ',')}`;
-            document.getElementById('price-broto').textContent = `R$ ${selectedPizza.prices.BROTO.toFixed(2).replace('.', ',')}`;
-        }
-
-        function updateAddToCartButton() {
-            const addBtn = document.getElementById('add-to-cart-btn');
-            if (isHalfPizza && (!halfPizza1 || !halfPizza2 || halfPizza1.name === halfPizza2.name)) {
-                addBtn.disabled = true;
+        function addToCart() { if (!selectedPizza) return; let item = { type: 'pizza', name: selectedPizza.name, size: selectedSize, price: selectedPizza.prices[selectedSize], quantity: 1 }; if (isHalfPizza && halfPizza1 && halfPizza2) { item.name = `${halfPizza1.name} / ${halfPizza2.name}`; item.price = Math.max(halfPizza1.prices[selectedSize], halfPizza2.prices[selectedSize]); item.isHalf = true; item.halfPizza1 = halfPizza1.name; item.halfPizza2 = halfPizza2.name; } if (isCombo && selectedPizza.combo && !isHalfPizza) { item.price += selectedPizza.combo.drinkPrice; item.combo = selectedPizza.combo.drink; } const existingItemIndex = cart.findIndex(cartItem => cartItem.type === item.type && cartItem.name === item.name && cartItem.size === item.size && cartItem.combo === item.combo); if (existingItemIndex > -1) { cart[existingItemIndex].quantity += 1; } else { cart.push(item); } updateCartDisplay(); closePizzaModal(); }
+        function addBebidaToCart(bebida) { addItemToCart({ type: 'bebida', name: bebida.name, price: bebida.price, quantity: 1 }); }
+        function addSobremesaToCart(sobremesa) { addItemToCart({ type: 'sobremesa', name: sobremesa.name, price: sobremesa.price, quantity: 1 }); }
+        
+        function addItemToCart(item) {
+            const existingItemIndex = cart.findIndex(cartItem => cartItem.type === item.type && cartItem.name === item.name);
+            if (existingItemIndex > -1) {
+                cart[existingItemIndex].quantity += 1;
             } else {
-                addBtn.disabled = false;
-            }
-        }
-
-        function addToCart() {
-            let item;
-            if (isHalfPizza) {
-                const price = Math.max(halfPizza1.prices[selectedSize], halfPizza2.prices[selectedSize]);
-                item = {
-                    name: `${halfPizza1.name} / ${halfPizza2.name}`,
-                    size: selectedSize,
-                    price: price,
-                    quantity: 1,
-                    type: 'half'
-                };
-            } else {
-                let price = selectedPizza.prices[selectedSize];
-                let name = selectedPizza.name;
-                if (isCombo && selectedPizza.combo) {
-                    price += selectedPizza.combo.drinkPrice;
-                    name += ` + ${selectedPizza.combo.drink}`;
-                }
-                item = {
-                    name: name,
-                    size: selectedSize,
-                    price: price,
-                    quantity: 1,
-                    type: 'whole'
-                };
-            }
-            cart.push(item);
-            updateCartDisplay();
-            closePizzaModal();
-        }
-
-        function addBebidaToCart(bebidaName) {
-            const bebida = menuData.bebidas.find(b => b.name === bebidaName);
-            const item = {
-                name: bebida.name,
-                price: bebida.price,
-                quantity: 1,
-                type: 'bebida'
-            };
-            cart.push(item);
-            updateCartDisplay();
-        }
-
-        function addSobremesaToCart(sobremesaName) {
-            const sobremesa = menuData.sobremesas.find(s => s.name === sobremesaName);
-            const item = {
-                name: sobremesa.name,
-                price: sobremesa.price,
-                quantity: 1,
-                type: 'sobremesa'
-            };
-            cart.push(item);
-            updateCartDisplay();
-        }
-
-        function updateCartDisplay() {
-            const cartButton = document.getElementById('cart-button');
-            const cartBadge = document.getElementById('cart-badge');
-            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-            cartBadge.textContent = totalItems;
-            cartButton.style.display = totalItems > 0 ? 'block' : 'none';
-        }
-
-        function openCartModal() {
-            const cartItems = document.getElementById('cart-items');
-            cartItems.innerHTML = '';
-            if (cart.length === 0) {
-                document.getElementById('cart-total').style.display = 'none';
-                document.getElementById('empty-cart').style.display = 'block';
-            } else {
-                document.getElementById('cart-total').style.display = 'block';
-                document.getElementById('empty-cart').style.display = 'none';
-                cart.forEach((item, index) => {
-                    const cartItem = document.createElement('div');
-                    cartItem.className = 'cart-item';
-                    cartItem.innerHTML = `
-                        <div class="cart-item-header">
-                            <div>
-                                <div class="cart-item-name">${item.name}</div>
-                                ${item.size ? `<div class="cart-item-size">${item.size}</div>` : ''}
-                            </div>
-                            <div class="cart-item-price">R$ ${(item.price * item.quantity).toFixed(2).replace('.', ',')}</div>
-                        </div>
-                        <div class="quantity-controls">
-                            <button class="quantity-btn" onclick="changeQuantity(${index}, -1)">-</button>
-                            <span class="quantity-display">${item.quantity}</span>
-                            <button class="quantity-btn" onclick="changeQuantity(${index}, 1)">+</button>
-                        </div>
-                    `;
-                    cartItems.appendChild(cartItem);
-                });
-            }
-            updateCartTotal();
-            document.getElementById('cart-modal').classList.add('active');
-        }
-
-        function closeCartModal() {
-            document.getElementById('cart-modal').classList.remove('active');
-        }
-
-        function changeQuantity(index, delta) {
-            cart[index].quantity += delta;
-            if (cart[index].quantity <= 0) {
-                cart.splice(index, 1);
+                cart.push(item);
             }
             updateCartDisplay();
-            openCartModal();
         }
+        
+        function updateCartDisplay() { const cartButton = document.getElementById('cart-button'); const cartBadge = document.getElementById('cart-badge'); const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0); if (totalItems > 0) { cartButton.style.display = 'flex'; cartBadge.textContent = totalItems; } else { cartButton.style.display = 'none'; } }
 
-        function updateCartTotal() {
-            const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-            document.getElementById('total-price').textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
-            document.getElementById('checkout-total').textContent = `R$ ${(total + deliveryFee).toFixed(2).replace('.', ',')}`;
-        }
+        function openCartModal() { const cartItems = document.getElementById('cart-items'); const cartTotal = document.getElementById('cart-total'); const emptyCart = document.getElementById('empty-cart'); if (cart.length === 0) { cartItems.innerHTML = ''; cartTotal.style.display = 'none'; emptyCart.style.display = 'block'; } else { emptyCart.style.display = 'none'; cartTotal.style.display = 'block'; cartItems.innerHTML = ''; cart.forEach((item, index) => { const cartItem = createCartItem(item, index); cartItems.appendChild(cartItem); }); updateCartTotal(); } document.getElementById('cart-modal').classList.add('active'); }
+        function closeCartModal() { document.getElementById('cart-modal').classList.remove('active'); }
 
-        function openCheckoutModal() {
-            if (cart.length === 0) {
-                alert('Seu carrinho está vazio!');
-                return;
-            }
-            closeCartModal();
-            updateCheckoutTotal();
-            document.getElementById('checkout-modal').classList.add('active');
-        }
+        function createCartItem(item, index) { const cartItem = document.createElement('div'); cartItem.className = 'cart-item'; let itemName = item.name; if (item.size) itemName += ` (${item.size})`; if (item.combo) itemName += ` + ${item.combo}`; cartItem.innerHTML = `<div class="cart-item-header"><div><div class="cart-item-name">${itemName}</div><div class="cart-item-size">${item.type}</div></div><div class="cart-item-price">R$ ${(item.price * item.quantity).toFixed(2).replace('.', ',')}</div></div><div class="quantity-controls"><button class="quantity-btn" onclick="updateQuantity(${index}, -1)">-</button><span class="quantity-display">${item.quantity}</span><button class="quantity-btn" onclick="updateQuantity(${index}, 1)">+</button><button class="quantity-btn" onclick="removeItem(${index})" style="margin-left: 1rem; color: #dc2626;">🗑️</button></div>`; return cartItem; }
+        
+        function updateQuantity(index, change) { cart[index].quantity += change; if (cart[index].quantity <= 0) { cart.splice(index, 1); } updateCartDisplay(); openCartModal(); }
+        function removeItem(index) { cart.splice(index, 1); updateCartDisplay(); openCartModal(); }
+        
+        function updateCartTotal() { const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0); document.getElementById('total-price').textContent = `R$ ${total.toFixed(2).replace('.', ',')}`; }
+        function openCheckoutModal() { closeCartModal(); updateCheckoutTotal(); document.getElementById('checkout-modal').classList.add('active'); }
+        function closeCheckoutModal() { document.getElementById('checkout-modal').classList.remove('active'); }
+        function updateCheckoutTotal() { const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0); const isDelivery = document.querySelector('input[name="order-type"]:checked').value === 'delivery'; const total = subtotal + (isDelivery ? deliveryFee : 0); document.getElementById('checkout-total').textContent = `R$ ${total.toFixed(2).replace('.', ',')}`; }
 
-        function closeCheckoutModal() {
-            document.getElementById('checkout-modal').classList.remove('active');
-        }
-
-        function updateCheckoutTotal() {
-            const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-            document.getElementById('checkout-total').textContent = `R$ ${(total + deliveryFee).toFixed(2).replace('.', ',')}`;
-        }
-
-        function sendOrder() {
-            const form = document.getElementById('checkout-form');
-            if (!form.checkValidity()) {
-                alert('Por favor, preencha todos os campos obrigatórios.');
-                return;
-            }
-
-            const name = document.getElementById('customer-name').value.trim();
-            const phone = document.getElementById('customer-phone').value.trim();
-            const cep = document.getElementById('customer-cep').value.trim();
-            const address = document.getElementById('customer-address').value.trim();
-            const paymentMethod = document.getElementById('payment-method').value;
-            const observations = document.getElementById('observations').value.trim();
+        async function sendOrder() {
             const orderType = document.querySelector('input[name="order-type"]:checked').value;
+            const customerName = document.getElementById('customer-name').value;
+            const customerPhone = document.getElementById('customer-phone').value;
+            const paymentMethod = document.getElementById('payment-method').value;
+            const observations = document.getElementById('observations').value;
+            
+            // CORREÇÃO E MELHORIA: Validação e montagem do endereço completo
+            let fullAddress = 'RETIRADA NO LOCAL';
+            if (orderType === 'delivery') {
+                const streetAddress = document.getElementById('customer-address').value;
+                const addressNumber = document.getElementById('customer-address-number').value;
+                const addressComplement = document.getElementById('customer-address-complement').value;
 
-            let message = `*Novo Pedido - La Bella Fornalha*\n\n`;
-            message += `*Cliente*: ${name}\n`;
-            message += `*Telefone*: ${phone}\n`;
-            message += `*Tipo de Pedido*: ${orderType === 'delivery' ? 'Entrega' : 'Retirada'}\n`;
-            if (orderType === 'delivery') {
-                message += `*CEP*: ${cep}\n`;
-                message += `*Endereço*: ${address}\n`;
-                message += `*Taxa de Entrega*: R$ ${deliveryFee.toFixed(2).replace('.', ',')}\n`;
+                if (!streetAddress || !addressNumber) {
+                    alert('Para entrega, é necessário buscar o CEP e preencher o número do endereço.');
+                    return;
+                }
+                fullAddress = `${streetAddress}, Nº ${addressNumber}`;
+                if (addressComplement) {
+                    fullAddress += ` - ${addressComplement}`;
+                }
             }
-            message += `\n*Itens do Pedido*:\n`;
-            cart.forEach(item => {
-                message += `- ${item.quantity}x ${item.name}${item.size ? ` (${item.size})` : ''} - R$ ${(item.price * item.quantity).toFixed(2).replace('.', ',')}\n`;
-            });
-            const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-            message += `\n*Subtotal*: R$ ${subtotal.toFixed(2).replace('.', ',')}\n`;
-            if (orderType === 'delivery') {
-                message += `*Taxa de Entrega*: R$ ${deliveryFee.toFixed(2).replace('.', ',')}\n`;
+
+            if (!customerName || !customerPhone || !paymentMethod) {
+                alert('Por favor, preencha Nome, Telefone e Forma de Pagamento.');
+                return;
             }
+
+            const submitBtn = document.getElementById('submit-order-btn');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<span class="loading-spinner"></span> Enviando...';
+            submitBtn.disabled = true;
+
+            sendToWhatsApp(customerName, customerPhone, fullAddress, paymentMethod, observations, orderType);
+
+            try {
+                const orderData = {
+                    nome: customerName, telefone: customerPhone, endereco: fullAddress,
+                    pagamento: paymentMethod, observacoes: observations || '',
+                    itens: cart.map(item => ({ name: `${item.quantity}x ${item.name}` + (item.size ? ` (${item.size})` : '') + (item.combo ? ` + ${item.combo}` : ''), price: item.price }))
+                };
+                await fetch(GOOGLE_SHEETS_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(orderData), mode: 'no-cors' });
+            } catch (error) {
+                console.error('Erro ao enviar para Google Sheets (a ação no WhatsApp já foi executada):', error);
+            }
+
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+        }
+
+        function sendToWhatsApp(customerName, customerPhone, customerAddress, paymentMethod, observations, orderType) {
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
             const total = subtotal + (orderType === 'delivery' ? deliveryFee : 0);
-            message += `*Total*: R$ ${total.toFixed(2).replace('.', ',')}\n`;
-            message += `*Forma de Pagamento*: ${paymentMethod.charAt(0).toUpperCase() + paymentMethod.slice(1).replace('-', ' ')}\n`;
-            if (observations) {
-                message += `\n*Observações*: ${observations}\n`;
-            }
 
-            const encodedMessage = encodeURIComponent(message);
-            const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
+            let message = `🍕 *NOVO PEDIDO - La Bella Fornalha*\n\n`;
+            message += `👤 *Cliente:* ${customerName}\n`;
+            message += `📞 *Telefone:* ${customerPhone}\n`;
+            message += `📦 *Tipo:* ${orderType === 'delivery' ? 'ENTREGA' : 'RETIRADA'}\n`;
+            if (orderType === 'delivery') message += `🏠 *Endereço:* ${customerAddress}\n`;
+            message += `💳 *Pagamento:* ${paymentMethod}\n\n`;
+            message += `🛒 *ITENS DO PEDIDO:*\n`;
+            cart.forEach(item => {
+                let itemName = item.name;
+                if (item.size) itemName += ` (${item.size})`;
+                if (item.combo) itemName += ` + ${item.combo}`;
+                message += `• ${item.quantity}x ${itemName} - R$ ${(item.price * item.quantity).toFixed(2).replace('.', ',')}\n`;
+            });
+            message += `\n💰 *SUBTOTAL:* R$ ${subtotal.toFixed(2).replace('.', ',')}\n`;
+            if (orderType === 'delivery') message += `🚚 *Taxa de Entrega:* R$ ${deliveryFee.toFixed(2).replace('.', ',')}\n`;
+            message += `💰 *TOTAL:* R$ ${total.toFixed(2).replace('.', ',')}\n`;
+            if (observations) message += `\n📝 *Observações:* ${observations}\n`;
+            message += `\n⏰ *Tempo de entrega:* 30 a 40 minutos`;
 
-            // Abre o WhatsApp e limpa o carrinho após sucesso
-            const whatsappWindow = window.open(whatsappUrl, '_blank');
-            if (whatsappWindow) {
+            const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+            
+            try {
+                window.open(whatsappUrl, '_blank');
+                alert('Pedido enviado com sucesso! Você será redirecionado para o WhatsApp.');
                 cart = [];
                 updateCartDisplay();
                 closeCheckoutModal();
-            } else {
-                alert('Erro ao abrir o WhatsApp. Verifique se o aplicativo está instalado ou se pop-ups estão bloqueados.');
+            } catch (error) {
+                console.error('Erro ao abrir WhatsApp:', error);
+                alert('Erro ao abrir o WhatsApp. Por favor, tente novamente.');
             }
         }
     </script>
