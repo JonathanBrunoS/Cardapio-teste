@@ -1,5 +1,3 @@
-esse é o html que voce precisa corrigir, me devolva ele corrigido 
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -718,7 +716,6 @@ esse é o html que voce precisa corrigir, me devolva ele corrigido
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header class="header">
         <div class="container">
             <h1>CARDAPIO DIGITAL - La Bella Fornalha</h1>
@@ -727,7 +724,6 @@ esse é o html que voce precisa corrigir, me devolva ele corrigido
         </div>
     </header>
 
-    <!-- Navigation Tabs -->
     <nav class="tabs">
         <div class="container">
             <ul class="tab-list">
@@ -739,43 +735,31 @@ esse é o html que voce precisa corrigir, me devolva ele corrigido
         </div>
     </nav>
 
-    <!-- Main Content -->
     <main class="main-content">
         <div class="container">
-            <!-- Pizzas Salgadas Tab -->
             <div id="pizzas-salgadas" class="tab-content active">
-                <!-- Categories will be populated by JavaScript -->
-            </div>
+                </div>
 
-            <!-- Pizzas Doces Tab -->
             <div id="pizzas-doces" class="tab-content">
-                <!-- Categories will be populated by JavaScript -->
-            </div>
+                </div>
 
-            <!-- Bebidas Tab -->
             <div id="bebidas" class="tab-content">
-                <!-- Categories will be populated by JavaScript -->
-            </div>
+                </div>
 
-            <!-- Sobremesas Tab -->
             <div id="sobremesas" class="tab-content">
-                <!-- Categories will be populated by JavaScript -->
-            </div>
+                </div>
         </div>
     </main>
 
-    <!-- Floating WhatsApp Button -->
     <a href="https://wa.me/5511959228663" target="_blank" class="whatsapp-floating" title="Fale conosco no WhatsApp">
         <img src="https://cdn.simpleicons.org/whatsapp/white" alt="WhatsApp Icon">
     </a>
 
-    <!-- Floating Cart Button -->
     <button id="cart-button" class="cart-floating" style="display: none;">
         🛒
         <span id="cart-badge" class="cart-badge">0</span>
     </button>
 
-    <!-- Pizza Modal -->
     <div id="pizza-modal" class="modal">
         <div class="modal-content">
             <button class="close-button" onclick="closePizzaModal()">×</button>
@@ -846,7 +830,6 @@ esse é o html que voce precisa corrigir, me devolva ele corrigido
         </div>
     </div>
 
-    <!-- Cart Modal -->
     <div id="cart-modal" class="modal">
         <div class="modal-content">
             <button class="close-button" onclick="closeCartModal()">×</button>
@@ -855,8 +838,7 @@ esse é o html que voce precisa corrigir, me devolva ele corrigido
             </div>
 
             <div id="cart-items">
-                <!-- Cart items will be populated by JavaScript -->
-            </div>
+                </div>
 
             <div id="cart-total" class="cart-total" style="display: none;">
                 <div class="total-row">
@@ -875,7 +857,6 @@ esse é o html que voce precisa corrigir, me devolva ele corrigido
         </div>
     </div>
 
-    <!-- Checkout Modal -->
     <div id="checkout-modal" class="modal">
         <div class="modal-content">
             <button class="close-button" onclick="closeCheckoutModal()">×</button>
@@ -1525,8 +1506,8 @@ esse é o html que voce precisa corrigir, me devolva ele corrigido
             const dLat = (lat2 - lat1) * Math.PI / 180;
             const dLon = (lon2 - lon1) * Math.PI / 180;
             const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-                      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+                          Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                          Math.sin(dLon / 2) * Math.sin(dLon / 2);
             const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
             return R * c;
         }
@@ -2073,8 +2054,12 @@ esse é o html que voce precisa corrigir, me devolva ele corrigido
             submitBtn.innerHTML = '<span class="loading-spinner"></span> Enviando...';
             submitBtn.disabled = true;
 
+            // ===== CORREÇÃO AQUI =====
+            // 1. Enviar para o WhatsApp PRIMEIRO para garantir que a janela abra.
+            sendToWhatsApp(customerName, customerPhone, customerCep, customerAddress, paymentMethod, observations, orderType);
+
+            // 2. Tentar enviar para o Google Sheets em segundo plano.
             try {
-                // Send to Google Sheets
                 const orderData = {
                     nome: customerName,
                     telefone: customerPhone,
@@ -2092,18 +2077,17 @@ esse é o html que voce precisa corrigir, me devolva ele corrigido
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(orderData),
-                    mode: 'no-cors'
+                    mode: 'no-cors' // 'no-cors' é necessário para este tipo de requisição para o Google Apps Script
                 });
-
-                // Send to WhatsApp
-                sendToWhatsApp(customerName, customerPhone, customerCep, customerAddress, paymentMethod, observations, orderType);
-
+                
             } catch (error) {
-                console.error('Erro ao enviar para Google Sheets:', error);
-                // Continue with WhatsApp even if Sheets fails
-                sendToWhatsApp(customerName, customerPhone, customerCep, customerAddress, paymentMethod, observations, orderType);
+                // O erro do Google Sheets não deve impedir o pedido do cliente.
+                // Apenas registramos no console para fins de depuração.
+                console.error('Erro ao enviar para Google Sheets (a ação no WhatsApp já foi executada):', error);
             }
 
+            // 3. Limpar o carrinho e fechar as janelas (isso já é feito dentro de sendToWhatsApp)
+            // e resetar o botão.
             submitBtn.innerHTML = originalText;
             submitBtn.disabled = false;
         }
@@ -2111,7 +2095,7 @@ esse é o html que voce precisa corrigir, me devolva ele corrigido
         // Send to WhatsApp
         function sendToWhatsApp(customerName, customerPhone, customerCep, customerAddress, paymentMethod, observations, orderType) {
             const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const total = subtotal + deliveryFee;
+            const total = subtotal + (orderType === 'delivery' ? deliveryFee : 0);
 
             let message = `🍕 *NOVO PEDIDO - La Bella Fornalha*\n\n`;
             message += `👤 *Cliente:* ${customerName}\n`;
@@ -2121,7 +2105,6 @@ esse é o html que voce precisa corrigir, me devolva ele corrigido
             if (orderType === 'delivery') {
                 message += `📍 *CEP:* ${customerCep}\n`;
                 message += `🏠 *Endereço:* ${customerAddress}\n`;
-                message += `🚚 *Taxa de Entrega:* R$ ${deliveryFee.toFixed(2).replace('.', ',')}\n`;
             }
             
             message += `💳 *Pagamento:* ${paymentMethod}\n\n`;
@@ -2151,12 +2134,12 @@ esse é o html que voce precisa corrigir, me devolva ele corrigido
             try {
                 window.open(whatsappUrl, '_blank');
                 
-                // Clear cart and close modal
+                // Limpa o carrinho e fecha o modal DEPOIS de abrir a janela do WhatsApp.
+                alert('Pedido enviado com sucesso! Você será redirecionado para o WhatsApp.');
                 cart = [];
                 updateCartDisplay();
                 closeCheckoutModal();
                 
-                alert('Pedido enviado com sucesso! Você será redirecionado para o WhatsApp.');
             } catch (error) {
                 console.error('Erro ao abrir WhatsApp:', error);
                 alert('Erro ao abrir o WhatsApp. Por favor, tente novamente.');
