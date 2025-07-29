@@ -80,7 +80,6 @@
         .radio-group { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1rem; }
         .radio-option { display: flex; align-items: center; gap: 0.5rem; }
         
-        /* Estilos para o anexo de receita */
         .prescription-group { background: #fffbe6; border: 1px solid #f59e0b; border-radius: 0.5rem; padding: 1rem; margin-top: 1.5rem; }
         .prescription-group label { font-weight: 600; color: #b45309; }
         .prescription-group p { font-size: 0.85rem; color: #78350f; margin-top: 0.5rem; }
@@ -187,72 +186,21 @@
     </div>
     
     <script>
-        // === CONFIGURAÇÕES DA FARMÁCIA ===
-        const WHATSAPP_NUMBER = '5565999999999'; // <-- Substitua pelo WhatsApp da farmácia
-        const DELIVERY_FEE = 15.00; // Frete fixo para Cuiabá
+        const WHATSAPP_NUMBER = '5565999999999'; 
+        const DELIVERY_FEE = 15.00; 
         
         const menuData = {
             products: [
-                {
-                    category: "Suplementos e Manipulados",
-                    name: "Creatina em Goma – Gummies Snella 3g (30 unid.)",
-                    description: "Aumente sua força e desempenho com a praticidade da creatina em gomas.",
-                    price: 112.00
-                },
-                {
-                    category: "Suplementos e Manipulados",
-                    name: "Melatonina em Goma – Gummies SleepPro 3g (30 unid.)",
-                    description: "Melhore a qualidade do seu sono e regule seu ciclo circadiano de forma deliciosa.",
-                    price: 98.00
-                },
-                {
-                    category: "Suplementos e Manipulados",
-                    name: "Vitamina D3 + K2 – Capsulas BioMax 60 doses",
-                    description: "Fórmula essencial para a saúde óssea, cardiovascular e fortalecimento da imunidade.",
-                    price: 126.90
-                },
-                {
-                    category: "Suplementos e Manipulados",
-                    name: "Ômega-3 Concentrado – Softgel 1000mg (60 cáps.)",
-                    description: "Alta concentração de EPA e DHA para saúde cerebral, cardíaca e ação anti-inflamatória.",
-                    price: 119.50
-                },
-                {
-                    category: "Suplementos e Manipulados",
-                    name: "Colágeno Verisol + Biotina – Pó 300g sabor morango",
-                    description: "Peptídeos de colágeno para pele, unhas e cabelos mais fortes e saudáveis.",
-                    price: 89.90
-                },
-                {
-                    category: "Suplementos e Manipulados",
-                    name: "Probiótico Imunidade – 30 cápsulas de Lactobacillus + Zinco",
-                    description: "Equilibre sua flora intestinal e reforce as defesas do seu corpo.",
-                    price: 85.00
-                },
-                {
-                    category: "Suplementos e Manipulados",
-                    name: "Fórmula Emagrecimento Herbal – 30 sachês (chá funcional)",
-                    description: "Mix de ervas com ação termogênica e diurética para auxiliar no controle de peso.",
-                    price: 76.90
-                },
-                {
-                    category: "Suplementos e Manipulados",
-                    name: "Adaptogen Trio (Ashwagandha + Bacopa + Rhodiola) – 60 doses",
-                    description: "Combata o estresse, melhore o foco e a resistência mental com este trio de adaptógenos.",
-                    price: 84.90
-                },
-                {
-                    category: "Suplementos e Manipulados",
-                    name: "Complexo B Energético – 60 cápsulas de vitaminas B + Magnésio",
-                    description: "Aumente sua energia e disposição para as atividades diárias.",
-                    price: 72.00
-                },
-                {
-                    category: "Suplementos e Manipulados",
-                    name: "Pre-treino Natural (Cafeína + Taurina) – 30 sachês",
-                    description: "O impulso de energia e foco que você precisa para treinos de alta intensidade.",
-                    price: 156.75
-                }
+                { category: "Suplementos e Manipulados", name: "Creatina em Goma – Gummies Snella 3g (30 unid.)", description: "Aumente sua força e desempenho com a praticidade da creatina em gomas.", price: 112.00 },
+                { category: "Suplementos e Manipulados", name: "Melatonina em Goma – Gummies SleepPro 3g (30 unid.)", description: "Melhore a qualidade do seu sono e regule seu ciclo circadiano de forma deliciosa.", price: 98.00 },
+                { category: "Suplementos e Manipulados", name: "Vitamina D3 + K2 – Capsulas BioMax 60 doses", description: "Fórmula essencial para a saúde óssea, cardiovascular e fortalecimento da imunidade.", price: 126.90 },
+                { category: "Suplementos e Manipulados", name: "Ômega-3 Concentrado – Softgel 1000mg (60 cáps.)", description: "Alta concentração de EPA e DHA para saúde cerebral, cardíaca e ação anti-inflamatória.", price: 119.50 },
+                { category: "Suplementos e Manipulados", name: "Colágeno Verisol + Biotina – Pó 300g sabor morango", description: "Peptídeos de colágeno para pele, unhas e cabelos mais fortes e saudáveis.", price: 89.90 },
+                { category: "Suplementos e Manipulados", name: "Probiótico Imunidade – 30 cápsulas de Lactobacillus + Zinco", description: "Equilibre sua flora intestinal e reforce as defesas do seu corpo.", price: 85.00 },
+                { category: "Suplementos e Manipulados", name: "Fórmula Emagrecimento Herbal – 30 sachês (chá funcional)", description: "Mix de ervas com ação termogênica e diurética para auxiliar no controle de peso.", price: 76.90 },
+                { category: "Suplementos e Manipulados", name: "Adaptogen Trio (Ashwagandha + Bacopa + Rhodiola) – 60 doses", description: "Combata o estresse, melhore o foco e a resistência mental com este trio de adaptógenos.", price: 84.90 },
+                { category: "Suplementos e Manipulados", name: "Complexo B Energético – 60 cápsulas de vitaminas B + Magnésio", description: "Aumente sua energia e disposição para as atividades diárias.", price: 72.00 },
+                { category: "Suplementos e Manipulados", name: "Pre-treino Natural (Cafeína + Taurina) – 30 sachês", description: "O impulso de energia e foco que você precisa para treinos de alta intensidade.", price: 156.75 }
             ]
         };
         
@@ -303,6 +251,8 @@
 
         function addToCart(productName) {
             const product = menuData.products.find(p => p.name === productName);
+            if (!product) return;
+
             const existingItem = cart.find(item => item.name === productName);
             if (existingItem) {
                 existingItem.quantity++;
@@ -316,6 +266,7 @@
             const cartButton = document.getElementById('cart-button');
             const cartBadge = document.getElementById('cart-badge');
             const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            
             if (totalItems > 0) {
                 cartButton.style.display = 'flex';
                 cartBadge.textContent = totalItems;
@@ -393,17 +344,18 @@
         }
 
         function setupEventListeners() {
+            // CORREÇÃO: Adicionando o event listener que faltava para o botão do carrinho
+            document.getElementById('cart-button').addEventListener('click', openCartModal);
+
             document.getElementById('checkout-btn').addEventListener('click', openCheckoutModal);
             document.getElementById('checkout-form').addEventListener('submit', sendOrder);
-
-            // Lógica para o anexo de receita
+            
             const hasPrescriptionCheckbox = document.getElementById('has-prescription');
             const prescriptionFile = document.getElementById('prescription-file');
             hasPrescriptionCheckbox.addEventListener('change', () => {
                 prescriptionFile.style.display = hasPrescriptionCheckbox.checked ? 'block' : 'none';
             });
             
-            // Lógica para entrega/retirada
             document.querySelectorAll('input[name="order-type"]').forEach(radio => {
                 radio.addEventListener('change', (e) => {
                     const addressContainer = document.getElementById('address-container');
