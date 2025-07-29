@@ -84,22 +84,69 @@
         .prescription-group label { font-weight: 600; color: #b45309; }
         .prescription-group p { font-size: 0.85rem; color: #78350f; margin-top: 0.5rem; }
         #prescription-file { margin-top: 0.75rem; }
+
+        /* === ESTILOS DO PAINEL DE ADMIN === */
+        #admin-panel { display: none; padding: 2rem 0; background-color: #eef; }
+        #admin-panel h2 { text-align: center; color: var(--secondary-color); margin-bottom: 1.5rem; }
+        .admin-product-item { background: white; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+        .admin-product-item div { flex-grow: 1; }
+        .admin-product-item .name { font-weight: bold; }
+        .admin-product-item .price { color: #666; }
+        .admin-actions button { padding: 0.5rem 0.8rem; font-size: 0.9rem; border: none; border-radius: 0.3rem; cursor: pointer; }
+        .btn-edit { background-color: var(--accent-color); color: white; }
+        .btn-delete { background-color: #dc2626; color: white; }
+        #admin-form { background: white; padding: 1.5rem; border-radius: 0.5rem; margin-top: 2rem; }
+        #admin-form h3 { margin-bottom: 1rem; }
+        .btn-export { background-color: #16a34a; color: white; margin-top: 1.5rem; width: 100%; font-size: 1.2rem !important; padding: 1rem !important; }
+        .btn-export:hover { background-color: #15803d; }
     </style>
 </head>
 <body>
-    <header class="header">
-        <div class="container">
-            <h1>Única Farmácia de Manipulação</h1>
-            <p>Sua saúde em primeiro lugar, com fórmulas personalizadas.</p>
-        </div>
-    </header>
+    <div id="public-view">
+        <header class="header">
+            <div class="container">
+                <h1>Única Farmácia de Manipulação</h1>
+                <p>Sua saúde em primeiro lugar, com fórmulas personalizadas.</p>
+            </div>
+        </header>
 
-    <main class="main-content">
+        <main class="main-content">
+            <div class="container">
+                <div id="product-list" class="tab-content active">
+                    </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="admin-panel">
         <div class="container">
-            <div id="product-list" class="tab-content active">
+            <h2>Painel de Administração</h2>
+            <div id="admin-product-list">
                 </div>
+            <form id="admin-form">
+                <h3 id="admin-form-title">Adicionar Novo Produto</h3>
+                <input type="hidden" id="admin-product-index">
+                <div class="form-group">
+                    <label class="form-label" for="admin-product-name">Nome do Produto</label>
+                    <input type="text" id="admin-product-name" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="admin-product-description">Descrição</label>
+                    <textarea id="admin-product-description" class="form-input" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="admin-product-price">Preço (use ponto, ex: 99.90)</label>
+                    <input type="number" step="0.01" id="admin-product-price" class="form-input" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Salvar Produto</button>
+                <button type="button" id="admin-cancel-edit" style="display:none;">Cancelar Edição</button>
+            </form>
+
+            <button id="export-button" class="btn btn-export">
+                Salvar Alterações e Exportar Novo Site
+            </button>
         </div>
-    </main>
+    </div>
 
     <a href="https://wa.me/5565999999999" target="_blank" class="whatsapp-floating" title="Fale conosco no WhatsApp"><img src="https://cdn.simpleicons.org/whatsapp/white" alt="WhatsApp Icon"></a>
     <button id="cart-button" class="cart-floating" style="display: none;">🛒<span id="cart-badge" class="cart-badge">0</span></button>
@@ -125,71 +172,23 @@
                 <p class="modal-description">Preencha seus dados para enviar o pedido</p>
             </div>
             <form id="checkout-form">
-                <div class="form-group">
-                    <label class="form-label">Tipo de Pedido:</label>
-                    <div class="radio-group">
-                        <label class="radio-option"><input type="radio" name="order-type" value="delivery" checked> Entrega</label>
-                        <label class="radio-option"><input type="radio" name="order-type" value="pickup"> Retirada</label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-label" for="customer-name">Nome Completo</label>
-                    <input type="text" id="customer-name" class="form-input" placeholder="Seu nome completo" required>
-                </div>
-                <div class="form-group">
-                    <label class="form-label" for="customer-phone">Telefone (com DDD)</label>
-                    <input type="tel" id="customer-phone" class="form-input" placeholder="Ex: (65) 99999-9999" required>
-                </div>
-
-                <div id="address-container">
-                    <div class="form-group">
-                        <label class="form-label" for="customer-address">Endereço Completo</label>
-                        <input type="text" id="customer-address" class="form-input" placeholder="Rua, Número, Bairro" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="customer-city">Cidade / Estado</label>
-                        <input type="text" id="customer-city" class="form-input" value="Cuiabá - MT" placeholder="Ex: Cuiabá - MT" required>
-                    </div>
-                    <div id="delivery-fee-group" class="form-group">
-                        <label class="form-label">Taxa de Entrega</label>
-                        <div class="delivery-fee-display">
-                            <span id="delivery-fee">R$ 15,00</span>
-                            <small style="display:block; margin-top: 5px;">Para entregas fora de Cuiabá, o frete será calculado e informado via WhatsApp.</small>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="payment-method">Forma de Pagamento</label>
-                    <select id="payment-method" class="form-input" required>
-                        <option value="">Selecione a forma de pagamento</option>
-                        <option value="pix">PIX</option>
-                        <option value="cartao-credito">Cartão de Crédito</option>
-                        <option value="cartao-debito">Cartão de Débito</option>
-                    </select>
-                </div>
-
-                <div class="prescription-group">
-                    <label class="form-label">
-                        <input type="checkbox" id="has-prescription"> Precisa de receita? Anexe aqui.
-                    </label>
-                    <p>Se o seu pedido contém itens que exigem prescrição, anexe o arquivo (foto ou PDF).</p>
-                    <input type="file" id="prescription-file" class="form-input" style="display:none;" accept="image/*,.pdf">
-                </div>
-
-                <div class="cart-total">
-                    <div class="total-row"><span>Total do Pedido:</span><span id="checkout-total">R$ 0,00</span></div>
-                    <button type="submit" class="btn whatsapp-button btn-full" style="margin-top:1rem" id="submit-order-btn"><img src="https://cdn.simpleicons.org/whatsapp/white" style="width:20px;height:20px;margin-right:8px" alt="WhatsApp Icon"> Enviar Pedido via WhatsApp</button>
-                </div>
+                <div class="form-group"><label class="form-label">Tipo de Pedido:</label><div class="radio-group"><label class="radio-option"><input type="radio" name="order-type" value="delivery" checked> Entrega</label><label class="radio-option"><input type="radio" name="order-type" value="pickup"> Retirada</label></div></div>
+                <div class="form-group"><label class="form-label" for="customer-name">Nome Completo</label><input type="text" id="customer-name" class="form-input" placeholder="Seu nome completo" required></div>
+                <div class="form-group"><label class="form-label" for="customer-phone">Telefone (com DDD)</label><input type="tel" id="customer-phone" class="form-input" placeholder="Ex: (65) 99999-9999" required></div>
+                <div id="address-container"><div class="form-group"><label class="form-label" for="customer-address">Endereço Completo</label><input type="text" id="customer-address" class="form-input" placeholder="Rua, Número, Bairro" required></div><div class="form-group"><label class="form-label" for="customer-city">Cidade / Estado</label><input type="text" id="customer-city" class="form-input" value="Cuiabá - MT" placeholder="Ex: Cuiabá - MT" required></div><div id="delivery-fee-group" class="form-group"><label class="form-label">Taxa de Entrega</label><div class="delivery-fee-display"><span id="delivery-fee">R$ 15,00</span><small style="display:block; margin-top: 5px;">Para entregas fora de Cuiabá, o frete será calculado e informado via WhatsApp.</small></div></div></div>
+                <div class="form-group"><label class="form-label" for="payment-method">Forma de Pagamento</label><select id="payment-method" class="form-input" required><option value="">Selecione a forma de pagamento</option><option value="pix">PIX</option><option value="cartao-credito">Cartão de Crédito</option><option value="cartao-debito">Cartão de Débito</option></select></div>
+                <div class="prescription-group"><label class="form-label"><input type="checkbox" id="has-prescription"> Precisa de receita? Anexe aqui.</label><p>Se o seu pedido contém itens que exigem prescrição, anexe o arquivo (foto ou PDF).</p><input type="file" id="prescription-file" class="form-input" style="display:none;" accept="image/*,.pdf"></div>
+                <div class="cart-total"><div class="total-row"><span>Total do Pedido:</span><span id="checkout-total">R$ 0,00</span></div><button type="submit" class="btn whatsapp-button btn-full" style="margin-top:1rem" id="submit-order-btn"><img src="https://cdn.simpleicons.org/whatsapp/white" style="width:20px;height:20px;margin-right:8px" alt="WhatsApp Icon"> Enviar Pedido via WhatsApp</button></div>
             </form>
         </div>
     </div>
     
     <script>
-        const WHATSAPP_NUMBER = '5565999999999'; 
-        const DELIVERY_FEE = 15.00; 
+        // === DADOS E CONFIGURAÇÕES ===
+        const WHATSAPP_NUMBER = '5565999999999';
+        const DELIVERY_FEE = 15.00;
         
-        const menuData = {
+        let menuData = {
             products: [
                 { category: "Suplementos e Manipulados", name: "Creatina em Goma – Gummies Snella 3g (30 unid.)", description: "Aumente sua força e desempenho com a praticidade da creatina em gomas.", price: 112.00 },
                 { category: "Suplementos e Manipulados", name: "Melatonina em Goma – Gummies SleepPro 3g (30 unid.)", description: "Melhore a qualidade do seu sono e regule seu ciclo circadiano de forma deliciosa.", price: 98.00 },
@@ -206,12 +205,151 @@
         
         let cart = [];
 
+        // --- LÓGICA PRINCIPAL ---
         document.addEventListener('DOMContentLoaded', () => {
-            renderProducts();
-            updateCartDisplay();
-            setupEventListeners();
+            if (window.location.hash === '#admin') {
+                handleAdminAccess();
+            } else {
+                loadMenuFromStorage();
+                renderProducts();
+                setupEventListeners();
+                updateCartDisplay();
+            }
         });
 
+        // --- SEÇÃO DE ADMIN ---
+        const ADMIN_PASSWORD = 'unica123'; // <-- MUDE A SENHA AQUI!
+
+        function handleAdminAccess() {
+            document.getElementById('public-view').style.display = 'none';
+            document.querySelector('.cart-floating').style.display = 'none';
+            document.querySelector('.whatsapp-floating').style.display = 'none';
+
+            const password = prompt('Digite a senha para acessar o painel de administração:');
+            if (password === ADMIN_PASSWORD) {
+                document.getElementById('admin-panel').style.display = 'block';
+                loadMenuFromStorage();
+                renderAdminPanel();
+                setupAdminEventListeners();
+            } else {
+                alert('Senha incorreta!');
+                window.location.href = window.location.pathname;
+            }
+        }
+        
+        function renderAdminPanel() {
+            const listContainer = document.getElementById('admin-product-list');
+            listContainer.innerHTML = '';
+            menuData.products.forEach((product, index) => {
+                const item = document.createElement('div');
+                item.className = 'admin-product-item';
+                item.innerHTML = `
+                    <div>
+                        <div class="name">${product.name}</div>
+                        <div class="price">R$ ${product.price.toFixed(2).replace('.', ',')}</div>
+                    </div>
+                    <div class="admin-actions">
+                        <button class="btn-edit" onclick="editProduct(${index})">Editar</button>
+                        <button class="btn-delete" onclick="deleteProduct(${index})">Excluir</button>
+                    </div>
+                `;
+                listContainer.appendChild(item);
+            });
+        }
+
+        function setupAdminEventListeners() {
+            document.getElementById('admin-form').addEventListener('submit', handleAdminFormSubmit);
+            document.getElementById('export-button').addEventListener('click', saveAndExportHTML);
+            document.getElementById('admin-cancel-edit').addEventListener('click', resetAdminForm);
+        }
+
+        function handleAdminFormSubmit(e) {
+            e.preventDefault();
+            const index = document.getElementById('admin-product-index').value;
+            const product = {
+                category: "Suplementos e Manipulados",
+                name: document.getElementById('admin-product-name').value,
+                description: document.getElementById('admin-product-description').value,
+                price: parseFloat(document.getElementById('admin-product-price').value)
+            };
+
+            if (index) { // Editando
+                menuData.products[parseInt(index)] = product;
+            } else { // Adicionando
+                menuData.products.push(product);
+            }
+            saveMenuToStorage();
+            renderAdminPanel();
+            resetAdminForm();
+        }
+
+        function editProduct(index) {
+            const product = menuData.products[index];
+            document.getElementById('admin-form-title').textContent = 'Editando Produto';
+            document.getElementById('admin-product-index').value = index;
+            document.getElementById('admin-product-name').value = product.name;
+            document.getElementById('admin-product-description').value = product.description;
+            document.getElementById('admin-product-price').value = product.price.toFixed(2);
+            document.getElementById('admin-cancel-edit').style.display = 'inline-block';
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+        
+        function deleteProduct(index) {
+            if (confirm(`Tem certeza que deseja excluir o produto "${menuData.products[index].name}"?`)) {
+                menuData.products.splice(index, 1);
+                saveMenuToStorage();
+                renderAdminPanel();
+            }
+        }
+        
+        function resetAdminForm() {
+            document.getElementById('admin-form').reset();
+            document.getElementById('admin-form-title').textContent = 'Adicionar Novo Produto';
+            document.getElementById('admin-product-index').value = '';
+            document.getElementById('admin-cancel-edit').style.display = 'none';
+        }
+
+        async function saveAndExportHTML() {
+            if (!confirm('Isso irá gerar um novo arquivo index.html com os produtos atualizados. Você deverá fazer o upload deste novo arquivo no GitHub. Deseja continuar?')) {
+                return;
+            }
+            try {
+                const response = await fetch(window.location.href.split('#')[0]);
+                const htmlContent = await response.text();
+
+                const menuDataString = `let menuData = ${JSON.stringify(menuData, null, 4)};`;
+                
+                // Regex para encontrar a variável menuData, mesmo que seja 'let' ou 'const'
+                const updatedHtml = htmlContent.replace(/let\s+menuData\s*=\s*{[\s\S]*?};/, menuDataString);
+
+                const blob = new Blob([updatedHtml], { type: 'text/html' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = 'index.html';
+                link.click();
+                URL.revokeObjectURL(link.href);
+                alert('Arquivo "index.html" gerado com sucesso! Faça o upload dele no seu GitHub para publicar as alterações.');
+            } catch (error) {
+                console.error("Erro ao exportar:", error);
+                alert("Ocorreu um erro ao tentar exportar o arquivo. Verifique o console para mais detalhes.");
+            }
+        }
+
+        // --- LÓGICA DE DADOS (localStorage) ---
+        function saveMenuToStorage() {
+            localStorage.setItem('pharmaMenuData', JSON.stringify(menuData));
+        }
+
+        function loadMenuFromStorage() {
+            const storedMenu = localStorage.getItem('pharmaMenuData');
+            if (storedMenu) {
+                menuData = JSON.parse(storedMenu);
+            } else {
+                saveMenuToStorage(); // Salva os dados iniciais se não houver nada
+            }
+        }
+        
+        // --- LÓGICA DO CARDÁPIO PÚBLICO ---
         function renderProducts() {
             const container = document.getElementById('product-list');
             container.innerHTML = '';
@@ -234,187 +372,25 @@
                 container.appendChild(section);
             }
         }
-
-        function createProductCard(product) {
-            const card = document.createElement('div');
-            card.className = 'product-card';
-            card.innerHTML = `
-                <div class="product-name">${product.name}</div>
-                <div class="product-description">${product.description}</div>
-                <div class="product-footer">
-                    <span class="product-price">R$ ${product.price.toFixed(2).replace('.', ',')}</span>
-                    <button class="add-button" onclick="addToCart('${product.name}')">+</button>
-                </div>
-            `;
-            return card;
-        }
-
-        function addToCart(productName) {
-            const product = menuData.products.find(p => p.name === productName);
-            if (!product) return;
-
-            const existingItem = cart.find(item => item.name === productName);
-            if (existingItem) {
-                existingItem.quantity++;
-            } else {
-                cart.push({ ...product, quantity: 1 });
-            }
-            updateCartDisplay();
-        }
         
-        function updateCartDisplay() {
-            const cartButton = document.getElementById('cart-button');
-            const cartBadge = document.getElementById('cart-badge');
-            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-            
-            if (totalItems > 0) {
-                cartButton.style.display = 'flex';
-                cartBadge.textContent = totalItems;
-            } else {
-                cartButton.style.display = 'none';
-            }
-        }
+        function createProductCard(product) { /* ... (funções existentes) ... */ }
+        function addToCart(productName) { /* ... */ }
+        // ... (todas as outras funções do cardápio público)
 
-        function openCartModal() {
-            const cartItemsContainer = document.getElementById('cart-items');
-            const cartTotal = document.getElementById('cart-total');
-            const emptyCart = document.getElementById('empty-cart');
-            
-            if (cart.length === 0) {
-                cartItemsContainer.innerHTML = '';
-                cartTotal.style.display = 'none';
-                emptyCart.style.display = 'block';
-            } else {
-                emptyCart.style.display = 'none';
-                cartTotal.style.display = 'block';
-                cartItemsContainer.innerHTML = '';
-                cart.forEach((item, index) => {
-                    cartItemsContainer.appendChild(createCartItem(item, index));
-                });
-                updateCartTotal();
-            }
-            document.getElementById('cart-modal').classList.add('active');
-        }
-
+        // (COLE AQUI O RESTANTE DAS FUNÇÕES DO CARDÁPIO QUE ESTAVAM NA VERSÃO ANTERIOR)
+        function createProductCard(product) { const card = document.createElement('div'); card.className = 'product-card'; card.innerHTML = ` <div class="product-name">${product.name}</div> <div class="product-description">${product.description}</div> <div class="product-footer"> <span class="product-price">R$ ${product.price.toFixed(2).replace('.', ',')}</span> <button class="add-button" onclick="addToCart('${product.name}')">+</button> </div> `; return card; }
+        function addToCart(productName) { const product = menuData.products.find(p => p.name === productName); if (!product) return; const existingItem = cart.find(item => item.name === productName); if (existingItem) { existingItem.quantity++; } else { cart.push({ ...product, quantity: 1 }); } updateCartDisplay(); }
+        function updateCartDisplay() { const cartButton = document.getElementById('cart-button'); const cartBadge = document.getElementById('cart-badge'); const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0); if (totalItems > 0) { cartButton.style.display = 'flex'; cartBadge.textContent = totalItems; } else { cartButton.style.display = 'none'; } }
+        function openCartModal() { const cartItemsContainer = document.getElementById('cart-items'); const cartTotal = document.getElementById('cart-total'); const emptyCart = document.getElementById('empty-cart'); if (cart.length === 0) { cartItemsContainer.innerHTML = ''; cartTotal.style.display = 'none'; emptyCart.style.display = 'block'; } else { emptyCart.style.display = 'none'; cartTotal.style.display = 'block'; cartItemsContainer.innerHTML = ''; cart.forEach((item, index) => { cartItemsContainer.appendChild(createCartItem(item, index)); }); updateCartTotal(); } document.getElementById('cart-modal').classList.add('active'); }
         function closeCartModal() { document.getElementById('cart-modal').classList.remove('active'); }
         function closeCheckoutModal() { document.getElementById('checkout-modal').classList.remove('active'); }
-
-        function createCartItem(item, index) {
-            const itemElement = document.createElement('div');
-            itemElement.className = 'cart-item';
-            itemElement.innerHTML = `
-                <div class="cart-item-header">
-                    <div class="cart-item-name">${item.name}</div>
-                    <div class="cart-item-price">R$ ${(item.price * item.quantity).toFixed(2).replace('.', ',')}</div>
-                </div>
-                <div class="quantity-controls">
-                    <button class="quantity-btn" onclick="updateQuantity(${index}, -1)">-</button>
-                    <span class="quantity-display">${item.quantity}</span>
-                    <button class="quantity-btn" onclick="updateQuantity(${index}, 1)">+</button>
-                </div>
-            `;
-            return itemElement;
-        }
-        
-        function updateQuantity(index, change) {
-            cart[index].quantity += change;
-            if (cart[index].quantity <= 0) {
-                cart.splice(index, 1);
-            }
-            updateCartDisplay();
-            openCartModal();
-        }
-
-        function updateCartTotal() {
-            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            document.getElementById('total-price').textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
-        }
-        
-        function openCheckoutModal() {
-            closeCartModal();
-            updateCheckoutTotal();
-            document.getElementById('checkout-modal').classList.add('active');
-        }
-
-        function updateCheckoutTotal() {
-            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const isDelivery = document.querySelector('input[name="order-type"]:checked').value === 'delivery';
-            const total = subtotal + (isDelivery ? DELIVERY_FEE : 0);
-            document.getElementById('checkout-total').textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
-        }
-
-        function setupEventListeners() {
-            // CORREÇÃO: Adicionando o event listener que faltava para o botão do carrinho
-            document.getElementById('cart-button').addEventListener('click', openCartModal);
-
-            document.getElementById('checkout-btn').addEventListener('click', openCheckoutModal);
-            document.getElementById('checkout-form').addEventListener('submit', sendOrder);
-            
-            const hasPrescriptionCheckbox = document.getElementById('has-prescription');
-            const prescriptionFile = document.getElementById('prescription-file');
-            hasPrescriptionCheckbox.addEventListener('change', () => {
-                prescriptionFile.style.display = hasPrescriptionCheckbox.checked ? 'block' : 'none';
-            });
-            
-            document.querySelectorAll('input[name="order-type"]').forEach(radio => {
-                radio.addEventListener('change', (e) => {
-                    const addressContainer = document.getElementById('address-container');
-                    const isDelivery = e.target.value === 'delivery';
-                    addressContainer.style.display = isDelivery ? 'block' : 'none';
-                    updateCheckoutTotal();
-                });
-            });
-        }
-        
-        function sendOrder(event) {
-            event.preventDefault();
-            const customerName = document.getElementById('customer-name').value;
-            const customerPhone = document.getElementById('customer-phone').value;
-            const paymentMethod = document.getElementById('payment-method').value;
-            const orderType = document.querySelector('input[name="order-type"]:checked').value;
-            const hasPrescription = document.getElementById('has-prescription').checked;
-            const prescriptionFile = document.getElementById('prescription-file').files[0];
-
-            let fullAddress = 'RETIRADA NO LOCAL';
-            if (orderType === 'delivery') {
-                const address = document.getElementById('customer-address').value;
-                const city = document.getElementById('customer-city').value;
-                if (!address || !city) return alert('Por favor, preencha o endereço completo para entrega.');
-                fullAddress = `${address} - ${city}`;
-            }
-
-            if (!customerName || !customerPhone || !paymentMethod) return alert('Por favor, preencha todos os campos obrigatórios.');
-            if (hasPrescription && !prescriptionFile) return alert('Você marcou que precisa de receita, mas nenhum arquivo foi anexado.');
-
-            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const total = subtotal + (orderType === 'delivery' ? DELIVERY_FEE : 0);
-            
-            let message = `💊 *NOVO PEDIDO - Única Farmácia*\n\n`;
-            message += `👤 *Cliente:* ${customerName}\n`;
-            message += `📞 *Telefone:* ${customerPhone}\n`;
-            message += `📦 *Tipo:* ${orderType === 'delivery' ? 'ENTREGA' : 'RETIRADA'}\n`;
-            if (orderType === 'delivery') message += `🏠 *Endereço:* ${fullAddress}\n`;
-            message += `💳 *Pagamento:* ${paymentMethod}\n\n`;
-            message += `🛒 *ITENS DO PEDIDO:*\n`;
-            cart.forEach(item => {
-                message += `• ${item.quantity}x ${item.name} - R$ ${(item.price * item.quantity).toFixed(2).replace('.', ',')}\n`;
-            });
-            message += `\n💰 *SUBTOTAL:* R$ ${subtotal.toFixed(2).replace('.', ',')}\n`;
-            if (orderType === 'delivery') message += `🚚 *Taxa de Entrega:* R$ ${DELIVERY_FEE.toFixed(2).replace('.', ',')}\n`;
-            message += `💰 *TOTAL DO PEDIDO:* R$ ${total.toFixed(2).replace('.', ',')}\n`;
-
-            if (hasPrescription) {
-                message += `\n\n*⚠️ ATENÇÃO: PEDIDO COM RECEITA.*\nPor favor, envie o arquivo da receita aqui na conversa para validarmos o pedido.`;
-            }
-
-            const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-            window.open(whatsappUrl, '_blank');
-            
-            alert('Pedido enviado! Você será redirecionado para o WhatsApp para finalizar.');
-            cart = [];
-            updateCartDisplay();
-            closeCheckoutModal();
-        }
+        function createCartItem(item, index) { const itemElement = document.createElement('div'); itemElement.className = 'cart-item'; itemElement.innerHTML = ` <div class="cart-item-header"> <div class="cart-item-name">${item.name}</div> <div class="cart-item-price">R$ ${(item.price * item.quantity).toFixed(2).replace('.', ',')}</div> </div> <div class="quantity-controls"> <button class="quantity-btn" onclick="updateQuantity(${index}, -1)">-</button> <span class="quantity-display">${item.quantity}</span> <button class="quantity-btn" onclick="updateQuantity(${index}, 1)">+</button> </div> `; return itemElement; }
+        function updateQuantity(index, change) { cart[index].quantity += change; if (cart[index].quantity <= 0) { cart.splice(index, 1); } updateCartDisplay(); openCartModal(); }
+        function updateCartTotal() { const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0); document.getElementById('total-price').textContent = `R$ ${total.toFixed(2).replace('.', ',')}`; }
+        function openCheckoutModal() { closeCartModal(); updateCheckoutTotal(); document.getElementById('checkout-modal').classList.add('active'); }
+        function updateCheckoutTotal() { const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0); const isDelivery = document.querySelector('input[name="order-type"]:checked').value === 'delivery'; const total = subtotal + (isDelivery ? DELIVERY_FEE : 0); document.getElementById('checkout-total').textContent = `R$ ${total.toFixed(2).replace('.', ',')}`; }
+        function setupEventListeners() { document.getElementById('cart-button').addEventListener('click', openCartModal); document.getElementById('checkout-btn').addEventListener('click', openCheckoutModal); document.getElementById('checkout-form').addEventListener('submit', sendOrder); const hasPrescriptionCheckbox = document.getElementById('has-prescription'); const prescriptionFile = document.getElementById('prescription-file'); hasPrescriptionCheckbox.addEventListener('change', () => { prescriptionFile.style.display = hasPrescriptionCheckbox.checked ? 'block' : 'none'; }); document.querySelectorAll('input[name="order-type"]').forEach(radio => { radio.addEventListener('change', (e) => { const addressContainer = document.getElementById('address-container'); const isDelivery = e.target.value === 'delivery'; addressContainer.style.display = isDelivery ? 'block' : 'none'; updateCheckoutTotal(); }); }); }
+        function sendOrder(event) { event.preventDefault(); const customerName = document.getElementById('customer-name').value; const customerPhone = document.getElementById('customer-phone').value; const paymentMethod = document.getElementById('payment-method').value; const orderType = document.querySelector('input[name="order-type"]:checked').value; const hasPrescription = document.getElementById('has-prescription').checked; const prescriptionFile = document.getElementById('prescription-file').files[0]; let fullAddress = 'RETIRADA NO LOCAL'; if (orderType === 'delivery') { const address = document.getElementById('customer-address').value; const city = document.getElementById('customer-city').value; if (!address || !city) return alert('Por favor, preencha o endereço completo para entrega.'); fullAddress = `${address} - ${city}`; } if (!customerName || !customerPhone || !paymentMethod) return alert('Por favor, preencha todos os campos obrigatórios.'); if (hasPrescription && !prescriptionFile) return alert('Você marcou que precisa de receita, mas nenhum arquivo foi anexado.'); const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0); const total = subtotal + (orderType === 'delivery' ? DELIVERY_FEE : 0); let message = `💊 *NOVO PEDIDO - Única Farmácia*\n\n`; message += `👤 *Cliente:* ${customerName}\n`; message += `📞 *Telefone:* ${customerPhone}\n`; message += `📦 *Tipo:* ${orderType === 'delivery' ? 'ENTREGA' : 'RETIRADA'}\n`; if (orderType === 'delivery') message += `🏠 *Endereço:* ${fullAddress}\n`; message += `💳 *Pagamento:* ${paymentMethod}\n\n`; message += `🛒 *ITENS DO PEDIDO:*\n`; cart.forEach(item => { message += `• ${item.quantity}x ${item.name} - R$ ${(item.price * item.quantity).toFixed(2).replace('.', ',')}\n`; }); message += `\n💰 *SUBTOTAL:* R$ ${subtotal.toFixed(2).replace('.', ',')}\n`; if (orderType === 'delivery') message += `🚚 *Taxa de Entrega:* R$ ${DELIVERY_FEE.toFixed(2).replace('.', ',')}\n`; message += `💰 *TOTAL DO PEDIDO:* R$ ${total.toFixed(2).replace('.', ',')}\n`; if (hasPrescription) { message += `\n\n*⚠️ ATENÇÃO: PEDIDO COM RECEITA.*\nPor favor, envie o arquivo da receita aqui na conversa para validarmos o pedido.`; } const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`; window.open(whatsappUrl, '_blank'); alert('Pedido enviado! Você será redirecionado para o WhatsApp para finalizar.'); cart = []; updateCartDisplay(); closeCheckoutModal(); }
     </script>
 </body>
 </html>
